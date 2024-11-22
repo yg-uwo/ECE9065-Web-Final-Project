@@ -5,7 +5,7 @@ class CartService {
         return CartModel.findCartByUser(userId);
     }
     async createCart(data) {
-        console.log("Inside Create Cart");
+        console.log("Hello")
         return CartModel.createCart(data);
     }
     async deleteCart(cartId) {

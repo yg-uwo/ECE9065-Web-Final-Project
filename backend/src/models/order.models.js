@@ -6,13 +6,14 @@ class OrderModel {
             userId: {type: String, required: true},
             items: [
                 {
-                    productId: { type: String, required: true, ref: 'Product' },
+                    _id: false,
+                    productId: { type: String, required: true},
                     quantity: {type: Number, required: true},
                 },
             ],
             status: {type: String, default: 'Pending'},
         });
-        this.model = mongoose.model('Order', schema, 'orders');
+        this.model = mongoose.model('orders', schema);
     }
 
     async createOrder(data) {
