@@ -1,7 +1,7 @@
 const ERROR_MESSAGES = {
     USER_ALREADY_EXISTS: 'User already exists.',
     USER_NOT_FOUND: 'User not found.',
-    INVALID_CREDENTIALS: 'Invalid credentials.',
+    INCORRECT_PASSWORD: 'Password is incorrect',
     UNAUTHORIZED_ACCESS: 'Access denied. You are not authorized to perform this action.',
     INVALID_EMAIL: 'Invalid email format.',
     INVALID_PASSWORD: 'Password must be at least 8 characters, with at least one letter and one number.',
