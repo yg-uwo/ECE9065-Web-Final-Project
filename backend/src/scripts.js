@@ -2,8 +2,8 @@ const { MongoClient } = require('mongodb');
 
 // Replace the following with your MongoDB connection details
 const MONGO_URI = 'mongodb://localhost:27017';
-const DATABASE_NAME = 'productsDB';
-const COLLECTION_NAME = 'laptopsAndAccessories';
+const DATABASE_NAME = 'computer_ecom';
+const COLLECTION_NAME = 'carts';
 
 // Sample data to insert into the collection
 const data = [
