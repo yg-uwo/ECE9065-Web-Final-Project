@@ -7,7 +7,6 @@ class OrderController {
     async checkout(req, res) {
         const { userId } = req.body;
         const paymentSuccess = PaymentService.simulatePayment();
-
         try {
             const cart = await CartService.getCart(userId);
             if (!cart) return res.status(404).json({message: 'Cart not found'});
