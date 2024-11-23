@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from '../ui/use-toast';
+
 
 // New Dummy Data
 export const DUMMY_PRODUCTS = [

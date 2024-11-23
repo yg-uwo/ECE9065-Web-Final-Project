@@ -1,8 +1,7 @@
-// frontend/src/components/ProductCatalog/ProductDetails.js
-
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import { toast } from '../ui/use-toast';
 
 // Updated product details data
 const productDetailsData = [
@@ -38,6 +37,7 @@ const productDetailsData = [
 const ProductDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   // Find the product by id
   const product = productDetailsData.find((p) => p.id === id);
@@ -45,6 +45,49 @@ const ProductDetails = () => {
   if (!product) {
     return <div>Product not found</div>;
   }
+
+  const handleAddToCart = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch('/api/cart/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // Include auth token if you're using one
+          // 'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+          productId: id,
+          quantity: 1
+        }),
+        credentials: 'include' // This includes cookies in the request
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to add item to cart');
+      }
+
+      const data = await response.json();
+      
+      toast({
+        title: "Success",
+        description: "Item added to cart successfully",
+        duration: 3000,
+      });
+
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      toast({
+        title: "Error",
+        description: error.message || "Failed to add item to cart",
+        variant: "destructive",
+        duration: 3000,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="max-w-4xl mx-auto p-6">
@@ -83,9 +126,13 @@ const ProductDetails = () => {
 
           <div className="flex gap-4">
             <button
-              className="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg"
+              onClick={handleAddToCart}
+              disabled={isLoading}
+              className={`flex-1 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg ${
+                isLoading ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
             >
-              Add to Cart
+              {isLoading ? 'Adding...' : 'Add to Cart'}
             </button>
             <button
               className="flex-1 bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg"
