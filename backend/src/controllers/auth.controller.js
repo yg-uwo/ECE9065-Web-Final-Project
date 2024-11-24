@@ -1,20 +1,6 @@
 const { signupService,loginService } = require('../services/auth.services');
 const { SUCCESS_MESSAGES, ERROR_MESSAGES, REGEX } = require('../utils/constants');
-
-// Validate
-const validateInput = (data) => {
-    const errors = [];
-    if (!REGEX.EMAIL.test(data.email)) {
-        errors.push(ERROR_MESSAGES.INVALID_EMAIL);
-    }
-    if (!REGEX.PASSWORD.test(data.password)) {
-        errors.push(ERROR_MESSAGES.INVALID_PASSWORD);
-    }
-    if (data.phoneNumber && !REGEX.PHONE_NUMBER.test(data.phoneNumber)) {
-        errors.push(ERROR_MESSAGES.INVALID_PHONE);
-    }
-    return errors;
-};
+const validateInput = require('../utils/validate_user_input');
 
 // Signup API
 exports.signup = async (req, res) => {
