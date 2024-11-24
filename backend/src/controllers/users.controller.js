@@ -30,18 +30,15 @@ exports.updateUser = async (req, res) => {
       if (existingUser && existingUser.role === 'general' && role) {
         return res.status(400).json({ message: ERROR_MESSAGES.UNAUTHORIZED_ROLE_UPDATE });
       }
-  
       const updatedData = { first_name, last_name, email, password, phoneNumber, role };
   
       //check if there is undefine value in request body
       Object.keys(updatedData).forEach(key => updatedData[key] === undefined && delete updatedData[key]);
   
       const updatedUser = await UserService.updateUserById(id, updatedData);
-  
       if (!updatedUser) {
         return res.status(404).json({ message: 'User not found' });
       }
-  
       res.status(200).json(updatedUser);
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -53,30 +50,26 @@ exports.updateUser = async (req, res) => {
     try {
       const { id } = req.params; 
       const deletedUser = await UserService.deleteUserById(id);
-  
       if (!deletedUser) {
         return res.status(404).json({ message: 'User not found' });
       }
-  
       res.status(200).json({ message: 'User deleted successfully' });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
   };
 
-  // User Listing API with Filters and Pagination
+
 exports.listUsers = async (req, res) => {
     try {
       const { first_name, last_name, email, role, phoneNumber, page = 1, limit = 10 } = req.query;
-  
-      // Construct filter object
       const filter = {};
       if (first_name) filter.first_name = { $regex: first_name, $options: 'i' }; 
       if (last_name) filter.last_name = { $regex: last_name, $options: 'i' };
       if (email) filter.email = { $regex: email, $options: 'i' };
       if (role) filter.role = role;
       if (phoneNumber) filter.phoneNumber = { $regex: phoneNumber, $options: 'i' };
-  
+
       // Pagination logic
       const pageNumber = parseInt(page, 10);
       const pageSize = parseInt(limit, 10);
