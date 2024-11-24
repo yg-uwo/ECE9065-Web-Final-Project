@@ -31,7 +31,8 @@ app.post('/api/user/listing', authMiddleware, adminMiddleware, listUsers);
 //Products
 app.post('/api/product/add_product', authMiddleware, adminMiddleware, ProductController.createProduct);             
 app.put('/api/product/update_product/:id', authMiddleware, adminMiddleware, ProductController.updateProduct);    
-app.delete('/api/product/delete_product/:id', authMiddleware, adminMiddleware, ProductController.deleteProduct); 
+app.delete('/api/product/delete_product/:id', authMiddleware, adminMiddleware, ProductController.deleteProduct);
+app.post('/api/product/listing',ProductController.listProducts); 
 
 app.get('/api/cart/:userId', CartController.getCart.bind(CartController));
 app.post('/api/checkout', (req, res) => OrderController.checkout(req, res));

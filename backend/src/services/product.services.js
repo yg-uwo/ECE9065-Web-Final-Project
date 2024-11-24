@@ -34,6 +34,17 @@ class ProductService {
     return product;
   }
 
+  async listProducts(filter, skip, limit, sortBy) {
+    return Product.find(filter)
+      .skip(skip)
+      .limit(limit)
+      .sort(sortBy);
+  }
+  
+  async countProducts(filter) {
+    return Product.countDocuments(filter);
+  }
+
 //   async updateProductStock(productId, quantity) {
 //     const product = await Product.findOneAndUpdate(
 //       { productId },
