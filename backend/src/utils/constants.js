@@ -6,6 +6,8 @@ const ERROR_MESSAGES = {
     INVALID_EMAIL: 'Invalid email format.',
     INVALID_PASSWORD: 'Password must be at least 8 characters, with at least one letter and one number.',
     INVALID_PHONE: 'Phone number must be between 10-15 digits.',
+    MISSING_REQUIRED_FIELDS: 'Product ID and category are required fields.',
+    PRODUCT_NOT_FOUND: 'Product not found.',
   };
 
   const REGEX= {
@@ -18,6 +20,9 @@ const ERROR_MESSAGES = {
   const SUCCESS_MESSAGES = {
     USER_REGISTERED: 'User registered successfully.',
     LOGIN_SUCCESS: 'Login successful.',
+    PRODUCT_CREATED: 'Product created successfully.',
+    PRODUCT_UPDATED: 'Product updated successfully.',
+    PRODUCT_DELETED: 'Product deleted successfully.',
   };
   
   // Roles
