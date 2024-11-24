@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
-
+const { ERROR_MESSAGES } = require('../utils/constants');
 const authMiddleware = (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1]; // Extract token
 
   if (!token) {
-    return res.status(401).json({ error: 'Unauthorized: Token missing' });
+    return res.status(401).json({ error: ERROR_MESSAGES.INVALID_TOKEN });
   }
 
   try {
@@ -14,13 +14,13 @@ const authMiddleware = (req, res, next) => {
     next(); //it will trigger adminMiddleware 
   } catch (err) {
     console.error(err);
-    res.status(403).json({ error: 'Forbidden: Invalid token' });
+    res.status(403).json({ error: ERROR_MESSAGES.UNAUTHORIZED_ACCESS });
   }
 };
 
 const adminMiddleware = (req, res, next) => {
   if (req.user?.role !== 'admin') {
-    return res.status(403).json({ error: 'Forbidden: Admin access required' });
+    return res.status(403).json({ error: ERROR_MESSAGES.UNAUTHORIZED_ACCESS });
   }
   next();
 };

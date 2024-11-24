@@ -3,6 +3,7 @@ const ERROR_MESSAGES = {
     USER_NOT_FOUND: 'User not found.',
     INCORRECT_PASSWORD: 'Password is incorrect',
     UNAUTHORIZED_ACCESS: 'Access denied. You are not authorized to perform this action.',
+    INVALID_TOKEN:"Invalid Token",
     INVALID_EMAIL: 'Invalid email format.',
     INVALID_PASSWORD: 'Password must be at least 8 characters, with at least one letter and one number.',
     INVALID_PHONE: 'Phone number must be between 10-15 digits.',

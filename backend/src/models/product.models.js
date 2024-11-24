@@ -18,7 +18,7 @@ class ProductModel {
         category: { type: String, required: true },
         manufacturer: { type: String },
         popularity: { type: Number, default: 0 },
-        quantity: { type: Number, default: 0 }, // Stock management
+        quantity: { type: Number, default: 0 },
       },
       { 
         collection: 'productInfo',
