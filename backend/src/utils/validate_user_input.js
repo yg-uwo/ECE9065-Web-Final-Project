@@ -1,3 +1,4 @@
+const {  REGEX } = require('../utils/constants');
 const validateInput = (data, fieldsToValidate = ['email', 'password', 'phoneNumber']) => {
     const errors = [];
     if (fieldsToValidate.includes('email') && !REGEX.EMAIL.test(data.email)) {
