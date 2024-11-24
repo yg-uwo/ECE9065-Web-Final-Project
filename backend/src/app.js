@@ -3,7 +3,7 @@ const connectDB = require('./config/db');
 const env = require('./config/env');
 
 const { signup,login } = require('./controllers/auth.controller'); 
-const {addUser} = require('./controllers/users.controller');
+const {addUser,updateUser,deleteUser,listUsers} = require('./controllers/users.controller');
 const {authMiddleware,adminMiddleware} = require("./middlewares/auth.middleware")
 const bodyParser = require('body-parser');
 const CartController = require('./controllers/cart.controller');
@@ -21,10 +21,14 @@ app.use(express.json());
 /*All routes*/
 app.post("/api/auth/signup",signup)
 app.post('/api/auth/login', login);
-app.post('/api/user/add-user', authMiddleware, adminMiddleware, addUser);
+
+//users
+app.post('/api/user/add_user', authMiddleware, adminMiddleware, addUser);
+app.put('/api/user/update_user/:id', updateUser);
+app.delete('/api/user/delete_user/:id', authMiddleware, adminMiddleware, deleteUser);
+app.post('/api/user/listing', authMiddleware, adminMiddleware, listUsers);
 
 //Products
-
 app.post('/api/product/add_product', authMiddleware, adminMiddleware, ProductController.createProduct);             
 app.put('/api/product/update_product/:id', authMiddleware, adminMiddleware, ProductController.updateProduct);    
 app.delete('/api/product/delete_product/:id', authMiddleware, adminMiddleware, ProductController.deleteProduct); 
