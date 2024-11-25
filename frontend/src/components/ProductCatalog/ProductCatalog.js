@@ -1,35 +1,7 @@
-// frontend/src/components/ProductCatalog/ProductCatalog.js
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from '../ui/use-toast';
-
-
-// New Dummy Data
-export const DUMMY_PRODUCTS = [
-  {
-    _id: '1',
-    productId: 'P001',
-    productName: 'MacBook Pro 2021',
-    type: 'Laptop',
-    quantity: 10,
-  },
-  {
-    _id: '2',
-    productId: 'P002',
-    productName: 'iPhone 13',
-    type: 'Smartphone',
-    quantity: 20,
-  },
-  {
-    _id: '3',
-    productId: 'P003',
-    productName: 'Samsung Galaxy Tab',
-    type: 'Tablet',
-    quantity: 15,
-  },
-];
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
@@ -62,9 +34,30 @@ const ProductCard = ({ product }) => {
 };
 
 const ProductCatalog = () => {
-  const [products] = useState(DUMMY_PRODUCTS);
+  const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch products from API
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/product/listing?page=1&limit=10');
+        if (!response.ok) throw new Error('Failed to fetch products');
+        const data = await response.json();
+        setProducts(data.products || []); // Adjust based on API response structure
+      } catch (err) {
+        setError(err.message);
+        toast({ title: 'Error', description: err.message, status: 'error' });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const filteredProducts = products.filter(product => {
     const matchesSearch =
@@ -107,11 +100,17 @@ const ProductCatalog = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredProducts.map(product => (
-          <ProductCard key={product._id} product={product} />
-        ))}
-      </div>
+      {loading ? (
+        <p>Loading products...</p>
+      ) : error ? (
+        <p className="text-red-500">Error: {error}</p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredProducts.map(product => (
+            <ProductCard key={product._id} product={product} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
