@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const NavbarComponent = () => {
   const { isAuthenticated, role } = useSelector((state) => state.auth);
@@ -14,7 +15,7 @@ const NavbarComponent = () => {
           <Nav className="ms-auto">
             <Nav.Link href="/">Home</Nav.Link>
             {isAuthenticated && role === 'admin' && (
-              <Nav.Link href="/users">User List</Nav.Link>
+              <Nav.Link as={Link} to="/users">User List</Nav.Link>
             )}
             {isAuthenticated ? (
               <Nav.Link href="/logout">Logout</Nav.Link>

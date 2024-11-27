@@ -82,6 +82,7 @@ const Auth = () => {
 
             dispatch(
                 login({
+                    token:token,
                     userId: decodedToken.id,
                     role: decodedToken.role,
                 })
