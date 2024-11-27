@@ -13,10 +13,10 @@ const ErrorHandler = require('./utils/error.handler');
 const cors = require('cors');
 
 const app = express();
-app.use(cors());
 connectDB();
 app.use(express.json());
 
+app.use(cors());
 
 /*All routes*/
 app.post("/api/auth/signup",signup)

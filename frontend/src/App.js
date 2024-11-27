@@ -5,6 +5,7 @@ import NavbarComponent from './components/Navbar';
 import Auth from './pages/Auth';
 import { store } from './redux/store';
 import PrivateRoute from './components/PrivateRoute';
+import UserList from './pages/UserList';
 
 const App = () => {
   return (
@@ -25,7 +26,7 @@ const App = () => {
             path="/users"
             element={
               <PrivateRoute>
-                <div>User List Page</div>
+                <UserList/>
               </PrivateRoute>
             }
           />
