@@ -1,40 +1,38 @@
+import React from 'react';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import NavbarComponent from './components/Navbar';
+import Auth from './pages/Auth';
+import { store } from './redux/store';
+import PrivateRoute from './components/PrivateRoute';
 
-import './App.css';
-import React, {Component} from "react";
-import Header from './components/Header';
-import Cart from './components/Cart';
-import Checkout from './components/Checkout';
-
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userId: "user123",
-      cart: null,
-    };
-  }
-  setCheckoutCart = (cart) => {
-    this.setState({ cart });
-  };
-
-  resetCart = () => {
-    this.setState({ cart: null});
-  };
-
-  render() {
-    const { userId, cart } = this.state;
-
-    return (
-      <div>
-        <Header />
-        {!cart ? (
-          <Cart userId={userId} onCheckout={this.setCheckoutCart} />
-        ) : (
-          <Checkout cart={cart} onComplete={this.resetCart} />
-        )}
-      </div>
-    )
-  }
-}
+const App = () => {
+  return (
+    <Provider store={store}>
+      <Router>
+        <NavbarComponent />
+        <Routes>
+          <Route path="/" element={<Auth />} />
+          <Route
+            path="/products"
+            element={
+              <PrivateRoute>
+                <div>Product Listing Page</div>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/users"
+            element={
+              <PrivateRoute>
+                <div>User List Page</div>
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+      </Router>
+    </Provider>
+  );
+};
 
 export default App;
