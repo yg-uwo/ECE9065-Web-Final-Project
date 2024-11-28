@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { Modal, Button, Form } from "react-bootstrap";
 import UserFilter from "../components/UserFilter";
 import Pagination from "../components/Pagination";
 import UpdateUserModal from "../components/UpdateUserModal";
+import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
 const UserList = () => {
@@ -77,9 +79,9 @@ const UserList = () => {
       if (!response.ok) {
         throw new Error("Failed to delete user.");
       }
-
-      setUsers(users.filter((user) => user.id !== id));
-      setFilteredUsers(filteredUsers.filter((user) => user.id !== id));
+      toast.error("User Deleted successfully!");
+      setUsers(users.filter((user) => user._id !== id));
+      setFilteredUsers(filteredUsers.filter((user) => user._id !== id));
     } catch (error) {
       console.error("Error deleting user:", error.message);
       alert(error.message);
