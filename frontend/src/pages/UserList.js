@@ -90,9 +90,8 @@ const UserList = () => {
 
   // Open the UpdateUserModal
   const handleUpdate = (id) => {
-    console.log("<><><><",id)
     setSelectedUserId(id);
-    setShowUpdateModal(true);
+    setShowUpdateModal(true); 
   };
 
   // Handle user update completion

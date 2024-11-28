@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { Modal, Button, Form } from "react-bootstrap";
 import { validateUserForm } from "../utils/validation";
 
 const UpdateUserModal = ({ userId, onClose, onUserUpdated, token }) => {
@@ -18,9 +19,9 @@ const UpdateUserModal = ({ userId, onClose, onUserUpdated, token }) => {
                     method: "PUT",
                     headers: { Authorization: `Bearer ${token}` },
                 });
-                const user = await response.json();
-                console.log(user);
-                setFormData(user);
+                const data = await response.json();
+                console.log(data.user);
+                setFormData(data.user);
             } catch (error) {
                 toast.error("Failed to fetch user details.");
             }
@@ -41,7 +42,7 @@ const UpdateUserModal = ({ userId, onClose, onUserUpdated, token }) => {
         }
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/user/${userId}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/user/update_user/${userId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -64,84 +65,70 @@ const UpdateUserModal = ({ userId, onClose, onUserUpdated, token }) => {
     };
 
     return (
-        <div className="modal">
-            <div className="modal-content">
-                <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label>Name</label>
-                        <input
+        <Modal show onHide={onClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>Update User</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group>
+                        <Form.Label>First Name</Form.Label>
+                        <Form.Control
                             type="text"
                             name="first_name"
-                            value={formData.first_name}
+                            value={formData.first_name || ""}
                             onChange={handleChange}
-                            className="form-control"
                             required
                         />
-                    </div>
-                    <div className="form-group">
-                        <label>Name</label>
-                        <input
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Last Name</Form.Label>
+                        <Form.Control
                             type="text"
                             name="last_name"
-                            value={formData.last_name}
+                            value={formData.last_name || ""}
                             onChange={handleChange}
-                            className="form-control"
                             required
                         />
-                    </div>
-                    <div className="form-group">
-                        <label>Email</label>
-                        <input
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control
                             type="email"
                             name="email"
-                            value={formData.email}
+                            value={formData.email || ""}
                             onChange={handleChange}
-                            className="form-control"
                             required
                         />
-                    </div>
-                    <div className="form-group">
-                        <label>Phone</label>
-                        <input
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Phone Number</Form.Label>
+                        <Form.Control
                             type="text"
                             name="phoneNumber"
-                            value={formData.phoneNumber}
+                            value={formData.phoneNumber || ""}
                             onChange={handleChange}
-                            className="form-control"
                             required
                         />
-                    </div>
-                    <div className="form-group">
-                        <label>Role</label>
-                        <div>
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="role"
-                                    value="admin"
-                                    checked={formData.role === "admin"}
-                                    onChange={handleChange}
-                                />{" "}
-                                Admin
-                            </label>
-                            <label className="ml-3">
-                                <input
-                                    type="radio"
-                                    name="role"
-                                    value="general"
-                                    checked={formData.role === "general"}
-                                    onChange={handleChange}
-                                />{" "}
-                                General
-                            </label>
-                        </div>
-                    </div>
-                    <button type="submit" className="btn btn-primary">
-                        Update User
-                    </button>
-                </form>
-            </div>
-        </div>
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Role</Form.Label>
+                        <Form.Control
+                            as="select"
+                            name="role"
+                            value={formData.role || ""}
+                            onChange={handleChange}
+                        >
+                            <option value="admin">Admin</option>
+                            <option value="general">General</option>
+                        </Form.Control>
+                    </Form.Group>
+                    <Button variant="primary" type="submit">
+                        Save Changes
+                    </Button>
+                </Form>
+            </Modal.Body>
+        </Modal>
     );
 };
 
