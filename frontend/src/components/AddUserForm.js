@@ -1,58 +1,132 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
+import { validateUserForm } from "../utils/validation";
 
-const AddUserForm = ({ onSubmit }) => {
+const AddUserForm = ({ onAddUser, onClose, token }) => {
   const [formData, setFormData] = useState({
-    name: "",
+    first_name: "",
+    last_name:"",
     email: "",
-    phone: "",
+    phoneNumber: "",
+    password: "",
+    role: "general",
   });
-
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    const validationError = validateUserForm(formData);
+    if (validationError) {
+      toast.error(validationError);
+      return;
+    }
+
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/user/add_user`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add user.");
+      }
+
+      const newUser = await response.json();
+      toast.success("User added successfully!");
+      onAddUser(newUser);
+      onClose();
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="mb-3">
-        <label>Name</label>
+      <div className="form-group">
+        <label>First Name</label>
         <input
           type="text"
-          className="form-control"
-          name="name"
-          value={formData.name}
+          name="first_name"
+          value={formData.first_name}
           onChange={handleChange}
+          className="form-control"
           required
         />
       </div>
-      <div className="mb-3">
+      <div className="form-group">
+        <label>Last Name</label>
+        <input
+          type="text"
+          name="last_name"
+          value={formData.last_name}
+          onChange={handleChange}
+          className="form-control"
+          required
+        />
+      </div>
+      <div className="form-group">
         <label>Email</label>
         <input
           type="email"
-          className="form-control"
           name="email"
           value={formData.email}
           onChange={handleChange}
+          className="form-control"
           required
         />
       </div>
-      <div className="mb-3">
+      <div className="form-group">
         <label>Phone</label>
         <input
           type="text"
-          className="form-control"
-          name="phone"
-          value={formData.phone}
+          name="phoneNumber"
+          value={formData.phoneNumber}
           onChange={handleChange}
+          className="form-control"
           required
         />
+      </div>
+      <div className="form-group">
+        <label>Password</label>
+        <input
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          className="form-control"
+          required
+        />
+      </div>
+      <div className="form-group">
+        <label>Role</label>
+        <div>
+          <label>
+            <input
+              type="radio"
+              name="role"
+              value="admin"
+              checked={formData.role === "admin"}
+              onChange={handleChange}
+            />{" "}
+            Admin
+          </label>
+          <label className="ml-3">
+            <input
+              type="radio"
+              name="role"
+              value="general"
+              checked={formData.role === "general"}
+              onChange={handleChange}
+            />{" "}
+            General
+          </label>
+        </div>
       </div>
       <button type="submit" className="btn btn-primary">
         Add User

@@ -6,10 +6,13 @@ import Auth from './pages/Auth';
 import { store } from './redux/store';
 import PrivateRoute from './components/PrivateRoute';
 import UserList from './pages/UserList';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
     <Provider store={store}>
+      <ToastContainer position="top-right" autoClose={3000} />
       <Router>
         <NavbarComponent />
         <Routes>
