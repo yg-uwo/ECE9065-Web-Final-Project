@@ -89,3 +89,22 @@ exports.listUsers = async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   };
+
+//get user with id
+exports.getUser = async(req,res) => {
+  try {
+    const { id } = req.params; 
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(400).json({ message: 'Invalid user ID format' });
+    }
+    const user = await UserService.getUserById(id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+}

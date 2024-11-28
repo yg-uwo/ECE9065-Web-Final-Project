@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import UserFilter from "../components/UserFilter";
 import Pagination from "../components/Pagination";
+import UpdateUserModal from "../components/UpdateUserModal";
 import { useSelector } from "react-redux";
 
 const UserList = () => {
@@ -8,6 +9,8 @@ const UserList = () => {
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
   const usersPerPage = 5;
 
   // Fetch users from the API
@@ -15,7 +18,7 @@ const UserList = () => {
     async (page = 1, limit = 10) => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/user/listing?page=${page}&limit=${limit}`,
+          `${process.env.REACT_APP_API_URL}/user/listing?page=${page}&limit=${limit}`,
           {
             method: "POST",
             headers: {
@@ -41,7 +44,7 @@ const UserList = () => {
   );
 
   useEffect(() => {
-    fetchUsers(); // Fetch users on component load
+    fetchUsers();
   }, [fetchUsers]);
 
   // Handle filter changes
@@ -57,14 +60,14 @@ const UserList = () => {
 
   // Handle adding a new user
   const handleAddUser = (newUser) => {
-    setUsers([newUser, ...users]);
-    setFilteredUsers([newUser, ...filteredUsers]);
+    setUsers([newUser.data, ...users]);
+    setFilteredUsers([newUser.data, ...filteredUsers]);
   };
 
   // Handle deleting a user
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/user/delete_user/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -83,9 +86,21 @@ const UserList = () => {
     }
   };
 
-  // Handle updating a user (Placeholder)
+  // Open the UpdateUserModal
   const handleUpdate = (id) => {
-    alert(`Update user ${id}`);
+    console.log("<><><><",id)
+    setSelectedUserId(id);
+    setShowUpdateModal(true);
+  };
+
+  // Handle user update completion
+  const handleUserUpdated = (updatedUser) => {
+    const updatedUsers = users.map((user) =>
+      user.id === updatedUser.id ? updatedUser : user
+    );
+    setUsers(updatedUsers);
+    setFilteredUsers(updatedUsers);
+    setShowUpdateModal(false);
   };
 
   // Pagination logic
@@ -103,27 +118,31 @@ const UserList = () => {
       <table className="table table-bordered">
         <thead>
           <tr>
-            <th>Name</th>
+            <th>First Name</th>
+            <th>Last Name</th>
             <th>Email</th>
             <th>Phone</th>
+            <th>Role</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {currentUsers.map((user) => (
             <tr key={user.id}>
-              <td>{user.name}</td>
+              <td>{user.first_name}</td>
+              <td>{user.last_name}</td>
               <td>{user.email}</td>
-              <td>{user.phone}</td>
+              <td>{user.phoneNumber}</td>
+              <td>{user.role}</td>
               <td>
                 <button
-                  onClick={() => handleUpdate(user.id)}
+                  onClick={() => handleUpdate(user._id)}
                   className="btn btn-warning btn-sm mx-1"
                 >
                   Update
                 </button>
                 <button
-                  onClick={() => handleDelete(user.id)}
+                  onClick={() => handleDelete(user._id)}
                   className="btn btn-danger btn-sm mx-1"
                 >
                   Delete
@@ -134,12 +153,22 @@ const UserList = () => {
         </tbody>
       </table>
 
- 
+      {/* Pagination Component */}
       <Pagination
         totalPages={Math.ceil(filteredUsers.length / usersPerPage)}
         currentPage={currentPage}
         onPageChange={(page) => setCurrentPage(page)}
       />
+
+      {/* Update User Modal */}
+      {showUpdateModal && (
+        <UpdateUserModal
+          userId={selectedUserId}
+          onClose={() => setShowUpdateModal(false)}
+          onUserUpdated={handleUserUpdated}
+          token={token}
+        />
+      )}
     </div>
   );
 };
