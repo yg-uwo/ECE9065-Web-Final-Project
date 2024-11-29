@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { login } from '../redux/auth_slice';
 import homepage_image from '../assets/images/homepage.jpg'
+import { toast } from 'react-toastify';
 
 
 const Auth = () => {
@@ -13,9 +14,9 @@ const Auth = () => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
-        firstName: '',
-        lastName: '',
-        phone: '',
+        first_name: '',
+        last_name: '',
+        phoneNumber: '',
     });
     const [errors, setErrors] = useState({});
     const [apiError, setApiError] = useState('');
@@ -45,14 +46,14 @@ const Auth = () => {
         }
 
         if (!isLogin) {
-            if (!formData.phone) {
-                newErrors.phone = 'Phone number is required';
-            } else if (!/^\d{10}$/.test(formData.phone)) {
-                newErrors.phone = 'Phone number must be 10 digits';
+            if (!formData.phoneNumber) {
+                newErrors.phoneNumber = 'Phone number is required';
+            } else if (!/^\d{10}$/.test(formData.phoneNumber)) {
+                newErrors.phoneNumber = 'Phone number must be 10 digits';
             }
 
-            if (!formData.firstName) newErrors.firstName = 'First name is required';
-            if (!formData.lastName) newErrors.lastName = 'Last name is required';
+            if (!formData.first_name) newErrors.first_name = 'First name is required';
+            if (!formData.last_name) newErrors.last_name = 'Last name is required';
         }
 
         setErrors(newErrors);
@@ -73,23 +74,36 @@ const Auth = () => {
                 body: JSON.stringify(formData),
             });
 
-            if (!response.ok) {
-                throw new Error('Authentication failed');
+            if (isLogin) {
+                if (!response.ok) {
+                    
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Authentication failed');
+                }
+
+                let { token } = await response.json();
+                let decodedToken = jwtDecode(token);
+
+                dispatch(
+                    login({
+                        token: token,
+                        userId: decodedToken.id,
+                        role: decodedToken.role,
+                    })
+                );
+
+                navigate('/products');
+            } else {
+                if (response.ok) {
+                    toast.success("Registered Successfully, Please log in to continue");
+                } else {
+                    const errorData = await response.json(); 
+                    const errorMessage = errorData.message || "Registration failed";
+                    toast.error(errorMessage); 
+                }
             }
-
-            let { token } = await response.json();
-            let decodedToken = jwtDecode(token);
-
-            dispatch(
-                login({
-                    token:token,
-                    userId: decodedToken.id,
-                    role: decodedToken.role,
-                })
-            );
-
-            navigate('/products');
         } catch (error) {
+            console.log(error)
             setApiError(error.message);
         }
     };
@@ -112,43 +126,43 @@ const Auth = () => {
                             <Form onSubmit={handleSubmit}>
                                 {!isLogin && (
                                     <>
-                                        <Form.Group controlId="firstName">
+                                        <Form.Group controlId="first_name">
                                             <Form.Label>First Name</Form.Label>
                                             <Form.Control
                                                 type="text"
-                                                name="firstName"
-                                                value={formData.firstName}
+                                                name="first_name"
+                                                value={formData.first_name}
                                                 onChange={handleInputChange}
-                                                isInvalid={!!errors.firstName}
+                                                isInvalid={!!errors.first_name}
                                             />
                                             <Form.Control.Feedback type="invalid">
-                                                {errors.firstName}
+                                                {errors.first_name}
                                             </Form.Control.Feedback>
                                         </Form.Group>
-                                        <Form.Group controlId="lastName">
+                                        <Form.Group controlId="last_name">
                                             <Form.Label>Last Name</Form.Label>
                                             <Form.Control
                                                 type="text"
-                                                name="lastName"
-                                                value={formData.lastName}
+                                                name="last_name"
+                                                value={formData.last_name}
                                                 onChange={handleInputChange}
-                                                isInvalid={!!errors.lastName}
+                                                isInvalid={!!errors.last_name}
                                             />
                                             <Form.Control.Feedback type="invalid">
-                                                {errors.lastName}
+                                                {errors.last_name}
                                             </Form.Control.Feedback>
                                         </Form.Group>
-                                        <Form.Group controlId="phone">
+                                        <Form.Group controlId="phoneNumber">
                                             <Form.Label>Phone Number</Form.Label>
                                             <Form.Control
                                                 type="text"
-                                                name="phone"
-                                                value={formData.phone}
+                                                name="phoneNumber"
+                                                value={formData.phoneNumber}
                                                 onChange={handleInputChange}
-                                                isInvalid={!!errors.phone}
+                                                isInvalid={!!errors.phoneNumber}
                                             />
                                             <Form.Control.Feedback type="invalid">
-                                                {errors.phone}
+                                                {errors.phoneNumber}
                                             </Form.Control.Feedback>
                                         </Form.Group>
                                     </>
