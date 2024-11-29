@@ -1,5 +1,7 @@
 const ProductService = require('../services/product.services');
 const { SUCCESS_MESSAGES } = require('../utils/constants');
+const ProductModel = require('../models/product.models');
+const { getJson } = require("serpapi");
 
 class ProductController {
   async createProduct(req, res) {
@@ -64,12 +66,12 @@ class ProductController {
       const skip = (pageNumber - 1) * pageSize;
 
       //sorting by popularity
-      const sortOrder = order === 'asc' ? 1 : -1; 
+      const sortOrder = order === 'asc' ? 1 : -1;
       const sortBy = {};
       sortBy[sort] = sortOrder;
-      
+
       const products = await ProductService.listProducts(filter, skip, pageSize, sortBy);
-      const totalProducts = await ProductService.countProducts(filter); 
+      const totalProducts = await ProductService.countProducts(filter);
 
       res.status(200).json({
         data: products,
@@ -82,6 +84,59 @@ class ProductController {
     }
   }
 
+  async fillReviews(req, res) {
+    const { productId } = req.params; 
+  
+    try {
+      // Fetch reviews from SerpAPI
+      const productDetails = await getJson({
+        api_key: process.env.SERP_API_KEY,
+        engine: 'walmart_product_reviews',
+        product_id: productId,
+      });
+  
+      // console.log(productDetails);
+      if (!productDetails.reviews || productDetails?.reviews.length === 0) {
+        return res.status(404).json({ message: 'No reviews found for this product' });
+      }
+  
+      // Process and map reviews to match your model
+      const processedReviews = productDetails.reviews.map((review) => {
+        return {
+          user_nickname: review.user_nickname,
+          title:review.title,
+          text:review.text,
+          positive_feedback:review.positive_feedback,
+          negative_feedback:review.negative_feedback,
+          rating: review.rating || 0,
+          comment: review.text || 'No comment',
+          review_submission_time: review.review_submission_time,
+        };
+      });
+  
+      const product = await ProductModel.findOne({ productId:productId });
+      if (!product) {
+        return res.status(404).json({ message: 'Product not found' });
+      }
+
+      product.reviews = [...product.reviews, ...processedReviews];
+      await product.save();
+      res.status(200).json({
+        message: 'Product reviews successfully updated.',
+        product: product,
+      });
+  
+    } catch (error) {
+      console.error('Error updating reviews:', error);
+      res.status(500).json({
+        message: 'Error fetching and updating product reviews',
+        error: error.message,
+      });
+    }
+  }
 }
+
+
+
 
 module.exports = new ProductController();
