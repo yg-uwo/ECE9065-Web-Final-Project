@@ -22,72 +22,71 @@ const Filters = ({ onFilterChange }) => {
   };
 
   return (
-    <div className="filters-container">
-      <h4>Filters</h4>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       
-      {/* Category filter */}
-      <div className="filter-item">
-        <label htmlFor="category">Category:</label>
-        <select
-          id="category"
-          name="category"
-          value={filters.category}
-          onChange={handleFilterChange}
-        >
-          <option value="">All Categories</option>
-          <option value="laptop">Laptop</option>
-          <option value="keyboard">Keyboard</option>
-          <option value="mouse">Mouse</option>
-          {/* Add more categories as needed */}
-        </select>
-      </div>
+      <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+        {/* Category filter */}
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <label htmlFor="category" style={{ marginBottom: '0.5rem' }}>Category:</label>
+          <select
+            id="category"
+            name="category"
+            value={filters.category}
+            onChange={handleFilterChange}
+          >
+            <option value="">All Categories</option>
+            <option value="laptop">Laptop</option>
+            <option value="keyboard">Keyboard</option>
+            <option value="mouse">Mouse</option>
+          </select>
+        </div>
 
-      {/* Price filter */}
-      <div className="filter-item">
-        <label htmlFor="price">Price:</label>
-        <select
-          id="price"
-          name="price"
-          value={filters.price}
-          onChange={handleFilterChange}
-        >
-          <option value="">All Prices</option>
-          <option value="0-500">$0 - $500</option>
-          <option value="500-1000">$500 - $1000</option>
-          <option value="1000-1500">$1000 - $1500</option>
-          <option value="1500+">$1500+</option>
-        </select>
-      </div>
+        {/* Price filter */}
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <label htmlFor="price" style={{ marginBottom: '0.5rem' }}>Price:</label>
+          <select
+            id="price"
+            name="price"
+            value={filters.price}
+            onChange={handleFilterChange}
+          >
+            <option value="">All Prices</option>
+            <option value="0-500">$0 - $500</option>
+            <option value="500-1000">$500 - $1000</option>
+            <option value="1000-1500">$1000 - $1500</option>
+            <option value="1500+">$1500+</option>
+          </select>
+        </div>
 
-      {/* Manufacturer filter */}
-      <div className="filter-item">
-        <label htmlFor="manufacturer">Manufacturer:</label>
-        <select
-          id="manufacturer"
-          name="manufacturer"
-          value={filters.manufacturer}
-          onChange={handleFilterChange}
-        >
-          <option value="">All Manufacturers</option>
-          <option value="Dell">Dell</option>
-          <option value="Acer">Acer</option>
-          <option value="Lenovo">Lenovo</option>
-          <option value="Logitech">Logitech</option>
-          {/* Add more manufacturers as needed */}
-        </select>
-      </div>
+        {/* Manufacturer filter */}
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <label htmlFor="manufacturer" style={{ marginBottom: '0.5rem' }}>Manufacturer:</label>
+          <select
+            id="manufacturer"
+            name="manufacturer"
+            value={filters.manufacturer}
+            onChange={handleFilterChange}
+          >
+            <option value="">All Manufacturers</option>
+            <option value="Dell">Dell</option>
+            <option value="Acer">Acer</option>
+            <option value="Lenovo">Lenovo</option>
+            <option value="Logitech">Logitech</option>
+          </select>
+        </div>
 
-      {/* Title filter */}
-      <div className="filter-item">
-        <label htmlFor="title">Title:</label>
-        <input
-          type="text"
-          id="title"
-          name="title"
-          value={filters.title}
-          onChange={handleFilterChange}
-          placeholder="Search by title"
-        />
+        {/* Title filter */}
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <label htmlFor="title" style={{ marginBottom: '0.5rem' }}>Title:</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            value={filters.title}
+            onChange={handleFilterChange}
+            placeholder="Search by title"
+          />
+        </div>
       </div>
     </div>
   );

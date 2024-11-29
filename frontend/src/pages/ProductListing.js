@@ -4,6 +4,7 @@ import homepage_image from '../assets/images/homepage.jpg';
 import { useSelector } from 'react-redux';
 import Pagination from "../components/Pagination"; // Import the Pagination component
 import Filters from "../components/Filters"; // Import the Filters component
+import { Navbar } from 'react-bootstrap';
 
 const ProductList = () => {
   const baseUrl = process.env.REACT_APP_API_URL; // API Base URL from .env file
@@ -74,7 +75,15 @@ const ProductList = () => {
   return (
     <Container>
       {/* Filters Component */}
-      <Filters onFilterChange={handleFilterChange} />
+      <Navbar bg="light" expand="lg">
+      <Container>
+        <Navbar.Brand href="#">Product Filters</Navbar.Brand>
+        <Navbar.Toggle aria-controls="navbar-filters" />
+        <Navbar.Collapse id="navbar-filters">
+          <Filters onFilterChange={handleFilterChange} />
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
 
       {loading && <div>Loading...</div>} {/* Show loading text */}
       <Row xs={1} sm={2} md={3} lg={4} className="g-4">
@@ -88,7 +97,11 @@ const ProductList = () => {
               <Card.Body>
                 <Card.Title>{product.title}</Card.Title>
                 <Card.Text>{product.specification?.cpu_model}</Card.Text>
-                <Button variant="primary">Add to Cart</Button>
+                <div className="d-flex justify-content-between">
+                <Button variant="primary" className="me-2">View Details</Button>
+                <Button variant="warning" className="me-2">Add Product</Button>
+                <Button variant="danger">Remove Product</Button>
+                </div>
               </Card.Body>
             </Card>
           </Col>
