@@ -5,6 +5,7 @@ const validateInput = require('../utils/validate_user_input');
 // Signup API
 exports.signup = async (req, res) => {
     try {
+        console.log("Inside backend code");
         const errors = validateInput(req.body);
         if (errors.length > 0) {
             return res.status(400).json({ errors });
