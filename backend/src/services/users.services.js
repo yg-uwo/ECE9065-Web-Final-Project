@@ -2,7 +2,7 @@ const User = require('../models/user.model');
 
 class UserService {
   async getUserById(id) {
-    return User.findById(id);
+    return User.findById(id).select('-password');  //// for security reason i haave excluded
   }
 
   async updateUserById(id, updateData) {

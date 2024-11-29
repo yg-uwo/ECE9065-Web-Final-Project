@@ -1,7 +1,7 @@
 const { signupService } = require('../services/auth.services');
 const UserService = require('../services/users.services');
 const validateInput = require('../utils/validate_user_input');
-const { SUCCESS_MESSAGES } = require('../utils/constants');
+const { SUCCESS_MESSAGES,ERROR_MESSAGES } = require('../utils/constants');
 
 //Login to 
 exports.addUser = async (req, res) => {
@@ -24,12 +24,6 @@ exports.updateUser = async (req, res) => {
     try {
       const { id } = req.params; 
       const { first_name, last_name, email, password, phoneNumber, role } = req.body;
-  
-      // role must be updated by admin only
-      const existingUser = await UserService.getUserById(id);
-      if (existingUser && existingUser.role === 'general' && role) {
-        return res.status(400).json({ message: ERROR_MESSAGES.UNAUTHORIZED_ROLE_UPDATE });
-      }
       const updatedData = { first_name, last_name, email, password, phoneNumber, role };
   
       //check if there is undefine value in request body
@@ -89,3 +83,22 @@ exports.listUsers = async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   };
+
+//get user with id
+exports.getUser = async(req,res) => {
+  try {
+    const { id } = req.params; 
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(400).json({ message: 'Invalid user ID format' });
+    }
+    const user = await UserService.getUserById(id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+}

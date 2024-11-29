@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import AddUserForm from "./AddUserForm";
+import { useSelector } from "react-redux";
+
 
 const UserFilter = ({ onFilterChange, onAddUser }) => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [showModal, setShowModal] = useState(false);
+
+  const token = useSelector((state) => state.auth.token);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -53,7 +57,11 @@ const UserFilter = ({ onFilterChange, onAddUser }) => {
           <Modal.Title>Add New User</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <AddUserForm onSubmit={handleAddUser}/>
+          <AddUserForm
+            onAddUser={handleAddUser}
+            onClose={() => setShowModal(false)}
+            token={token} 
+          />
         </Modal.Body>
       </Modal>
     </>

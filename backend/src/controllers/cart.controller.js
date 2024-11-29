@@ -26,9 +26,9 @@ class CartController {
     }
 
     async updateCart(req, res) {
-        const { userId, items } = req.body;
-        if (!userId || !items || !Array.isArray(items)) {
-            return res.status(400).json({message: 'Invalid data. Check the inputs(userId, item array)'});
+        const { userId, items, product } = req.body;
+        if (!userId || !items || !product) {
+            return res.status(400).json({message: 'Invalid data. Check the inputs(userId, item, product...)'});
         }
         try {
             const newCart = await CartService.updateCart({ userId, items });

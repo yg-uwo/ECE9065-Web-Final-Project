@@ -4,7 +4,7 @@ class ProductModel {
   constructor() {
     const schema = new mongoose.Schema(
       {
-        productId: { type: Number, required: true, unique: true },
+        productId: { type: String, required: true, unique: true },
         title: { type: String, required: true },
         screen: { type: String },
         images: { type: [String], default: [] },
@@ -19,6 +19,15 @@ class ProductModel {
         manufacturer: { type: String },
         popularity: { type: Number, default: 0 },
         quantity: { type: Number, default: 0 },
+        reviews: [{  
+          title: { type: String },   
+          rating: { type: Number },      
+          text: { type: String },  
+          positive_feedback:{type:Number},
+          negative_feedback:{type:Number},
+          review_submission_time: { type: String },
+          user_nickname:{type:String}   
+        }],
       },
       { 
         collection: 'productInfo',
