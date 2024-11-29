@@ -8,6 +8,7 @@ import PrivateRoute from './components/PrivateRoute';
 import UserList from './pages/UserList';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ProductList from './pages/ProductListing';
 
 const App = () => {
   return (
@@ -21,7 +22,7 @@ const App = () => {
             path="/products"
             element={
               <PrivateRoute>
-                <div>Product Listing Page</div>
+                <ProductList />
               </PrivateRoute>
             }
           />
