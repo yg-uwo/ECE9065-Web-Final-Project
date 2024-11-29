@@ -14,12 +14,17 @@ class OrderController {
             if (paymentSuccess) {
                 for (const item of cart.items) {
                     await ProductModel.updateProductStock(item.productId, -item.quantity);
+                    if (!updatedStock) {
+                        return res.status(500).json({ message: 'Error updating product stock' });
+                    }
                 }
                 // Creating the order
                 const order = await OrderModel.createOrder({
                     userId,
                     items: cart.items,
                     status: 'Confirmed',
+                    totalAmount: this.calculateTotalAmount(cart.items),
+                    paymentStatus: paymentSuccess ? 'Success' : 'Failed',
                 })
 
                 await CartService.deleteCart(cart._id);
@@ -31,6 +36,9 @@ class OrderController {
         } catch(error) {
             res.status(500).json({ message: 'Error during checkout', error });
         }
+    }
+    calculateTotalAmount(items) {
+        return items.reduce((total, item) => total + (item.productId.price * item.quantity), 0);
     }
 }
 
