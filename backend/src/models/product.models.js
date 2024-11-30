@@ -54,5 +54,5 @@ class ProductModel {
   }
 }
 
-module.exports = new ProductModel();
+module.exports = new ProductModel().getModel();
 
