@@ -35,7 +35,7 @@ app.put('/api/product/update_product/:id', authMiddleware, adminMiddleware, Prod
 app.delete('/api/product/delete_product/:id', authMiddleware, adminMiddleware, ProductController.deleteProduct);
 app.post('/api/product/listing',ProductController.listProducts);
 app.put('/api/product/add_reviews/:productId', ProductController.fillReviews); 
-
+app.get('/api/product/:productId', ProductController.getProduct); 
 app.get('/api/cart/:userId', CartController.getCart.bind(CartController));
 app.post('/api/checkout', (req, res) => OrderController.checkout(req, res));
 app.post('/api/cart', CartController.createCart.bind(CartController));

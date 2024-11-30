@@ -5,8 +5,10 @@ import { useSelector } from 'react-redux';
 import Pagination from "../components/Pagination"; // Import the Pagination component
 import Filters from "../components/Filters"; // Import the Filters component
 import { Navbar } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const ProductList = () => {
+  const navigate = useNavigate();
   const baseUrl = process.env.REACT_APP_API_URL; // API Base URL from .env file
   const [products, setProducts] = useState([]); // State to store products
   const [currentPage, setCurrentPage] = useState(1); // Current page for pagination
@@ -98,7 +100,7 @@ const ProductList = () => {
                 <Card.Title>{product.title}</Card.Title>
                 <Card.Text>{product.specification?.cpu_model}</Card.Text>
                 <div className="d-flex justify-content-between">
-                <Button variant="primary" className="me-2">View Details</Button>
+                <Button variant="primary" className="me-2"  onClick={() => navigate(`/product/details/${product._id}`)}>View Details</Button>
                 <Button variant="warning" className="me-2">Add Product</Button>
                 <Button variant="danger">Remove Product</Button>
                 </div>
