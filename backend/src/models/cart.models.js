@@ -17,8 +17,9 @@ class CartModel {
 
     async findCartByUser(userId) {
         try {
-            const cart = await this.model.findOne({ userId });
-            if (!cart) {
+            const cart = await this.model.findOne({ _id: userId});
+            console.log("Cart info:", cart);
+            if (!cart || cart === null) { 
                 throw new Error(`Cart for userId ${userId} not found`);
             }
             return cart;

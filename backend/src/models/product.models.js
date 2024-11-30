@@ -46,8 +46,8 @@ class ProductModel {
     console.log("ProductID:", productId);
     const result = "";
     try {
-      result = this.model.findByIdAndUpdate({ _id: productId }, { $inc: { quantity } });
-    } catch (err) {
+      result = this.model.findByIdAndUpdate({_id: productId}, { $inc: { quantity } });
+    } catch(err) {
       console.log("Error in payments", err);
     }
     return result;
