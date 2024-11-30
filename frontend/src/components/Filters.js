@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Modal, Button, Form } from "react-bootstrap";
+import AddProductForm from "./AddProductForm";
+import { toast } from "react-toastify";
 
 const Filters = ({ onFilterChange }) => {
+  const { isAuthenticated, role, token } = useSelector((state) => state.auth);
+  const [showModal, setShowModal] = useState(false);
   // Define the state for each filter
   const [filters, setFilters] = useState({
     category: '',
@@ -21,9 +27,33 @@ const Filters = ({ onFilterChange }) => {
     onFilterChange({ ...filters, [name]: value });
   };
 
+  const handleAddProduct = async (productData) => {
+    // Send productData to the server (via API)
+    console.log(productData);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/product/add_product`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(productData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to add user.");
+    }
+
+    const newProduct = await response.json();
+    console.log(newProduct);
+    toast.success("Product added successfully!");
+    // onAddUser(newProduct);
+    // onClose();
+    
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      
+
       <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
         {/* Category filter */}
         <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -87,6 +117,25 @@ const Filters = ({ onFilterChange }) => {
             placeholder="Search by title"
           />
         </div>
+        {isAuthenticated && role === 'admin' && (
+          <>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <Button onClick={() => setShowModal(true)}>Add Product</Button>
+            </div>
+            <Modal show={showModal} onHide={() => setShowModal(false)}>
+              <Modal.Header closeButton>
+                <Modal.Title>Add New Product</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <AddProductForm
+                  onAddProduct={handleAddProduct}
+                  onClose={() => setShowModal(false)}
+                  token={token}
+                />
+              </Modal.Body>
+            </Modal>
+          </>
+        )}
       </div>
     </div>
   );
