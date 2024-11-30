@@ -6,7 +6,6 @@ const PaymentService = require('../services/payment.service');
 class OrderController {
     async checkout(req, res) {
         let { userId } = req.body;
-        userId = '674a237650bd21327aece0ee';
         const paymentSuccess = PaymentService.simulatePayment();
         try {
             const cart = await CartService.getCart(userId);
