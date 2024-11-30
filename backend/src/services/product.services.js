@@ -67,7 +67,7 @@ class ProductService {
   }
 
   async getProductById(productId) {
-    const product = await Product.findOne({ productId });
+    const product = await Product.findOne({ _id:productId });
     if (!product) {
       throw new Error(ERROR_MESSAGES.PRODUCT_NOT_FOUND);
     }
