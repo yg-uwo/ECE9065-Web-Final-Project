@@ -1,6 +1,7 @@
 class PaymentService {
     simulatePayment() {
-        return Math.random() > 0.5;
+        return true;
+        // return Math.random() > 0.5;
     }
 }
 
