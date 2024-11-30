@@ -31,7 +31,7 @@ class CartController {
             return res.status(400).json({message: 'Invalid data. Check the inputs(userId, item, product...)'});
         }
         try {
-            const newCart = await CartService.updateCart({ userId, items });
+            const newCart = await CartService.updateCart({ userId, items, product });
             res.status(201).json(newCart);
         } catch (error) {
             res.status(500).json({ message: 'Error creating cart', error});

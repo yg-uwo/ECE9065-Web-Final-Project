@@ -11,6 +11,7 @@ import OrderConfirmation from './components/OrderComfirmation';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProductList from './pages/ProductListing';
+import ProductDetails from './pages/ProductDetails';
 
 const App = () => {
   return (
@@ -36,6 +37,16 @@ const App = () => {
               </PrivateRoute>
             }
           />
+
+          
+          <Route
+            path="/product/details/:productId"
+            element={
+              <PrivateRoute>
+                <ProductDetails />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/cart"
             element={
@@ -52,6 +63,7 @@ const App = () => {
               </PrivateRoute>
             }
           />
+
         </Routes>
       </Router>
     </Provider>

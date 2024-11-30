@@ -4,20 +4,27 @@ import homepage_image from '../assets/images/homepage.jpg';
 import { useSelector } from 'react-redux';
 import Pagination from "../components/Pagination"; // Import the Pagination component
 import Filters from "../components/Filters"; // Import the Filters component
+import { Navbar } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const ProductList = () => {
+  const navigate = useNavigate();
   const baseUrl = process.env.REACT_APP_API_URL; // API Base URL from .env file
   const [products, setProducts] = useState([]); // State to store products
   const [currentPage, setCurrentPage] = useState(1); // Current page for pagination
   const [totalPages, setTotalPages] = useState(1); // Total pages based on total items
   const [loading, setLoading] = useState(false); // Loading state
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedProductId, setselectedProductId] = useState(null);
   const [filters, setFilters] = useState({
     category: '',
     price: '',
     manufacturer: '',
     title: '',
   }); // Filter state
-  const token = useSelector((state) => state.auth.token);
+
+  const { isAuthenticated, role, token } = useSelector((state) => state.auth);
+  // const token = useSelector((state) => state.auth.token);
 
   // Fetch products when the component mounts or when the page or filters change
   useEffect(() => {
@@ -74,7 +81,15 @@ const ProductList = () => {
   return (
     <Container>
       {/* Filters Component */}
-      <Filters onFilterChange={handleFilterChange} />
+      <Navbar bg="light" expand="lg">
+        <Container>
+          <Navbar.Brand href="#">Product Filters</Navbar.Brand>
+          <Navbar.Toggle aria-controls="navbar-filters" />
+          <Navbar.Collapse id="navbar-filters">
+            <Filters onFilterChange={handleFilterChange} />
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
 
       {loading && <div>Loading...</div>} {/* Show loading text */}
       <Row xs={1} sm={2} md={3} lg={4} className="g-4">
@@ -88,7 +103,15 @@ const ProductList = () => {
               <Card.Body>
                 <Card.Title>{product.title}</Card.Title>
                 <Card.Text>{product.specification?.cpu_model}</Card.Text>
-                <Button variant="primary">Add to Cart</Button>
+                <div className="d-flex justify-content-between">
+                  <Button variant="primary" className="me-2"  onClick={() => navigate(`/product/details/${product._id}`)}>View Details</Button>
+                  {isAuthenticated && role === 'admin' && (
+                    <>
+                      <Button variant="warning" className="me-2">Add Product</Button>
+                      <Button variant="danger">Remove Product</Button>
+                    </>
+                  )}
+                </div>
               </Card.Body>
             </Card>
           </Col>

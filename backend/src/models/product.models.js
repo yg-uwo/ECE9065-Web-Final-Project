@@ -14,24 +14,24 @@ class ProductModel {
           battery_life: { type: String },
           cpu_model: { type: String },
         },
-        price: { type: Number, required: true },
         category: { type: String, required: true },
+        price: { type: Number, required: true },
         manufacturer: { type: String },
         popularity: { type: Number, default: 0 },
         quantity: { type: Number, default: 0 },
-        reviews: [{  
-          title: { type: String },   
-          rating: { type: Number },      
-          text: { type: String },  
-          positive_feedback:{type:Number},
-          negative_feedback:{type:Number},
+        reviews: [{
+          title: { type: String },
+          rating: { type: Number },
+          text: { type: String },
+          positive_feedback: { type: Number },
+          negative_feedback: { type: Number },
           review_submission_time: { type: String },
-          user_nickname:{type:String}   
+          user_nickname: { type: String }
         }],
       },
-      { 
+      {
         collection: 'productInfo',
-        timestamps: true 
+        timestamps: true
       }
     );
 
@@ -54,5 +54,4 @@ class ProductModel {
   }
 }
 
-module.exports = new ProductModel().getModel();
-
+module.exports = new ProductModel();
