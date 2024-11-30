@@ -43,9 +43,16 @@ class ProductModel {
   }
 
   async updateProductStock(productId, quantity) {
-    return this.model.findByIdAndUpdate(productId, { $inc: { quantity } });
+    console.log("ProductID:", productId);
+    const result = "";
+    try {
+      result = this.model.findByIdAndUpdate({_id: productId}, { $inc: { quantity } });
+    } catch(err) {
+      console.log("Error in payments", err);
+    }
+    return result;
   }
 }
 
-module.exports = new ProductModel().getModel();
+module.exports = new ProductModel();
 

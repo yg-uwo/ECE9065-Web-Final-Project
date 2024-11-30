@@ -5,7 +5,8 @@ const PaymentService = require('../services/payment.service');
 
 class OrderController {
     async checkout(req, res) {
-        const { userId } = req.body;
+        let { userId } = req.body;
+        userId = '674a237650bd21327aece0ee';
         const paymentSuccess = PaymentService.simulatePayment();
         try {
             const cart = await CartService.getCart(userId);
@@ -13,9 +14,14 @@ class OrderController {
 
             if (paymentSuccess) {
                 for (const item of cart.items) {
-                    await ProductModel.updateProductStock(item.productId, -item.quantity);
-                    if (!updatedStock) {
-                        return res.status(500).json({ message: 'Error updating product stock' });
+                    console.log("Inside payments");
+                    try {
+                        await ProductModel.updateProductStock(item.productId, -item.quantity);
+                        if (!updatedStock) {
+                            return res.status(500).json({ message: 'Error updating product stock' });
+                        }
+                    } catch (err) {
+                        console.log("Error is:", err);
                     }
                 }
                 // Creating the order
