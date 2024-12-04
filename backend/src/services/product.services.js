@@ -1,6 +1,7 @@
 const ProductModel = require('../models/product.models');
 const Product = ProductModel.getModel();
 const { ERROR_MESSAGES } = require('../utils/constants');
+const { getJson } = require("serpapi");
 
 class ProductService {
   static specificationMapping = {
@@ -56,18 +57,30 @@ class ProductService {
       throw new Error(ERROR_MESSAGES.MISSING_REQUIRED_FIELDS);
     }
 
-    // console.log("Available categories:", Object.keys(ProductService.specificationMapping));
+    const productDetails = await getJson({
+      api_key: process.env.SERP_API_KEY,
+      engine: 'walmart_product',
+      product_id: data.productId,
+    });
+
+    
+
+    let images = productDetails?.product_result?.images
+
+    
     const requiredSpecs = ProductService.specificationMapping[data.category];
     if (!requiredSpecs) {
       throw new Error(`Unsupported category: ${data.category}`);
     }
 
+    data.images = images
+   
     const product = new Product(data);
     return product.save();
   }
 
   async getProductById(productId) {
-    const product = await Product.findOne({ _id:productId });
+    const product = await Product.findOne({ _id: productId });
     if (!product) {
       throw new Error(ERROR_MESSAGES.PRODUCT_NOT_FOUND);
     }
@@ -75,7 +88,7 @@ class ProductService {
   }
 
   async updateProduct(productId, updates) {
-    const product = await Product.findOneAndUpdate({ _id:productId }, updates, { new: true });
+    const product = await Product.findOneAndUpdate({ _id: productId }, updates, { new: true });
     if (!product) {
       throw new Error(ERROR_MESSAGES.PRODUCT_NOT_FOUND);
     }
@@ -83,9 +96,9 @@ class ProductService {
   }
 
   async deleteProduct(productId) {
-    
-    const product = await Product.findByIdAndDelete({ _id:productId });
-   
+
+    const product = await Product.findByIdAndDelete({ _id: productId });
+
     if (!product) {
       throw new Error(ERROR_MESSAGES.PRODUCT_NOT_FOUND);
     }
