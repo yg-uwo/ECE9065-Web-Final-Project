@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Row, Col, Image, Button, ListGroup, Carousel } from 'react-bootstrap';
+import { Container, Row, Col, Image, Button, ListGroup, Carousel, Card, Dropdown } from 'react-bootstrap';
 import homepage_image from '../assets/images/homepage.jpg';
 
-const ProductDetails = () => {
+const ProductReviewsPage = () => {
   const { productId } = useParams(); // Get the product ID from the URL
   const baseUrl = process.env.REACT_APP_API_URL; // API Base URL from .env file
   const [product, setProduct] = useState(null); // State to store product details
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
   const [userId, setUserId] = useState(''); // Assuming you have a user ID
+  const [sortOption, setSortOption] = useState('newest'); // Default sorting option
 
   useEffect(() => {
     if (!productId) {
@@ -31,7 +32,6 @@ const ProductDetails = () => {
         }
 
         const data = await response.json();
-        //console.log('Fetched Product:', data); 
         setProduct(data.product); // Update product details
       } catch (err) {
         setError('Failed to fetch product details.');
@@ -51,9 +51,16 @@ const ProductDetails = () => {
     }
 
     const cartItem = {
-      userId: userId, 
-      items: 1, // Adding one item to the cart
-      product: productId, // Add the productId to the cart
+      userId: userId,
+      items: [
+        {
+          productId: productId,  
+          quantity: 1,            
+          imageUrl: product.images && product.images.length > 0 ? product.images[0] : '', 
+          productName: product.title,  
+          price: product.price || 0,
+        },
+      ],
     };
 
     try {
@@ -74,6 +81,18 @@ const ProductDetails = () => {
     } catch (err) {
       setError('Failed to update cart.');
       console.error('Error adding to cart:', err);
+    }
+  };
+
+  const sortReviews = (reviews) => {
+    if (sortOption === 'high-to-low') {
+      return [...reviews].sort((a, b) => b.rating - a.rating);
+    } else if (sortOption === 'low-to-high') {
+      return [...reviews].sort((a, b) => a.rating - b.rating);
+    } else {
+      return [...reviews].sort(
+        (a, b) => new Date(b.review_submission_time) - new Date(a.review_submission_time)
+      );
     }
   };
 
@@ -107,30 +126,86 @@ const ProductDetails = () => {
         </Col>
 
         <Col md={6}>
-          <h2>{product?.title || 'No title available'}</h2>
+          {/* Reviews Section */}
+          {product.reviews && product.reviews.length > 0 && (
+            <>
+              <h4 className="mt-3">Customer Reviews</h4>
+              <Dropdown className="mb-3">
+                <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                  Sort by: {sortOption.replace(/-/g, ' ')}
+                </Dropdown.Toggle>
 
-          {/* Specifications Section */}
-          {product.specification && Object.keys(product.specification).length > 0 && (
-            <ListGroup variant="flush" className="mt-3">
-              <h4>Specifications</h4>
-              {Object.entries(product.specification).map(([key, value], index) => (
-                <ListGroup.Item key={index}>
-                  <strong>{key}:</strong> {value}
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => setSortOption('newest')}>Newest First</Dropdown.Item>
+                  <Dropdown.Item onClick={() => setSortOption('high-to-low')}>Rating: High to Low</Dropdown.Item>
+                  <Dropdown.Item onClick={() => setSortOption('low-to-high')}>Rating: Low to High</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+
+              <div
+                style={{
+                  maxHeight: '400px', // Increased height for scrollable reviews
+                  overflowY: 'scroll',
+                  border: '1px solid #ddd',
+                  padding: '10px',
+                }}
+              >
+                {sortReviews(product.reviews).map((review, index) => (
+                  <Card key={index} className="mb-3">
+                    <Card.Body>
+                      <Card.Title>{review.title}</Card.Title>
+                      <Card.Text>
+                        <strong>Review By:</strong> {review.user_nickname}
+                      </Card.Text>
+                      <Card.Text>
+                        <strong>Date:</strong> {new Date(review.review_submission_time).toLocaleDateString()}
+                      </Card.Text>
+                      <Card.Text>
+                        <strong>Comments:</strong> {review.text}
+                      </Card.Text>
+                      <Card.Text>
+                        <strong>User Rating:</strong> {review.rating}
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                ))}
+              </div>
+            </>
           )}
+        </Col>
+      </Row>
 
-          {/* <p>{product?.description || 'No description available'}</p> */}
-          <ListGroup variant="flush">
-            <ListGroup.Item>
-              <strong>Price:</strong> ${product.price || 'N/A'}
-            </ListGroup.Item>
-            <ListGroup.Item>
-              <strong>Manufacturer:</strong> {product.manufacturer || 'N/A'}
-            </ListGroup.Item>
-          </ListGroup>
-          <Button variant="primary" className="mt-3" onClick={handleAddToCart}>
+      <h2>{product?.title || 'No title available'}</h2>   
+      <h4 className="mt-3">{product?.price ? `$${product.price}` : 'Price not available'}</h4>
+      {/* Specifications Section */}
+      {product.specification && Object.keys(product.specification).length > 0 && (
+        <Row className="mt-5">
+          <Col md={12}>
+            <h4>Specifications</h4>
+            <div
+              style={{
+                maxHeight: '300px', // Adjust the height as needed
+                overflowY: 'scroll', // Enable vertical scrolling
+                border: '1px solid #ddd', // Optional: adds a border around the specifications
+                padding: '10px', // Optional: add padding for better visual spacing
+              }}
+            >
+              <ListGroup variant="flush">
+                {Object.entries(product.specification).map(([key, value], index) => (
+                  <ListGroup.Item key={index}>
+                    <strong>{key}:</strong> {value}
+                  </ListGroup.Item>
+                ))}
+              </ListGroup>
+            </div>
+          </Col>
+        </Row>
+      )}
+
+      {/* Center the Add to Cart button */}
+      <Row className="mt-4 d-flex justify-content-center">
+        <Col xs="auto">
+          <Button variant="primary" onClick={handleAddToCart}>
             Add to Cart
           </Button>
         </Col>
@@ -139,4 +214,4 @@ const ProductDetails = () => {
   );
 };
 
-export default ProductDetails;
+export default ProductReviewsPage;
