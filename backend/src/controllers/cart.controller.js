@@ -15,10 +15,11 @@ class CartController {
     }
 
     async getCart(req, res) {
-        const { userId } = req.params;
+        let { userId } = req.params;
+        userId = '67493879bdf27d1461f4fe7e';
         try {
             const cart = await CartService.getCart(userId);
-            if (!cart) return res.status(404).json({ message: 'Cart not found' });
+            if (!cart || cart === null) return res.status(404).json({ message: 'Cart not found' });
             res.json(cart);
         } catch (error) {
             res.status(500).json({message: 'Error fetching cart', error});

@@ -9,22 +9,22 @@ class CartModel {
                     _id: false,
                     productId: {type: String, required: true},
                     quantity: {type: Number, required: true},
+                    productName: {type: String, required: true }
                 }
             ],
         });
         this.model = mongoose.model('carts', schema);
     }
 
-    async findCartByUser(userId) {
+    async findCartByUser(id) {
         try {
-            const cart = await this.model.findOne({ _id: userId});
-            console.log("Cart info:", cart);
-            if (!cart || cart === null) { 
+            const cartInfo = await this.model.findOne({ userId: id});
+            if (!cartInfo || cartInfo === null) { 
                 throw new Error(`Cart for userId ${userId} not found`);
             }
-            return cart;
+            return cartInfo;
         } catch (error) {
-            throw new Error(`Error in finding the cart`);
+            throw new Error(`Error in finding the cart`, error);
         }
     }
 
@@ -41,7 +41,7 @@ class CartModel {
             const savedCart = await cart.save();
             return savedCart.save();
         } catch (error) {
-            throw new Error('Error in creating cart');
+            throw new Error('Error in creating cart', error);
         }
     }
 
