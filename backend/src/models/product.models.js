@@ -40,15 +40,18 @@ class ProductModel {
     return this.model;
   }
 
-  async updateProductStock(productId, quantity) {
-    console.log("ProductID:", productId);
-    const result = "";
+  async updateProductStock(id, quantity) {
     try {
-      result = this.model.findByIdAndUpdate({_id: productId}, { $inc: { quantity } });
-    } catch(err) {
-      console.log("Error in payments", err);
+        const result = await this.model.findOneAndUpdate(
+            { productId: id },
+            { $inc: { quantity } },
+            { new: true }
+        );
+        return result;
+    } catch (err) {
+        console.log("Error in payments", err);
+        throw err; // Throw the error to be handled by the caller
     }
-    return result;
   }
 }
 

@@ -39,7 +39,6 @@ const App = () => {
             }
           />
 
-          
           <Route
             path="/product/details/:productId"
             element={
@@ -65,7 +64,6 @@ const App = () => {
             }
           />
            <Route path="/logout" element={<Logout />} />
-
         </Routes>
       </Router>
     </Provider>
@@ -83,11 +81,10 @@ const CartWithUser = () => {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userId: userId }), // Make sure userId is passed correctly
+        body: JSON.stringify({ userId: userId }), 
     });
-
       if (!response.ok) {
-        throw new Error("Checkout failed");
+        throw new Error("Request can't be fulfilled due to inventory issue.. :(");
       }
 
       const result = await response.json();

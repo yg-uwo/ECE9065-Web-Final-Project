@@ -1,24 +1,25 @@
 const CartService = require('../services/cart.service');
 const OrderModel = require('../models/order.models');
 const ProductModel = require('../models/product.models');
-const PaymentService = require('../services/payment.service');
 
 class OrderController {
     async checkout(req, res) {
-        let { userId } = req.body;
-        // userId = '674a237650bd21327aece0ee';
-        const paymentSuccess = PaymentService.simulatePayment();
+        const { userId } = req.body;
+        let paymentSuccess = false;
         try {
             const cart = await CartService.getCart(userId);
-            if (!cart) return res.status(404).json({message: 'Cart not found'});
-
+            if (!cart) { 
+                return res.status(404).json({message: 'Cart not found'})
+            } else {
+                paymentSuccess = true;
+            }
             if (paymentSuccess) {
                 for (const item of cart.items) {
-                    console.log("Inside payments");
                     try {
-                        await ProductModel.updateProductStock(item.productId, -item.quantity);
-                        if (!updatedStock) {
-                            return res.status(500).json({ message: 'Error updating product stock' });
+                        const updatedStock = await ProductModel.updateProductStock(item.productId, -item.quantity);
+                        const quantityIsLessThenThreshold = updatedStock.quantity < 0;
+                        if (!updatedStock || quantityIsLessThenThreshold) {
+                            throw Error(res.status(500).json({ message: 'Error updating product stock' }));
                         }
                     } catch (err) {
                         console.log("Error is:", err);
@@ -34,7 +35,7 @@ class OrderController {
                 })
                 await CartService.deleteCart(cart._id);
 
-                res.json({ message: 'Order confirmed', order });
+                res.json({ message: 'Order sent to inventory', order });
             } else {
                 res.json({ message: 'Payment failed. No updates made.' });
             }

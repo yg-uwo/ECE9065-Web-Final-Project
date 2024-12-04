@@ -2,7 +2,7 @@ const CartModel = require('../models/cart.models');
 
 class CartService {
     async getCart(userId) {
-        return await CartModel.findCartByUser(userId);
+        return CartModel.findCartByUser(userId);
     }
     async createCart(data) {
         return CartModel.createCart(data);
