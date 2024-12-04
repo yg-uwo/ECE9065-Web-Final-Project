@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Row, Col, Image, Button, ListGroup, Carousel, Card } from 'react-bootstrap';
+import { Container, Row, Col, Image, Button, ListGroup, Carousel, Card, DropdownButton, Dropdown } from 'react-bootstrap';
 import homepage_image from '../assets/images/homepage.jpg';
 
 const ProductDetails = () => {
@@ -10,6 +10,7 @@ const ProductDetails = () => {
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
   const [userId, setUserId] = useState(''); // Assuming you have a user ID
+  const [sortOption, setSortOption] = useState('Newest First'); // Default sort option
 
   useEffect(() => {
     if (!productId) {
@@ -76,6 +77,22 @@ const ProductDetails = () => {
     }
   };
 
+  // Function to handle sorting of reviews
+  const sortReviews = (reviews) => {
+    switch (sortOption) {
+      case 'High to Low Rating':
+        return reviews.sort((a, b) => b.rating - a.rating);
+      case 'Low to High Rating':
+        return reviews.sort((a, b) => a.rating - b.rating);
+      case 'Newest First':
+        return reviews.sort(
+          (a, b) => new Date(b.review_submission_time) - new Date(a.review_submission_time)
+        );
+      default:
+        return reviews;
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -120,7 +137,6 @@ const ProductDetails = () => {
             </ListGroup>
           )}
 
-          {/* <p>{product?.description || 'No description available'}</p> */}
           <ListGroup variant="flush">
             <ListGroup.Item>
               <strong>Price:</strong> ${product.price || 'N/A'}
@@ -140,15 +156,29 @@ const ProductDetails = () => {
         <Row className="mt-5">
           <Col md={12}>
             <h3>Customer Reviews</h3>
+
+            {/* Review Sorting Options */}
+            <DropdownButton
+              id="review-sort-dropdown"
+              title={`Sort by: ${sortOption}`}
+              className="mb-3"
+              onSelect={(selectedOption) => setSortOption(selectedOption)}
+            >
+              <Dropdown.Item eventKey="Newest First">Newest First</Dropdown.Item>
+              <Dropdown.Item eventKey="High to Low Rating">High to Low Rating</Dropdown.Item>
+              <Dropdown.Item eventKey="Low to High Rating">Low to High Rating</Dropdown.Item>
+            </DropdownButton>
+
             <div
               style={{
-                maxHeight: '300px', 
-                overflowY: 'scroll', 
-                border: '1px solid #ddd', 
+                maxHeight: '300px',
+                overflowY: 'scroll',
+                border: '1px solid #ddd',
                 padding: '10px',
               }}
             >
-              {product.reviews.map((review, index) => (
+              {/* Display sorted reviews */}
+              {sortReviews(product.reviews).map((review, index) => (
                 <Card key={index} className="mb-3">
                   <Card.Body>
                     <Card.Title>{review.title}</Card.Title>
