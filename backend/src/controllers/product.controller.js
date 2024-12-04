@@ -86,56 +86,65 @@ class ProductController {
     }
   }
 
-  async fillReviews(req, res) {
-    const { productId } = req.params; 
-  
+  async fillReviews(req,res) {
     try {
-      // Fetch reviews from SerpAPI
-      const productDetails = await getJson({
-        api_key: process.env.SERP_API_KEY,
-        engine: 'walmart_product_reviews',
-        product_id: productId,
-      });
   
-      // console.log(productDetails);
-      if (!productDetails.reviews || productDetails?.reviews.length === 0) {
-        return res.status(404).json({ message: 'No reviews found for this product' });
+      const productsWithoutReviews = await Product.find({ reviews: { $eq: null } });
+      if (productsWithoutReviews.length === 0) {
+        return res.status(404).json({ message: 'No products without reviews found.' });
       }
   
-      // Process and map reviews to match your model
-      const processedReviews = productDetails.reviews.map((review) => {
-        return {
-          user_nickname: review.user_nickname,
-          title:review.title,
-          text:review.text,
-          positive_feedback:review.positive_feedback,
-          negative_feedback:review.negative_feedback,
-          rating: review.rating || 0,
-          comment: review.text || 'No comment',
-          review_submission_time: review.review_submission_time,
-        };
-      });
+      const updatedProducts = [];
   
-      const product = await Product.findOne({ productId:productId });
-      if (!product) {
-        return res.status(404).json({ message: 'Product not found' });
-      }
+      for (const product of productsWithoutReviews) {
+        try {
+         
+          const productDetails = await getJson({
+            api_key: process.env.SERP_API_KEY,
+            engine: 'walmart_product_reviews',
+            product_id: product.productId,
+          });
+  
+          if (productDetails.reviews && productDetails.reviews.length > 0) {
+            const processedReviews = productDetails.reviews.map((review) => ({
+              user_nickname: review.user_nickname,
+              title: review.title,
+              text: review.text,
+              positive_feedback: review.positive_feedback,
+              negative_feedback: review.negative_feedback,
+              rating: review.rating || 0,
+              comment: review.text || 'No comment',
+              review_submission_time: review.review_submission_time,
+            }));
 
-      product.reviews = [...product.reviews, ...processedReviews];
-      await product.save();
+            product.reviews = processedReviews;
+            await product.save();
+            updatedProducts.push(product);
+          }
+        } catch (innerError) {
+          console.error(`Error fetching reviews for product ID: ${product.productId}`, innerError);
+          continue;
+        }
+      }
+  
+      if (updatedProducts.length === 0) {
+        return res.status(404).json({ message: 'No reviews were added for any product.' });
+      }
+  
       res.status(200).json({
-        message: 'Product reviews successfully updated.',
-        product: product,
+        message: 'Reviews successfully updated for products without reviews.',
+        updatedProducts,
       });
   
     } catch (error) {
-      console.error('Error updating reviews:', error);
+      console.error('Error updating reviews for products:', error);
       res.status(500).json({
-        message: 'Error fetching and updating product reviews',
+        message: 'Error fetching and updating reviews for products',
         error: error.message,
       });
     }
   }
+  
 }
 
 
