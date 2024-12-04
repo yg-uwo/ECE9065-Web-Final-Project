@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Row, Col, Image, Button, ListGroup } from 'react-bootstrap';
+import { Container, Row, Col, Image, Button, ListGroup, Carousel } from 'react-bootstrap';
+import homepage_image from '../assets/images/homepage.jpg';
 
 const ProductDetails = () => {
   const { productId } = useParams(); // Get the product ID from the URL
   const baseUrl = process.env.REACT_APP_API_URL; // API Base URL from .env file
   const [product, setProduct] = useState(null); // State to store product details
-  const [loading, setLoading] = useState(false); // Loading state
+  const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
-  const [userId, setUserId] = useState(''); // Assuming you have a user ID (you may need to set this dynamically)
+  const [userId, setUserId] = useState(''); // Assuming you have a user ID
 
   useEffect(() => {
     if (!productId) {
@@ -30,7 +31,8 @@ const ProductDetails = () => {
         }
 
         const data = await response.json();
-        setProduct(data); // Update product details
+        //console.log('Fetched Product:', data); 
+        setProduct(data.product); // Update product details
       } catch (err) {
         setError('Failed to fetch product details.');
         console.error('Error fetching product details:', err);
@@ -40,7 +42,7 @@ const ProductDetails = () => {
     };
 
     fetchProductDetails();
-  }, [productId]); // Fetch details when the productId changes
+  }, [productId]);
 
   const handleAddToCart = async () => {
     if (!userId || !product) {
@@ -50,13 +52,13 @@ const ProductDetails = () => {
 
     const cartItem = {
       userId: userId, 
-      items: 1, // Assuming you are adding one item to the cart. You can change this if needed.
-      product: productId, // Add the productId to the cart.
+      items: 1, // Adding one item to the cart
+      product: productId, // Add the productId to the cart
     };
 
     try {
       const response = await fetch(`${baseUrl}/cart`, {
-        method: 'POST', // Assuming POST request for adding to cart
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -76,41 +78,51 @@ const ProductDetails = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>; // Show loading state
+    return <div>Loading...</div>;
   }
 
   if (error) {
-    return <div>{error}</div>; // Show error message
+    return <div>{error}</div>;
   }
 
   if (!product) {
-    return <div>No product found.</div>; // Handle missing product
+    return <div>No product found.</div>;
   }
 
   return (
     <Container>
       <Row className="mt-4">
-        {/* Images on the left */}
         <Col md={6}>
           {product.images && product.images.length > 0 ? (
-            <div>
+            <Carousel>
               {product.images.map((image, index) => (
-                <Image key={index} src={image} alt={product.title} fluid className="mb-2" />
+                <Carousel.Item key={index}>
+                  <Image src={image} alt={product.title} fluid />
+                </Carousel.Item>
               ))}
-            </div>
+            </Carousel>
           ) : (
-            <Image src="/path/to/placeholder-image.jpg" alt="No images available" fluid />
+            <Image src={homepage_image} alt="No images available" fluid />
           )}
         </Col>
 
-        {/* Details on the right */}
         <Col md={6}>
-          <h2>{product.title}</h2>
-          <p>{product.description}</p>
+          <h2>{product?.title || 'No title available'}</h2>
+
+          {/* Specifications Section */}
+          {product.specification && Object.keys(product.specification).length > 0 && (
+            <ListGroup variant="flush" className="mt-3">
+              <h4>Specifications</h4>
+              {Object.entries(product.specification).map(([key, value], index) => (
+                <ListGroup.Item key={index}>
+                  <strong>{key}:</strong> {value}
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          )}
+
+          {/* <p>{product?.description || 'No description available'}</p> */}
           <ListGroup variant="flush">
-            <ListGroup.Item>
-              <strong>CPU Model:</strong> {product.specification?.cpu_model || 'N/A'}
-            </ListGroup.Item>
             <ListGroup.Item>
               <strong>Price:</strong> ${product.price || 'N/A'}
             </ListGroup.Item>

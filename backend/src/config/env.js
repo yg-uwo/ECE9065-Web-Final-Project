@@ -2,6 +2,8 @@ const dotenv = require('dotenv');
 const envFile = process.env.NODE_ENV === 'production' ? '.env.prod' : '.env.dev';
 dotenv.config({ path: envFile });
 
+console.log(process.env.JWT_SECRET)
+
 module.exports = {
   port: process.env.PORT || 5000,
   mongoUri: process.env.MONGO_URI,
