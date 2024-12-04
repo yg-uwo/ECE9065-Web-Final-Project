@@ -137,7 +137,7 @@ class Cart extends Component {
                     {cart.items.map((item) => (
                         <div key={item.productId} className="cart-item">
                             <img
-                                src={item.imageURL || defaultImage}
+                                src={item.imageUrl || defaultImage}
                                 alt={item.productName}
                                 className="cart-item-image"
                             />

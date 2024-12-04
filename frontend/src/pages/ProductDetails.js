@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Row, Col, Image, Button, ListGroup, Carousel, Card, Dropdown } from 'react-bootstrap';
 import homepage_image from '../assets/images/homepage.jpg';
+import { useSelector } from 'react-redux';
+import { ToastContainer, toast } from "react-toastify";
 
 const ProductReviewsPage = () => {
   const { productId } = useParams(); // Get the product ID from the URL
@@ -9,8 +11,9 @@ const ProductReviewsPage = () => {
   const [product, setProduct] = useState(null); // State to store product details
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
-  const [userId, setUserId] = useState(''); // Assuming you have a user ID
+  // const [userId, setUserId] = useState(''); // Assuming you have a user ID
   const [sortOption, setSortOption] = useState('newest'); // Default sorting option
+  const userId = useSelector((state) => state.auth.userId);
 
   useEffect(() => {
     if (!productId) {
@@ -45,11 +48,14 @@ const ProductReviewsPage = () => {
   }, [productId]);
 
   const handleAddToCart = async () => {
+    console.log("User ID:", userId);  // Add this to see if userId is set correctly
+    console.log("Product:", product);
+
     if (!userId || !product) {
       setError('Invalid user or product details.');
       return;
     }
-
+  
     const cartItem = {
       userId: userId,
       items: [
@@ -61,29 +67,35 @@ const ProductReviewsPage = () => {
           price: product.price || 0,
         },
       ],
+      // product: {
+      //   productId: productId,  // Include the product in the request as required by your backend
+      // },
     };
 
+    console.log(cartItem)
+  
     try {
-      const response = await fetch(`${baseUrl}/cart`, {
+      const response = await fetch(`${baseUrl}/cart`, {  // Assuming '/cart/update' for the updateCart route
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(cartItem),
       });
-
+  
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-
+  
       const data = await response.json();
       console.log('Cart updated successfully:', data);
+      toast.success("Added to cart")
+      // Optionally, you could update the cart state or show a success message
     } catch (err) {
       setError('Failed to update cart.');
       console.error('Error adding to cart:', err);
     }
   };
-
   const sortReviews = (reviews) => {
     if (sortOption === 'high-to-low') {
       return [...reviews].sort((a, b) => b.rating - a.rating);
