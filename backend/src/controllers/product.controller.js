@@ -89,7 +89,7 @@ class ProductController {
   async fillReviews(req,res) {
     try {
   
-      const productsWithoutReviews = await Product.find({ reviews: { $eq: null } });
+      const productsWithoutReviews = await Product.find({ reviews: { $exists: true, $eq: [] } });
       if (productsWithoutReviews.length === 0) {
         return res.status(404).json({ message: 'No products without reviews found.' });
       }
