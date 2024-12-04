@@ -19,7 +19,8 @@ class Cart extends Component {
     async fetchCart() {
         const { userId } = this.props;
         try {
-            const cart = await ApiService.getCart(userId)
+            const cart = await ApiService.getCart(userId);
+            console.log(cart);
             this.setState({cart, loading: false});
         } catch (error) {
             this.setState({error: error.message, loading: false});
@@ -59,7 +60,7 @@ class Cart extends Component {
                 <ul>
                     {cart.items.map((item) => (
                         <li key={item.productId._id}>
-                            {item.productId.name} - Quantity: {item.quantity}
+                            ProductName: {item.productName} - Quantity: {item.quantity}
                         </li>
                     ))}
                 </ul>
