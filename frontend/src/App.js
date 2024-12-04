@@ -12,6 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProductList from './pages/ProductListing';
 import ProductDetails from './pages/ProductDetails';
+import Logout from './components/Logout';
 
 const App = () => {
   return (
@@ -62,6 +63,7 @@ const App = () => {
               </PrivateRoute>
             }
           />
+           <Route path="/logout" element={<Logout />} />
         </Routes>
       </Router>
     </Provider>

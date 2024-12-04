@@ -13,17 +13,15 @@ const NavbarComponent = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link href="/">Home</Nav.Link>
+
             {isAuthenticated && role === 'admin' && (
               <Nav.Link as={Link} to="/users">User List</Nav.Link>
             )}
              {isAuthenticated && (
               <Nav.Link as={Link} to="/cart">Order</Nav.Link>
             )}
-            {isAuthenticated ? (
+            {isAuthenticated && (
               <Nav.Link href="/logout">Logout</Nav.Link>
-            ) : (
-              <Nav.Link href="/login">Login</Nav.Link>
             )}
           </Nav>
         </Navbar.Collapse>

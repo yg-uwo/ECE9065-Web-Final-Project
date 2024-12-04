@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { Modal, Button, Form } from "react-bootstrap";
 import { validateUserForm } from "../utils/validation";
+import '../assets/css/user_modal_form.css'
 
 const UpdateUserModal = ({ userId, onClose, onUserUpdated, token }) => {
     const [formData, setFormData] = useState({
@@ -65,70 +66,83 @@ const UpdateUserModal = ({ userId, onClose, onUserUpdated, token }) => {
     };
 
     return (
-        <Modal show onHide={onClose}>
+        <Modal show onHide={onClose} centered>
             <Modal.Header closeButton>
                 <Modal.Title>Update User</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={handleSubmit}>
-                    <Form.Group>
-                        <Form.Label>First Name</Form.Label>
+                    <Form.Group className="mb-3">
+                        <Form.Label className="form_label">First Name</Form.Label>
                         <Form.Control
                             type="text"
                             name="first_name"
                             value={formData.first_name || ""}
                             onChange={handleChange}
                             required
+                            className="form-control"
                         />
                     </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Last Name</Form.Label>
+
+                    <Form.Group className="mb-3">
+                        <Form.Label className="form_label">Last Name</Form.Label>
                         <Form.Control
                             type="text"
                             name="last_name"
                             value={formData.last_name || ""}
                             onChange={handleChange}
                             required
+                            className="form-control"
                         />
                     </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Email</Form.Label>
+
+                    <Form.Group className="mb-3">
+                        <Form.Label className="form_label">Email</Form.Label>
                         <Form.Control
                             type="email"
                             name="email"
                             value={formData.email || ""}
                             onChange={handleChange}
                             required
+                            className="form-control"
                         />
                     </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Phone Number</Form.Label>
+
+                    <Form.Group className="mb-3">
+                        <Form.Label className="form_label">Phone Number</Form.Label>
                         <Form.Control
                             type="text"
                             name="phoneNumber"
                             value={formData.phoneNumber || ""}
                             onChange={handleChange}
                             required
+                            className="form-control"
                         />
                     </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Role</Form.Label>
+
+                    <Form.Group className="mb-3">
+                        <Form.Label className="form_label">Role</Form.Label>
                         <Form.Control
                             as="select"
                             name="role"
                             value={formData.role || ""}
                             onChange={handleChange}
+                            className="form-control"
                         >
                             <option value="admin">Admin</option>
                             <option value="general">General</option>
                         </Form.Control>
                     </Form.Group>
-                    <Button variant="primary" type="submit">
-                        Save Changes
-                    </Button>
+
+                    <div className="d-flex justify-content-center mt-4">
+                        <Button variant="primary" type="submit">
+                            Save
+                        </Button>
+                    </div>
                 </Form>
             </Modal.Body>
         </Modal>
+
     );
 };
 

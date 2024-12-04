@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Row, Col, Image, Button, ListGroup } from 'react-bootstrap';
+import { Container, Row, Col, Image, Button, ListGroup, Carousel, Card, Dropdown } from 'react-bootstrap';
+import homepage_image from '../assets/images/homepage.jpg';
 
-const ProductDetails = () => {
+const ProductReviewsPage = () => {
   const { productId } = useParams(); // Get the product ID from the URL
   const baseUrl = process.env.REACT_APP_API_URL; // API Base URL from .env file
   const [product, setProduct] = useState(null); // State to store product details
-  const [loading, setLoading] = useState(false); // Loading state
+  const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
-  const [userId, setUserId] = useState(''); // Assuming you have a user ID (you may need to set this dynamically)
+  const [userId, setUserId] = useState(''); // Assuming you have a user ID
+  const [sortOption, setSortOption] = useState('newest'); // Default sorting option
 
   useEffect(() => {
     if (!productId) {
@@ -30,7 +32,7 @@ const ProductDetails = () => {
         }
 
         const data = await response.json();
-        setProduct(data); // Update product details
+        setProduct(data.product); // Update product details
       } catch (err) {
         setError('Failed to fetch product details.');
         console.error('Error fetching product details:', err);
@@ -40,7 +42,7 @@ const ProductDetails = () => {
     };
 
     fetchProductDetails();
-  }, [productId]); // Fetch details when the productId changes
+  }, [productId]);
 
   const handleAddToCart = async () => {
     if (!userId || !product) {
@@ -49,14 +51,21 @@ const ProductDetails = () => {
     }
 
     const cartItem = {
-      userId: userId, 
-      items: 1, // Assuming you are adding one item to the cart. You can change this if needed.
-      product: productId, // Add the productId to the cart.
+      userId: userId,
+      items: [
+        {
+          productId: productId,  
+          quantity: 1,            
+          imageUrl: product.images && product.images.length > 0 ? product.images[0] : '', 
+          productName: product.title,  
+          price: product.price || 0,
+        },
+      ],
     };
 
     try {
       const response = await fetch(`${baseUrl}/cart`, {
-        method: 'POST', // Assuming POST request for adding to cart
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -75,50 +84,128 @@ const ProductDetails = () => {
     }
   };
 
+  const sortReviews = (reviews) => {
+    if (sortOption === 'high-to-low') {
+      return [...reviews].sort((a, b) => b.rating - a.rating);
+    } else if (sortOption === 'low-to-high') {
+      return [...reviews].sort((a, b) => a.rating - b.rating);
+    } else {
+      return [...reviews].sort(
+        (a, b) => new Date(b.review_submission_time) - new Date(a.review_submission_time)
+      );
+    }
+  };
+
   if (loading) {
-    return <div>Loading...</div>; // Show loading state
+    return <div>Loading...</div>;
   }
 
   if (error) {
-    return <div>{error}</div>; // Show error message
+    return <div>{error}</div>;
   }
 
   if (!product) {
-    return <div>No product found.</div>; // Handle missing product
+    return <div>No product found.</div>;
   }
 
   return (
     <Container>
       <Row className="mt-4">
-        {/* Images on the left */}
         <Col md={6}>
           {product.images && product.images.length > 0 ? (
-            <div>
+            <Carousel>
               {product.images.map((image, index) => (
-                <Image key={index} src={image} alt={product.title} fluid className="mb-2" />
+                <Carousel.Item key={index}>
+                  <Image src={image} alt={product.title} fluid />
+                </Carousel.Item>
               ))}
-            </div>
+            </Carousel>
           ) : (
-            <Image src="/path/to/placeholder-image.jpg" alt="No images available" fluid />
+            <Image src={homepage_image} alt="No images available" fluid />
           )}
         </Col>
 
-        {/* Details on the right */}
         <Col md={6}>
-          <h2>{product.title}</h2>
-          <p>{product.description}</p>
-          <ListGroup variant="flush">
-            <ListGroup.Item>
-              <strong>CPU Model:</strong> {product.specification?.cpu_model || 'N/A'}
-            </ListGroup.Item>
-            <ListGroup.Item>
-              <strong>Price:</strong> ${product.price || 'N/A'}
-            </ListGroup.Item>
-            <ListGroup.Item>
-              <strong>Manufacturer:</strong> {product.manufacturer || 'N/A'}
-            </ListGroup.Item>
-          </ListGroup>
-          <Button variant="primary" className="mt-3" onClick={handleAddToCart}>
+          {/* Reviews Section */}
+          {product.reviews && product.reviews.length > 0 && (
+            <>
+              <h4 className="mt-3">Customer Reviews</h4>
+              <Dropdown className="mb-3">
+                <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                  Sort by: {sortOption.replace(/-/g, ' ')}
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => setSortOption('newest')}>Newest First</Dropdown.Item>
+                  <Dropdown.Item onClick={() => setSortOption('high-to-low')}>Rating: High to Low</Dropdown.Item>
+                  <Dropdown.Item onClick={() => setSortOption('low-to-high')}>Rating: Low to High</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+
+              <div
+                style={{
+                  maxHeight: '400px', // Increased height for scrollable reviews
+                  overflowY: 'scroll',
+                  border: '1px solid #ddd',
+                  padding: '10px',
+                }}
+              >
+                {sortReviews(product.reviews).map((review, index) => (
+                  <Card key={index} className="mb-3">
+                    <Card.Body>
+                      <Card.Title>{review.title}</Card.Title>
+                      <Card.Text>
+                        <strong>Review By:</strong> {review.user_nickname}
+                      </Card.Text>
+                      <Card.Text>
+                        <strong>Date:</strong> {new Date(review.review_submission_time).toLocaleDateString()}
+                      </Card.Text>
+                      <Card.Text>
+                        <strong>Comments:</strong> {review.text}
+                      </Card.Text>
+                      <Card.Text>
+                        <strong>User Rating:</strong> {review.rating}
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                ))}
+              </div>
+            </>
+          )}
+        </Col>
+      </Row>
+
+      <h2>{product?.title || 'No title available'}</h2>   
+      <h4 className="mt-3">{product?.price ? `$${product.price}` : 'Price not available'}</h4>
+      {/* Specifications Section */}
+      {product.specification && Object.keys(product.specification).length > 0 && (
+        <Row className="mt-5">
+          <Col md={12}>
+            <h4>Specifications</h4>
+            <div
+              style={{
+                maxHeight: '300px', // Adjust the height as needed
+                overflowY: 'scroll', // Enable vertical scrolling
+                border: '1px solid #ddd', // Optional: adds a border around the specifications
+                padding: '10px', // Optional: add padding for better visual spacing
+              }}
+            >
+              <ListGroup variant="flush">
+                {Object.entries(product.specification).map(([key, value], index) => (
+                  <ListGroup.Item key={index}>
+                    <strong>{key}:</strong> {value}
+                  </ListGroup.Item>
+                ))}
+              </ListGroup>
+            </div>
+          </Col>
+        </Row>
+      )}
+
+      {/* Center the Add to Cart button */}
+      <Row className="mt-4 d-flex justify-content-center">
+        <Col xs="auto">
+          <Button variant="primary" onClick={handleAddToCart}>
             Add to Cart
           </Button>
         </Col>
@@ -127,4 +214,4 @@ const ProductDetails = () => {
   );
 };
 
-export default ProductDetails;
+export default ProductReviewsPage;
