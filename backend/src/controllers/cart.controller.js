@@ -16,10 +16,11 @@ class CartController {
 
     async getCart(req, res) {
         let { userId } = req.params;
-        userId = '67493879bdf27d1461f4fe7e';
         try {
             const cart = await CartService.getCart(userId);
-            if (!cart || cart === null) return res.status(404).json({ message: 'Cart not found' });
+            if (!cart || cart === null) {
+                return res.status(404).json({ message: 'Cart not found' })
+            };
             res.json(cart);
         } catch (error) {
             res.status(500).json({message: 'Error fetching cart', error});
@@ -32,7 +33,7 @@ class CartController {
             return res.status(400).json({message: 'Invalid data. Check the inputs(userId, item, product...)'});
         }
         try {
-            const newCart = await CartService.updateCart({ userId, items, product });
+            const newCart = await CartService.updateCart({ userId, items });
             res.status(201).json(newCart);
         } catch (error) {
             res.status(500).json({ message: 'Error creating cart', error});

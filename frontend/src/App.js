@@ -11,7 +11,6 @@ import OrderConfirmation from './components/OrderComfirmation';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProductList from './pages/ProductListing';
-import ProductDetails from './pages/ProductDetails';
 
 const App = () => {
   return (
@@ -37,16 +36,6 @@ const App = () => {
               </PrivateRoute>
             }
           />
-
-          
-          <Route
-            path="/product/details/:productId"
-            element={
-              <PrivateRoute>
-                <ProductDetails />
-              </PrivateRoute>
-            }
-          />
           <Route
             path="/cart"
             element={
@@ -63,7 +52,6 @@ const App = () => {
               </PrivateRoute>
             }
           />
-
         </Routes>
       </Router>
     </Provider>
@@ -81,11 +69,10 @@ const CartWithUser = () => {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userId: userId }), // Make sure userId is passed correctly
+        body: JSON.stringify({ userId: userId }), 
     });
-
       if (!response.ok) {
-        throw new Error("Checkout failed");
+        throw new Error("Request can't be fulfilled due to inventory issue.. :(");
       }
 
       const result = await response.json();

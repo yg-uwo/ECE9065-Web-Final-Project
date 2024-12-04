@@ -7,9 +7,10 @@ class CartModel {
             items: [
                 {
                     _id: false,
-                    productId: {type: String, required: true},
-                    quantity: {type: Number, required: true},
-                    productName: {type: String, required: true }
+                    productId: { type: String, required: true },
+                    quantity: { type: Number, required: true },
+                    productName: { type: String, required: true },
+                    price: { type: Number, required: true },
                 }
             ],
         });
@@ -20,7 +21,7 @@ class CartModel {
         try {
             const cartInfo = await this.model.findOne({ userId: id});
             if (!cartInfo || cartInfo === null) { 
-                throw new Error(`Cart for userId ${userId} not found`);
+                return cartInfo;
             }
             return cartInfo;
         } catch (error) {
