@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Row, Col, Image, Button, ListGroup, Carousel } from 'react-bootstrap';
+import { Container, Row, Col, Image, Button, ListGroup, Carousel, Card } from 'react-bootstrap';
 import homepage_image from '../assets/images/homepage.jpg';
 
 const ProductDetails = () => {
@@ -31,7 +31,6 @@ const ProductDetails = () => {
         }
 
         const data = await response.json();
-        //console.log('Fetched Product:', data); 
         setProduct(data.product); // Update product details
       } catch (err) {
         setError('Failed to fetch product details.');
@@ -51,7 +50,7 @@ const ProductDetails = () => {
     }
 
     const cartItem = {
-      userId: userId, 
+      userId: userId,
       items: 1, // Adding one item to the cart
       product: productId, // Add the productId to the cart
     };
@@ -135,6 +134,35 @@ const ProductDetails = () => {
           </Button>
         </Col>
       </Row>
+
+      {/* Reviews Section */}
+      {product.reviews && product.reviews.length > 0 && (
+        <Row className="mt-5">
+          <Col md={12}>
+            <h3>Customer Reviews</h3>
+            <div
+              style={{
+                maxHeight: '300px', 
+                overflowY: 'scroll', 
+                border: '1px solid #ddd', 
+                padding: '10px',
+              }}
+            >
+              {product.reviews.map((review, index) => (
+                <Card key={index} className="mb-3">
+                  <Card.Body>
+                    <Card.Title>{review.title}</Card.Title>
+                    <Card.Text><strong>Review By:</strong> {review.user_nickname}</Card.Text>
+                    <Card.Text><strong>Date:</strong> {new Date(review.review_submission_time).toLocaleDateString()}</Card.Text>
+                    <Card.Text><strong>Comments:</strong> {review.text}</Card.Text>
+                    <Card.Text><strong>User Rating:</strong> {review.rating}</Card.Text>
+                  </Card.Body>
+                </Card>
+              ))}
+            </div>
+          </Col>
+        </Row>
+      )}
     </Container>
   );
 };
