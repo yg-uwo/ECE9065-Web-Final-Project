@@ -74,7 +74,7 @@ const AddProductForm = ({ onAddProduct, onClose }) => {
     }
   };
 
-  
+
 
   const validateForm = () => {
     const newErrors = {};
@@ -85,13 +85,6 @@ const AddProductForm = ({ onAddProduct, onClose }) => {
     if (formData.price === '' || isNaN(formData.price)) newErrors.price = "Valid price is required";
     if (formData.popularity === '' || isNaN(formData.popularity)) newErrors.popularity = "Valid popularity is required";
     if (formData.quantity === '' || isNaN(formData.quantity)) newErrors.quantity = "Valid quantity is required";
-
-    //Validate image URLs
-    // const invalidUrls = formData.images.filter((url) => !validUrl(url));
-    // if (invalidUrls.length > 0) {
-    //   newErrors.images = "Some of the image URLs are invalid";
-    // }
-
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -125,36 +118,39 @@ const AddProductForm = ({ onAddProduct, onClose }) => {
 
   return (
     <div>
-      <h2>Add Product</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Title:</label>
+      <form onSubmit={handleSubmit} className="p-4 rounded shadow-sm bg-light">
+        <div className="form-group mb-3">
+          <label className="form_label">Title:</label>
           <input
             type="text"
             name="title"
             value={formData.title}
             onChange={handleInputChange}
+            className="form-control"
             required
           />
           {errors.title && <span>{errors.title}</span>}
         </div>
-        <div>
-          <label>Price:</label>
+        
+        <div className="form-group mb-3">
+          <label className="form_label">Price:</label>
           <input
             type="number"
             name="price"
             value={formData.price}
             onChange={handleInputChange}
+            className="form-control"
             required
           />
           {errors.price && <span>{errors.price}</span>}
         </div>
-        <div>
-          <label>Category:</label>
+        <div className="form-group mb-3">
+          <label className="form_label">Category:</label>
           <select
             name="category"
             value={formData.category}
             onChange={handleInputChange}
+            className="form-control"
             required
           >
             <option value="">Select Category</option>
@@ -164,70 +160,75 @@ const AddProductForm = ({ onAddProduct, onClose }) => {
           </select>
           {errors.category && <span>{errors.category}</span>}
         </div>
+        <h6 className='text-center'>Specification</h6>
 
-        {/* Render dynamic specification fields based on selected category */}
         {Object.keys(formData.specification).map((specField) => (
-          <div key={specField}>
-            <label>{specField.replace('_', ' ').toUpperCase()}:</label>
+          <div className="form-group mb-3" key={specField}>
+            <label className="form_label_spec">{specField.replace('_', ' ').toUpperCase()}:</label>
             <input
               type="text"
               name={`specification.${specField}`}
               value={formData.specification[specField]}
               onChange={handleInputChange}
+              className="form-control"
             />
             {errors[`specification.${specField}`] && <span>{errors[`specification.${specField}`]}</span>}
           </div>
         ))}
-
-        <div>
-          <label>Manufacturer:</label>
+        <hr className="danger"></hr>
+        <div className="form-group mb-3">
+          <label className="form_label">Manufacturer:</label>
           <input
             type="text"
             name="manufacturer"
             value={formData.manufacturer}
             onChange={handleInputChange}
+            className="form-control"
             required
           />
           {errors.manufacturer && <span>{errors.manufacturer}</span>}
         </div>
-        <div>
-          <label>Product ID:</label>
+        <div className="form-group mb-3">
+          <label className="form_label">Product ID:</label>
           <input
             type="text"
             name="productId"
             value={formData.productId}
             onChange={handleInputChange}
+            className="form-control"
             required
           />
           {errors.productId && <span>{errors.productId}</span>}
         </div>
-        <div>
-          <label>Popularity:</label>
+        <div className="form-group mb-3">
+          <label className="form_label">Popularity:</label>
           <input
             type="number"
             name="popularity"
             value={formData.popularity}
             onChange={handleInputChange}
+            className="form-control"
             required
           />
           {errors.popularity && <span>{errors.popularity}</span>}
         </div>
-        <div>
-          <label>Quantity:</label>
+        <div className="form-group mb-3">
+          <label className="form_label">Quantity:</label>
           <input
             type="number"
             name="quantity"
             value={formData.quantity}
             onChange={handleInputChange}
+            className="form-control"
             required
           />
           {errors.quantity && <span>{errors.quantity}</span>}
         </div>
         <div>
-          <button type="submit">Add Product</button>
+          <button type="submit" className="btn btn-primary w-100 py-2">Add Product</button>
         </div>
       </form>
-      <button onClick={onClose}>Close</button>
+
     </div>
   );
 };

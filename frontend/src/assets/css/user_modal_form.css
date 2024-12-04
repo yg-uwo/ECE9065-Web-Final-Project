@@ -8,4 +8,9 @@
   .form_label:hover {
     color: #FF5722; 
   }
+
+
+  .form_label_spec{
+    color:blue;
+  }
   
