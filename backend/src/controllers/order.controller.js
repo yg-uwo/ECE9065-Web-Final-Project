@@ -32,7 +32,6 @@ class OrderController {
                     totalAmount: this.calculateTotalAmount(cart.items),
                     paymentStatus: paymentSuccess ? 'Success' : 'Failed',
                 })
-
                 await CartService.deleteCart(cart._id);
 
                 res.json({ message: 'Order confirmed', order });

@@ -6,6 +6,7 @@ import { jwtDecode } from 'jwt-decode';
 import { login } from '../redux/auth_slice';
 import homepage_image from '../assets/images/homepage.jpg'
 import { toast } from 'react-toastify';
+import '../assets/css/auth.css'
 
 
 const Auth = () => {
@@ -110,21 +111,139 @@ const Auth = () => {
     };
 
     return (
-        <Container className="d-flex align-items-center justify-content-center vh-100">
-            <Row>
-                <Col md={6}>
-                    <img
-                        src={homepage_image}
-                        alt="Placeholder"
-                        className="img-fluid"
-                    />
+        // <Container className="d-flex align-items-center justify-content-center vh-100">
+        //     <Row>
+        //         <Col md={6}>
+        //             <img
+        //                 src={homepage_image}
+        //                 alt="Placeholder"
+        //                 className="img-fluid"
+        //             />
+        //         </Col>
+        //         <Col md={6}>
+        //             <Card>
+        //                 <Card.Body>
+        //                     <h3 className="text-center">{isLogin ? 'Login' : 'Sign Up'}</h3>
+        //                     {apiError && <Alert variant="danger">{apiError}</Alert>}
+        //                     <Form onSubmit={handleSubmit}>
+        //                         {!isLogin && (
+        //                             <>
+        //                                 <Form.Group controlId="first_name">
+        //                                     <Form.Label>First Name</Form.Label>
+        //                                     <Form.Control
+        //                                         type="text"
+        //                                         name="first_name"
+        //                                         value={formData.first_name}
+        //                                         onChange={handleInputChange}
+        //                                         isInvalid={!!errors.first_name}
+        //                                     />
+        //                                     <Form.Control.Feedback type="invalid">
+        //                                         {errors.first_name}
+        //                                     </Form.Control.Feedback>
+        //                                 </Form.Group>
+        //                                 <Form.Group controlId="last_name">
+        //                                     <Form.Label>Last Name</Form.Label>
+        //                                     <Form.Control
+        //                                         type="text"
+        //                                         name="last_name"
+        //                                         value={formData.last_name}
+        //                                         onChange={handleInputChange}
+        //                                         isInvalid={!!errors.last_name}
+        //                                     />
+        //                                     <Form.Control.Feedback type="invalid">
+        //                                         {errors.last_name}
+        //                                     </Form.Control.Feedback>
+        //                                 </Form.Group>
+        //                                 <Form.Group controlId="phoneNumber">
+        //                                     <Form.Label>Phone Number</Form.Label>
+        //                                     <Form.Control
+        //                                         type="text"
+        //                                         name="phoneNumber"
+        //                                         value={formData.phoneNumber}
+        //                                         onChange={handleInputChange}
+        //                                         isInvalid={!!errors.phoneNumber}
+        //                                     />
+        //                                     <Form.Control.Feedback type="invalid">
+        //                                         {errors.phoneNumber}
+        //                                     </Form.Control.Feedback>
+        //                                 </Form.Group>
+        //                             </>
+        //                         )}
+        //                         <Form.Group controlId="email">
+        //                             <Form.Label>Email</Form.Label>
+        //                             <Form.Control
+        //                                 type="email"
+        //                                 name="email"
+        //                                 value={formData.email}
+        //                                 onChange={handleInputChange}
+        //                                 isInvalid={!!errors.email}
+        //                             />
+        //                             <Form.Control.Feedback type="invalid">
+        //                                 {errors.email}
+        //                             </Form.Control.Feedback>
+        //                         </Form.Group>
+        //                         <Form.Group controlId="password">
+        //                             <Form.Label>Password</Form.Label>
+        //                             <Form.Control
+        //                                 type="password"
+        //                                 name="password"
+        //                                 value={formData.password}
+        //                                 onChange={handleInputChange}
+        //                                 isInvalid={!!errors.password}
+        //                             />
+        //                             <Form.Control.Feedback type="invalid">
+        //                                 {errors.password}
+        //                             </Form.Control.Feedback>
+        //                         </Form.Group>
+        //                         <Button variant="primary" type="submit" className="w-100 mt-3">
+        //                             {isLogin ? 'Login' : 'Sign Up'}
+        //                         </Button>
+        //                     </Form>
+        //                     <div className="text-center mt-3">
+        //                         {isLogin ? (
+        //                             <p>
+        //                                 Don't have an account?{' '}
+        //                                 <Button
+        //                                     variant="link"
+        //                                     onClick={() => setIsLogin(false)}
+        //                                     className="p-0"
+        //                                 >
+        //                                     Sign Up
+        //                                 </Button>
+        //                             </p>
+        //                         ) : (
+        //                             <p>
+        //                                 Already have an account?{' '}
+        //                                 <Button
+        //                                     variant="link"
+        //                                     onClick={() => setIsLogin(true)}
+        //                                     className="p-0"
+        //                                 >
+        //                                     Login
+        //                                 </Button>
+        //                             </p>
+        //                         )}
+        //                     </div>
+        //                 </Card.Body>
+        //             </Card>
+        //         </Col>
+        //     </Row>
+        // </Container>
+        <Container className="container_auth">
+            <Row className="auth-row">
+                {/* Image Side */}
+                <Col md={6} className="image-side">
+                    <img src={homepage_image} alt="Homepage" />
                 </Col>
-                <Col md={6}>
-                    <Card>
+
+                {/* Form Section */}
+                <Col md={6} className="form-section">
+                    <Card className="form-card">
                         <Card.Body>
                             <h3 className="text-center">{isLogin ? 'Login' : 'Sign Up'}</h3>
                             {apiError && <Alert variant="danger">{apiError}</Alert>}
                             <Form onSubmit={handleSubmit}>
+                                {/* Conditional fields for Sign Up */}
                                 {!isLogin && (
                                     <>
                                         <Form.Group controlId="first_name">
@@ -168,6 +287,8 @@ const Auth = () => {
                                         </Form.Group>
                                     </>
                                 )}
+                                
+                                {/* Common fields for both Login and Sign Up */}
                                 <Form.Group controlId="email">
                                     <Form.Label>Email</Form.Label>
                                     <Form.Control
@@ -198,6 +319,8 @@ const Auth = () => {
                                     {isLogin ? 'Login' : 'Sign Up'}
                                 </Button>
                             </Form>
+
+                            {/* Link to toggle between Login/Sign Up */}
                             <div className="text-center mt-3">
                                 {isLogin ? (
                                     <p>

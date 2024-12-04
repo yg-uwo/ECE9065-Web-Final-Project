@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { Modal, Button, Form } from "react-bootstrap";
 import { validateUserForm } from "../utils/validation";
 
+
 const UpdateUserModal = ({ userId, onClose, onUserUpdated, token }) => {
     const [formData, setFormData] = useState({
         first_name: "",

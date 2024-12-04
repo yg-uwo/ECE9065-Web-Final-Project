@@ -8,11 +8,9 @@ class ProductModel {
         title: { type: String, required: true },
         screen: { type: String },
         images: { type: [String], default: [] },
-        specification: {
-          operating_system: { type: String },
-          standard_memory: { type: String },
-          battery_life: { type: String },
-          cpu_model: { type: String },
+        specification: { 
+          type: Map, // Allows dynamic keys
+          of: String // Values of all keys are expected to be strings
         },
         category: { type: String, required: true },
         price: { type: Number, required: true },

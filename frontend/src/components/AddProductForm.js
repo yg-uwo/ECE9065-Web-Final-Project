@@ -5,7 +5,6 @@ import { validUrl } from "../utils/validation";
 const AddProductForm = ({ onAddProduct, onClose }) => {
   const [formData, setFormData] = useState({
     title: '',
-    images: [],
     price: '',
     category: '',
     manufacturer: '',
@@ -18,10 +17,39 @@ const AddProductForm = ({ onAddProduct, onClose }) => {
   const [categories] = useState(["laptop", "keyboard", "mouse", "bag"]);
 
   const specificationSchema = {
-    laptop: ["operating_system", "standard_memory", "battery_life", "cpu_model"],
+    laptop: ["operating_system",
+      "standard_memory",
+      "battery_life",
+      "cpu_model",
+      "processor_brand",
+      "processor_name",
+      "ram_type",
+      "ram_speed",
+      "gpu_type",
+      "gpu_memory",
+      "display_size",
+      "display_resolution",
+      "weight",
+      "storage_type",
+      "storage_capacity",
+      "usb_ports",
+      "hdmi_ports",
+      "bluetooth",
+      "wifi",
+      "webcam",
+      "keyboard_type",
+      "backlit_keyboard"],
     keyboard: ["key_type", "connection_type", "compatibility", "backlight"],
-    mouse: ["sensor_type", "dpi", "buttons", "color"],
-    bag: ["material", "size", "compartments"],
+    mouse: ["sensor_type",
+      "dpi",
+      "buttons",
+      "wireless",
+      "color"],
+    bag: ["material",
+      "dimensions",
+      "compartments",
+      "strap_type",
+      "laptop_compatible"],
   };
 
   const [errors, setErrors] = useState({});
@@ -46,13 +74,7 @@ const AddProductForm = ({ onAddProduct, onClose }) => {
     }
   };
 
-  const handleImageChange = (e) => {
-    const { value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      images: value.split(','),
-    }));
-  };
+  
 
   const validateForm = () => {
     const newErrors = {};
@@ -115,18 +137,6 @@ const AddProductForm = ({ onAddProduct, onClose }) => {
             required
           />
           {errors.title && <span>{errors.title}</span>}
-        </div>
-        
-        <div>
-          <label>Images (comma-separated URLs):</label>
-          <input
-            type="text"
-            name="images"
-            value={formData.images.join(',')}
-            onChange={handleImageChange}
-            required
-          />
-          {/* {errors.images && <span>{errors.images}</span>} */}
         </div>
         <div>
           <label>Price:</label>

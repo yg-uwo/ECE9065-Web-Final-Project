@@ -53,8 +53,8 @@ const UserList = () => {
   const handleFilterChange = (type, value) => {
     const filtered = users.filter((user) =>
       type === "email"
-        ? user.email.toLowerCase().includes(value.toLowerCase())
-        : user.phone.includes(value)
+        ? user?.email?.toLowerCase().includes(value.toLowerCase())
+        : user?.phone?.includes(value)
     );
     setFilteredUsers(filtered);
     setCurrentPage(1); // Reset to the first page

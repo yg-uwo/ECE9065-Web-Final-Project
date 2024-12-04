@@ -6,6 +6,8 @@ import Pagination from "../components/Pagination"; // Import the Pagination comp
 import Filters from "../components/Filters"; // Import the Filters component
 import { Navbar } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import UpdateProduct from '../components/UpdateProduct'; 
+import { toast } from "react-toastify";
 
 const ProductList = () => {
   const navigate = useNavigate();
@@ -14,8 +16,8 @@ const ProductList = () => {
   const [currentPage, setCurrentPage] = useState(1); // Current page for pagination
   const [totalPages, setTotalPages] = useState(1); // Total pages based on total items
   const [loading, setLoading] = useState(false); // Loading state
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const [selectedProductId, setselectedProductId] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState(null);
   const [filters, setFilters] = useState({
     category: '',
     price: '',
@@ -78,6 +80,70 @@ const ProductList = () => {
     setCurrentPage(1); // Reset to the first page whenever filters change
   };
 
+  //Update products function below
+  const handleOpenModal = (productId) => {
+    setSelectedProductId(productId);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedProductId(null);
+  };
+
+  const handleUpdateProduct =async (updatedProductData) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/product/update_product/${updatedProductData._id}`, {
+          method: "PUT",
+          headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(updatedProductData),
+      });
+
+      if (!response.ok) {
+          throw new Error("Failed to update product.");
+      }
+
+      const updatedProduct = await response.json();
+
+      
+      const updated_product = products.map((prod) =>
+        prod._id === updatedProduct.product._id ? updatedProduct.product : prod
+      );
+
+      
+      setProducts(updated_product);
+      toast.success("Product updated successfully!");
+      handleCloseModal();
+  } catch (error) {
+      toast.error(error.message);
+  }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      console.log(id);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/product/delete_product/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete user.");
+      }
+      toast.error("Product Deleted successfully!");
+      setProducts(products.filter((prod) => prod._id !== id));
+     
+    } catch (error) {
+      console.error("Error deleting user:", error.message);
+      alert(error.message);
+    }
+  };
+
   return (
     <Container>
       {/* Filters Component */}
@@ -107,8 +173,9 @@ const ProductList = () => {
                   <Button variant="primary" className="me-2"  onClick={() => navigate(`/product/details/${product._id}`)}>View Details</Button>
                   {isAuthenticated && role === 'admin' && (
                     <>
-                      <Button variant="warning" className="me-2">Add Product</Button>
-                      <Button variant="danger">Remove Product</Button>
+                   
+                      <Button variant="warning" onClick={() => handleOpenModal(product._id)} className="me-2">Update Product</Button>
+                      <Button variant="danger" onClick={() => handleDelete(product._id)}>Remove Product</Button>
                     </>
                   )}
                 </div>
@@ -117,6 +184,16 @@ const ProductList = () => {
           </Col>
         ))}
       </Row>
+
+      {isModalOpen && (
+        <div className="modal">
+          <UpdateProduct
+            productId={selectedProductId}
+            onUpdateProduct={handleUpdateProduct}
+            onClose={handleCloseModal}
+          />
+        </div>
+      )}
 
       {/* Pagination component */}
       <Pagination

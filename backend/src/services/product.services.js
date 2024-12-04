@@ -75,7 +75,7 @@ class ProductService {
   }
 
   async updateProduct(productId, updates) {
-    const product = await Product.findOneAndUpdate({ productId }, updates, { new: true });
+    const product = await Product.findOneAndUpdate({ _id:productId }, updates, { new: true });
     if (!product) {
       throw new Error(ERROR_MESSAGES.PRODUCT_NOT_FOUND);
     }
@@ -83,7 +83,9 @@ class ProductService {
   }
 
   async deleteProduct(productId) {
-    const product = await Product.findOneAndDelete({ productId });
+    
+    const product = await Product.findByIdAndDelete({ _id:productId });
+   
     if (!product) {
       throw new Error(ERROR_MESSAGES.PRODUCT_NOT_FOUND);
     }
