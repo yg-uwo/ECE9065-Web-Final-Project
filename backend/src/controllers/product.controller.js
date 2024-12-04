@@ -1,6 +1,7 @@
 const ProductService = require('../services/product.services');
 const { SUCCESS_MESSAGES } = require('../utils/constants');
 const ProductModel = require('../models/product.models');
+const Product = ProductModel.getModel();
 const { getJson } = require("serpapi");
 
 class ProductController {
@@ -115,7 +116,7 @@ class ProductController {
         };
       });
   
-      const product = await ProductModel.findOne({ productId:productId });
+      const product = await Product.findOne({ productId:productId });
       if (!product) {
         return res.status(404).json({ message: 'Product not found' });
       }

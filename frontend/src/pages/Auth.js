@@ -6,6 +6,7 @@ import { jwtDecode } from 'jwt-decode';
 import { login } from '../redux/auth_slice';
 import homepage_image from '../assets/images/homepage.jpg'
 import { toast } from 'react-toastify';
+import '../assets/css/auth.css'
 
 
 const Auth = () => {
@@ -110,21 +111,21 @@ const Auth = () => {
     };
 
     return (
-        <Container className="d-flex align-items-center justify-content-center vh-100">
-            <Row>
-                <Col md={6}>
-                    <img
-                        src={homepage_image}
-                        alt="Placeholder"
-                        className="img-fluid"
-                    />
+        <Container className="container_auth">
+            <Row className="auth-row">
+                {/* Image Side */}
+                <Col md={6} className="image-side">
+                    <img src={homepage_image} alt="Homepage" />
                 </Col>
-                <Col md={6}>
-                    <Card>
+
+                {/* Form Section */}
+                <Col md={6} className="form-section">
+                    <Card className="form-card">
                         <Card.Body>
                             <h3 className="text-center">{isLogin ? 'Login' : 'Sign Up'}</h3>
                             {apiError && <Alert variant="danger">{apiError}</Alert>}
                             <Form onSubmit={handleSubmit}>
+                                {/* Conditional fields for Sign Up */}
                                 {!isLogin && (
                                     <>
                                         <Form.Group controlId="first_name">
@@ -168,6 +169,8 @@ const Auth = () => {
                                         </Form.Group>
                                     </>
                                 )}
+                                
+                                {/* Common fields for both Login and Sign Up */}
                                 <Form.Group controlId="email">
                                     <Form.Label>Email</Form.Label>
                                     <Form.Control
@@ -198,6 +201,8 @@ const Auth = () => {
                                     {isLogin ? 'Login' : 'Sign Up'}
                                 </Button>
                             </Form>
+
+                            {/* Link to toggle between Login/Sign Up */}
                             <div className="text-center mt-3">
                                 {isLogin ? (
                                     <p>
