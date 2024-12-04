@@ -36,6 +36,15 @@ const App = () => {
               </PrivateRoute>
             }
           />
+
+          <Route
+            path="/product/details/:productId"
+            element={
+              <PrivateRoute>
+                <ProductDetails />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/cart"
             element={
