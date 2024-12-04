@@ -11,6 +11,7 @@ import OrderConfirmation from './components/OrderComfirmation';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProductList from './pages/ProductListing';
+import ProductDetails from './pages/ProductDetails';
 
 const App = () => {
   return (
