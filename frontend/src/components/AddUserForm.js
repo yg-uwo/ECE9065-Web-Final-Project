@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { validateUserForm } from "../utils/validation";
+import '../assets/css/user_modal_form.css'
 
 const AddUserForm = ({ onAddUser, onClose, token }) => {
   const [formData, setFormData] = useState({
     first_name: "",
-    last_name:"",
+    last_name: "",
     email: "",
     phoneNumber: "",
     password: "",
@@ -47,9 +48,94 @@ const AddUserForm = ({ onAddUser, onClose, token }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="form-group">
-        <label>First Name</label>
+    // <form onSubmit={handleSubmit}>
+    //   <div className="form-group">
+    //     <label>First Name</label>
+    //     <input
+    //       type="text"
+    //       name="first_name"
+    //       value={formData.first_name}
+    //       onChange={handleChange}
+    //       className="form-control"
+    //       required
+    //     />
+    //   </div>
+    //   <div className="form-group">
+    //     <label>Last Name</label>
+    //     <input
+    //       type="text"
+    //       name="last_name"
+    //       value={formData.last_name}
+    //       onChange={handleChange}
+    //       className="form-control"
+    //       required
+    //     />
+    //   </div>
+    //   <div className="form-group">
+    //     <label>Email</label>
+    //     <input
+    //       type="email"
+    //       name="email"
+    //       value={formData.email}
+    //       onChange={handleChange}
+    //       className="form-control"
+    //       required
+    //     />
+    //   </div>
+    //   <div className="form-group">
+    //     <label>Phone</label>
+    //     <input
+    //       type="text"
+    //       name="phoneNumber"
+    //       value={formData.phoneNumber}
+    //       onChange={handleChange}
+    //       className="form-control"
+    //       required
+    //     />
+    //   </div>
+    //   <div className="form-group">
+    //     <label>Password</label>
+    //     <input
+    //       type="password"
+    //       name="password"
+    //       value={formData.password}
+    //       onChange={handleChange}
+    //       className="form-control"
+    //       required
+    //     />
+    //   </div>
+    //   <div className="form-group">
+    //     <label>Role</label>
+    //     <div>
+    //       <label>
+    //         <input
+    //           type="radio"
+    //           name="role"
+    //           value="admin"
+    //           checked={formData.role === "admin"}
+    //           onChange={handleChange}
+    //         />{" "}
+    //         Admin
+    //       </label>
+    //       <label className="ml-3">
+    //         <input
+    //           type="radio"
+    //           name="role"
+    //           value="general"
+    //           checked={formData.role === "general"}
+    //           onChange={handleChange}
+    //         />{" "}
+    //         General
+    //       </label>
+    //     </div>
+    //   </div>
+    //   <button type="submit" className="btn btn-primary">
+    //     Add User
+    //   </button>
+    // </form>
+    <form onSubmit={handleSubmit} className="p-4 rounded shadow-sm bg-light">
+      <div className="form-group mb-3">
+        <label className="form_label">First Name</label>
         <input
           type="text"
           name="first_name"
@@ -59,8 +145,9 @@ const AddUserForm = ({ onAddUser, onClose, token }) => {
           required
         />
       </div>
-      <div className="form-group">
-        <label>Last Name</label>
+
+      <div className="form-group mb-3">
+        <label className="form_label">Last Name</label>
         <input
           type="text"
           name="last_name"
@@ -70,8 +157,9 @@ const AddUserForm = ({ onAddUser, onClose, token }) => {
           required
         />
       </div>
-      <div className="form-group">
-        <label>Email</label>
+
+      <div className="form-group mb-3">
+        <label className="form_label">Email</label>
         <input
           type="email"
           name="email"
@@ -81,8 +169,9 @@ const AddUserForm = ({ onAddUser, onClose, token }) => {
           required
         />
       </div>
-      <div className="form-group">
-        <label>Phone</label>
+
+      <div className="form-group mb-3">
+        <label className="form_label">Phone</label>
         <input
           type="text"
           name="phoneNumber"
@@ -92,8 +181,9 @@ const AddUserForm = ({ onAddUser, onClose, token }) => {
           required
         />
       </div>
-      <div className="form-group">
-        <label>Password</label>
+
+      <div className="form-group mb-3">
+        <label className="form_label">Password</label>
         <input
           type="password"
           name="password"
@@ -103,10 +193,11 @@ const AddUserForm = ({ onAddUser, onClose, token }) => {
           required
         />
       </div>
-      <div className="form-group">
-        <label>Role</label>
+
+      <div className="form-group mb-4">
+        <label className="form_label">Role</label>
         <div>
-          <label>
+          <label className="me-3">
             <input
               type="radio"
               name="role"
@@ -116,7 +207,7 @@ const AddUserForm = ({ onAddUser, onClose, token }) => {
             />{" "}
             Admin
           </label>
-          <label className="ml-3">
+          <label>
             <input
               type="radio"
               name="role"
@@ -128,10 +219,12 @@ const AddUserForm = ({ onAddUser, onClose, token }) => {
           </label>
         </div>
       </div>
-      <button type="submit" className="btn btn-primary">
+
+      <button type="submit" className="btn btn-primary w-100 py-2">
         Add User
       </button>
     </form>
+
   );
 };
 

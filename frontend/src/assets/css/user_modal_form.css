@@ -1,0 +1,11 @@
+
+.form_label {
+    color: #4CAF50; 
+    font-weight: bold;
+  }
+  
+  
+  .form_label:hover {
+    color: #FF5722; 
+  }
+  

@@ -6,6 +6,7 @@ import UpdateUserModal from "../components/UpdateUserModal";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
+
 const UserList = () => {
   const token = useSelector((state) => state.auth.token);
   const [users, setUsers] = useState([]);
@@ -13,7 +14,7 @@ const UserList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
-  const usersPerPage = 5;
+  const usersPerPage = 6;
 
   // Fetch users from the API
   const fetchUsers = useCallback(
@@ -91,7 +92,7 @@ const UserList = () => {
   // Open the UpdateUserModal
   const handleUpdate = (id) => {
     setSelectedUserId(id);
-    setShowUpdateModal(true); 
+    setShowUpdateModal(true);
   };
 
   // Handle user update completion
@@ -115,44 +116,37 @@ const UserList = () => {
       {/* Filter Component */}
       <UserFilter onFilterChange={handleFilterChange} onAddUser={handleAddUser} />
 
-      {/* User Table */}
-      <table className="table table-bordered">
-        <thead>
-          <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Role</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentUsers.map((user) => (
-            <tr key={user.id}>
-              <td>{user.first_name}</td>
-              <td>{user.last_name}</td>
-              <td>{user.email}</td>
-              <td>{user.phoneNumber}</td>
-              <td>{user.role}</td>
-              <td>
-                <button
-                  onClick={() => handleUpdate(user._id)}
-                  className="btn btn-warning btn-sm mx-1"
-                >
-                  Update
-                </button>
-                <button
-                  onClick={() => handleDelete(user._id)}
-                  className="btn btn-danger btn-sm mx-1"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {/* Users List */}
+      <div className="row">
+        {currentUsers.map((user) => (
+          <div key={user.id} className="col-12 col-md-6 mb-3">
+            <div className="card shadow-sm border-warning">
+              <div className="card-body">
+                <h5 className="card-title text-primary">{user.first_name} {user.last_name}</h5>
+                <p className="card-text">
+                  <span className="text-muted"><i className="fas fa-envelope"></i> <strong>Email:</strong> {user.email}</span><br />
+                  <span className="text-muted"><i className="fas fa-phone-alt"></i> <strong>Phone:</strong> {user.phoneNumber}</span><br />
+                  <span className="badge bg-info text-white"><i className="fas fa-user-tag"></i> {user.role}</span>
+                </p>
+                <div className="d-flex justify-content-end">
+                  <button
+                    onClick={() => handleUpdate(user._id)}
+                    className="btn btn-warning btn-sm mx-1"
+                  >
+                    <i className="fas fa-edit"></i> 
+                  </button>
+                  <button
+                    onClick={() => handleDelete(user._id)}
+                    className="btn btn-danger btn-sm mx-1"
+                  >
+                    <i className="fas fa-trash"></i> 
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
 
       {/* Pagination Component */}
       <Pagination

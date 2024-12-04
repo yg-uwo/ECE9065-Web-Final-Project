@@ -6,9 +6,6 @@
 
 /* Container for the form and image */
 .container_auth {
-    /* display: flex;
-    align-items: center;
-    justify-content: center; */
     height: 100vh;
     padding-top: 10px;
     margin-top:10px;
