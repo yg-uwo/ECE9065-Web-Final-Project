@@ -165,7 +165,8 @@ const ProductList = () => {
               />
               <Card.Body className="card-body">
                 <Card.Title className="card-title">{product.title}</Card.Title>
-                <Card.Text className="card-text">{product.specification?.cpu_model}</Card.Text>
+                <Card.Text className="card-text">Quantity:{product.specification?.cpu_model}</Card.Text>
+                <Card.Text className="card-text">{product.quantity}</Card.Text>
                 <div className="card-footer d-flex flex-column flex-sm-row justify-content-between">
                   <Button variant="primary" className="mb-2 mb-sm-0 me-sm-2" onClick={() => navigate(`/product/details/${product._id}`)}>View Details</Button>
                   {isAuthenticated && role === 'admin' && (

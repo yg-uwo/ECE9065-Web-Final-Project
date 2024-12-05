@@ -69,7 +69,7 @@ const Auth = () => {
 
         try {
             let api = isLogin ? `${apiUrl}/auth/login` : `${apiUrl}/auth/signup`;
-            console.log(api);
+            // console.log(api);
             let response = await fetch(api, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -91,6 +91,7 @@ const Auth = () => {
                         token: token,
                         userId: decodedToken.id,
                         role: decodedToken.role,
+                        email:formData.email
                     })
                 );
 

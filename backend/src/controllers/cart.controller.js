@@ -2,13 +2,13 @@ const CartService = require('../services/cart.service');
 
 class CartController {
     async createCart(req, res) {
-        const { userId, items } = req.body;
+        const { userId, items,email } = req.body;
         console.log("item-info", items);
         if (!userId || !items || !Array.isArray(items)) {
             return res.status(400).json({message: 'Invalid data. Check the inputs(userId, item array)'});
         }
         try {
-            const newCart = await CartService.createCart({ userId, items });
+            const newCart = await CartService.createCart({ userId, items,email });
             res.status(201).json(newCart);
         } catch (error) {
             res.status(500).json({ message: 'Error creating cart', error});

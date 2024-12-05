@@ -5,8 +5,7 @@ const nodemailer = require('nodemailer');
 
 class OrderController {
     async checkout(req, res) {
-        const { userId, cart } = req.body;
-        console.log("Cart Info:", cart);
+        const { userId, cart, email } = req.body;
         let paymentSuccess = false;
         try {
             //const cart = await CartService.getCart(userId);
@@ -31,13 +30,14 @@ class OrderController {
                 // Creating the order
                 const order = await OrderModel.createOrder({
                     userId,
+                    email,
                     items: cart.items,
                     status: 'Confirmed',
                     totalAmount: this.calculateTotalAmount(cart.items),
                     paymentStatus: paymentSuccess ? 'Success' : 'Failed',
                 })
                 // Send Email here with order details
-                const userEmail = "aekam59@gmail.com"; 
+                const userEmail = email; 
                 if (userEmail) {
                     await this.sendOrderConfirmationEmail(userEmail, order);
                 }
@@ -54,6 +54,46 @@ class OrderController {
     calculateTotalAmount(items) {
         return items.reduce((total, item) => total + (item.productId.price * item.quantity), 0);
     }
+
+    async listProducts(req, res) {
+        try {
+          const {
+            category,
+            manufacturer,
+            title,
+            price,
+            page = 1,
+            limit = 10,
+            sort = 'popularity',
+            order = 'desc',
+          } = req.query;
+          const filter = {};
+          if (category) filter.category = { $regex: category, $options: 'i' };
+          if (manufacturer) filter.manufacturer = { $regex: manufacturer, $options: 'i' };
+          if (title) filter.title = { $regex: title, $options: 'i' };
+          if (price) filter.price = { $lte: price }; // Filter by price less than or equal to the given value
+          const pageNumber = parseInt(page, 10);
+          const pageSize = parseInt(limit, 10);
+          const skip = (pageNumber - 1) * pageSize;
+    
+          //sorting by popularity
+          const sortOrder = order === 'asc' ? 1 : -1;
+          const sortBy = {};
+          sortBy[sort] = sortOrder;
+    
+          const products = await ProductService.listProducts(filter, skip, pageSize, sortBy);
+          const totalProducts = await ProductService.countProducts(filter);
+    
+          res.status(200).json({
+            data: products,
+            total: totalProducts,
+            page: pageNumber,
+            limit: pageSize,
+          });
+        } catch (error) {
+          res.status(500).json({ message: error.message });
+        }
+      }
 
     async sendOrderConfirmationEmail(toEmail, order) {
         try {

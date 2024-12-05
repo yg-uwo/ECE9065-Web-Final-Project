@@ -70,6 +70,7 @@ const App = () => {
 
 const CartWithUser = () => {
   const userId = useSelector((state) => state.auth.userId);
+  const email = useSelector((state) => state.auth.email);
   const navigate = useNavigate();
 
   const handleCheckout = async (cart) => {
@@ -79,7 +80,7 @@ const CartWithUser = () => {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userId: userId, cart }), 
+        body: JSON.stringify({ userId: userId, cart, email:email }), 
     });
       if (!response.ok) {
         throw new Error("Request can't be fulfilled due to inventory issue.. :(");
