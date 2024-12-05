@@ -54,6 +54,12 @@ class ProductModel {
         throw err; // Throw the error to be handled by the caller
     }
   }
+
+  async getAllProducts(){
+    const result = await this.model.find();
+  return result;
+  }
+  
 }
 
 module.exports = new ProductModel();

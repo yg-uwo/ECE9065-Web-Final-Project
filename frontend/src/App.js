@@ -13,6 +13,10 @@ import "react-toastify/dist/ReactToastify.css";
 import ProductList from './pages/ProductListing';
 import ProductDetails from './pages/ProductDetails';
 
+import Logout from './components/Logout';
+import OrdersPage from './pages/OrderListing';
+
+
 const App = () => {
   return (
     <Provider store={store}>
@@ -34,6 +38,14 @@ const App = () => {
             element={
               <PrivateRoute>
                 <UserList/>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/orders"
+            element={
+              <PrivateRoute>
+                <OrdersPage/>
               </PrivateRoute>
             }
           />

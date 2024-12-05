@@ -1,16 +1,19 @@
 const CartService = require('../services/cart.service');
 const OrderModel = require('../models/order.models');
 const ProductModel = require('../models/product.models');
+const UserModel = require('../models/user.model');
 const nodemailer = require('nodemailer');
 
 class OrderController {
     async checkout(req, res) {
+
         const { userId, cart, email } = req.body;
         let paymentSuccess = false;
         try {
             //const cart = await CartService.getCart(userId);
             if (!cart) { 
                 return res.status(404).json({message: 'Cart not found'})
+
             } else {
                 paymentSuccess = true;
             }
@@ -37,7 +40,7 @@ class OrderController {
                     paymentStatus: paymentSuccess ? 'Success' : 'Failed',
                 })
                 // Send Email here with order details
-                const userEmail = email; 
+                const userEmail = email;
                 if (userEmail) {
                     await this.sendOrderConfirmationEmail(userEmail, order);
                 }
@@ -47,67 +50,69 @@ class OrderController {
             } else {
                 res.json({ message: 'Payment failed. No updates made.' });
             }
-        } catch(error) {
+        } catch (error) {
             res.status(500).json({ message: 'Error during checkout', error });
         }
     }
+
     calculateTotalAmount(items) {
         return items.reduce((total, item) => total + (item.productId.price * item.quantity), 0);
     }
 
-    async listProducts(req, res) {
+    async listOrders(req, res) {
         try {
-          const {
-            category,
-            manufacturer,
-            title,
-            price,
-            page = 1,
-            limit = 10,
-            sort = 'popularity',
-            order = 'desc',
-          } = req.query;
-          const filter = {};
-          if (category) filter.category = { $regex: category, $options: 'i' };
-          if (manufacturer) filter.manufacturer = { $regex: manufacturer, $options: 'i' };
-          if (title) filter.title = { $regex: title, $options: 'i' };
-          if (price) filter.price = { $lte: price }; // Filter by price less than or equal to the given value
-          const pageNumber = parseInt(page, 10);
-          const pageSize = parseInt(limit, 10);
-          const skip = (pageNumber - 1) * pageSize;
-    
-          //sorting by popularity
-          const sortOrder = order === 'asc' ? 1 : -1;
-          const sortBy = {};
-          sortBy[sort] = sortOrder;
-    
-          const products = await ProductService.listProducts(filter, skip, pageSize, sortBy);
-          const totalProducts = await ProductService.countProducts(filter);
-    
-          res.status(200).json({
-            data: products,
-            total: totalProducts,
-            page: pageNumber,
-            limit: pageSize,
-          });
+            const { first_name } = req.query;
+
+            let userFilter = {};
+            if (first_name) {
+                userFilter.first_name = new RegExp(first_name, "i");
+            }
+
+            const orders = await OrderModel.getAllOrders();
+            const users = await UserModel.find(userFilter);
+            const userMap = new Map(users.map(user => [user._id.toString(), user]));
+            const products = await ProductModel.getAllProducts();
+            const productMap = new Map(products.map(product => [product.productId, product.title]));
+
+            // console.log(orders);
+
+            const final_list = orders.map(order => {
+                const user = userMap.get(order.userId);
+                const items = order.items.map(item => ({
+                    productName: productMap.get(item.productId) || "Unknown",
+                    quantity: item.quantity,
+                }));
+
+
+                return user ? {
+                    first_name: user.first_name,
+                    last_name: user.last_name,
+                    status: order.status,
+                    updatedAt:order.updatedAt,
+                    items,
+                } : null;
+            }).filter(Boolean);
+
+            res.json(final_list);
         } catch (error) {
-          res.status(500).json({ message: error.message });
+            console.error(error);
+            res.status(500).json({ error: "Failed to fetch orders." });
         }
-      }
+    }
 
     async sendOrderConfirmationEmail(toEmail, order) {
         try {
             // Configure the transporter
             const transporter = nodemailer.createTransport({
-                service: 'Gmail', 
+                service: 'Gmail',
                 auth: {
                     user: process.env.EMAIL_USER,
                     pass: process.env.EMAIL_PASS,
                 },
             });
             const mailOptions = {
-                from: process.env.EMAIL_USER, 
-                to: toEmail, 
+                from: process.env.EMAIL_USER,
+                to: toEmail,
                 subject: 'Order Confirmation',
                 html: `
                     <h1>Order Confirmation</h1>
