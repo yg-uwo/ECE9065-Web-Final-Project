@@ -4,6 +4,7 @@ class OrderModel {
     constructor() {
         const schema = new mongoose.Schema({
             userId: {type: String, required: true},
+            email: { type: String, required: true },
             items: [
                 {
                     _id: false,
