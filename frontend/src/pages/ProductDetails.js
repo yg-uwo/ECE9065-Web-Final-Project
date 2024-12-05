@@ -62,6 +62,25 @@ const ProductReviewsPage = () => {
       setError('Invalid user or product details.');
       return;
     }
+
+    const currentCart = await fetch(`${baseUrl}/cart/${userId}`, {  // Assuming '/cart/update' for the updateCart route
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    
+    if (currentCart.ok) {
+      const dataCart = await currentCart.json();
+      const isProductInItems = dataCart.items.some(item => item.productId === product.productId);
+
+      if(isProductInItems) {
+        toast.success("Item Already Present in Cart");
+        return;
+      }
+    }
+
   
     const cartItem = {
       userId: userId,

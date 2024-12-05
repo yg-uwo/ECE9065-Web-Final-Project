@@ -74,6 +74,14 @@ const App = () => {
               </PrivateRoute>
             }
           />
+          <Route
+            path="/logout"
+            element={
+              <PrivateRoute>
+                <Logout/>
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </Router>
     </Provider>
