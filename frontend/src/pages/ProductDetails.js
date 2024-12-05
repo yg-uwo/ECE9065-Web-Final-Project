@@ -14,7 +14,7 @@ const ProductReviewsPage = () => {
   // const [userId, setUserId] = useState(''); // Assuming you have a user ID
   const [sortOption, setSortOption] = useState('newest'); // Default sorting option
   const userId = useSelector((state) => state.auth.userId);
-
+  const email = useSelector((state) => state.auth.email);
   useEffect(() => {
     if (!productId) {
       setError('Invalid Product ID');
@@ -61,7 +61,8 @@ const ProductReviewsPage = () => {
       items: [
         {
           productId: product.productId,  
-          quantity: 1,            
+          quantity: 1,    
+          email:email,        
           imageUrl: product.images && product.images.length > 0 ? product.images[0] : '', 
           productName: product.title,  
           price: product.price || 0,

@@ -8,6 +8,7 @@ class CartModel {
                 {
                     _id: false,
                     productId: { type: String, required: true },
+                    email: { type: String, required: true },
                     quantity: { type: Number, required: true },
                     productName: { type: String, required: true },
                     price: { type: Number, required: true },
