@@ -13,6 +13,9 @@ class CartService {
     async updateCartItem(userId, productId, quantity) {
         return CartModel.updateCartItem(userId, productId, quantity);
     }
+    async clearCartByUserId(userId) {
+        return CartModel.clearCartByUserId(userId);
+    }
 }
 
 module.exports = new CartService();

@@ -60,21 +60,51 @@ class CartModel {
     }
 
     async updateCartItem(userId, productId, quantity) {
+        // Ensure inputs are converted to appropriate types
+        const userIdString = userId.toString();
+        const productIdString = productId.toString();
+        console.log("Inside UserId", userId);
+        // Input validation
+        if (!userIdString || !productIdString || quantity === undefined || quantity === null) {
+            throw new Error('Invalid input: userId, productId, and quantity are required');
+        }
+    
         try {
-            const cart = await this.model.findOne({userId});
+            console.log("Updated UserId:", { userId: userIdString, productId: productIdString, quantity });
+            
+            const cart = await this.model.findOne({ userId: userIdString });
             if (!cart) {
-                throw new Error(`Cart for userId ${userId} not found`);
+                throw new Error(`Cart for userId ${userIdString} not found`);
             }
-            const itemIndex = cart.items.findIndex(item => item.productId === productId);
+    
+            const itemIndex = cart.items.findIndex(item => item.productId === productIdString);
             if (itemIndex === -1) {
-                throw new Error(`Product with productId ${productId} not found in cart`);
+                throw new Error(`Product with productId ${productIdString} not found in cart`);
             }
+    
             cart.items[itemIndex].quantity = quantity;
+       
+            // Save the updated cart
             const updatedCart = await cart.save();
             return updatedCart;
         } catch (error) {
-            throw new Error('Error updating the cart item');
+            console.error(`Error in updateCartItem: ${error.message}`);
+            throw new Error(`Error updating the cart item: ${error.message}`);
         }
+    }
+   
+
+    async clearCartByUserId(userId) {
+        if (!userId) {
+            throw new Error('userId is required');
+        }
+        const result = await this.model.findOneAndUpdate(
+            { userId }, 
+            { $set: { items: [] } }, 
+            { new: true } 
+        );
+    
+        return result; // Return the result for further use
     }
 }
 

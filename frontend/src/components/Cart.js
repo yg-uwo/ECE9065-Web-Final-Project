@@ -36,22 +36,38 @@ class Cart extends Component {
         }
     }
 
-    updateQuantity = (productId, delta) => {
-        this.setState((prevState) => {
-            const updatedItems = prevState.cart.items
-                .map((item) => {
-                    if (item.productId === productId) {
-                        const newQuantity = item.quantity + delta;
-                        return newQuantity > 0 ? { ...item, quantity: newQuantity } : null;
-                    }
-                    return item;
-                })
-                .filter((item) => item !== null);
+    updateQuantity = async (productId, delta) => {
+        const { userId } = this.props;
+        const { cart } = this.state;
 
-            return {
-                cart: { ...prevState.cart, items: updatedItems },
-            };
-        });
+        const updatedItems = cart.items.map((item) => {
+            if (item.productId === productId) {
+                const newQuantity = item.quantity + delta;
+                return newQuantity > 0 ? { ...item, quantity: newQuantity } : null;
+            }
+            return item;
+        }).filter((item) => item !== null);
+
+        const updatedCart = { ...cart, items: updatedItems };
+
+        try {
+            console.log("Updated Cart", updatedCart);
+            await ApiService.updateCart(userId, updatedCart); // Sync with backend
+            this.setState({ cart: updatedCart });
+        } catch (error) {
+            console.error("Failed to update cart:", error.message);
+        }
+    };
+
+    clearCart = async () => {
+        const { userId } = this.props;
+
+        try {
+            await ApiService.clearCart(userId);
+            this.setState({ cart: { items: [] } }); // Clear local state
+        } catch (error) {
+            console.error("Failed to clear cart:", error.message);
+        }
     };
 
     handlePaymentChange = (name, value) => {
@@ -61,23 +77,11 @@ class Cart extends Component {
     };
 
     handleCheckout = async () => {
-        const { onCheckout } = this.props;
         const { cart } = this.state;
-
-        if (!onCheckout || !cart) {
-            this.setState({ error: "Unable to proceed with checkout." });
-            return;
-        }
-
         this.setState({ isCheckingOut: true });
-
         try {
-            await onCheckout(cart);
-            this.setState({
-                cart: null,
-                paymentDetails: { cardNumber: "", expiryDate: "", cvv: "" },
-                error: null,
-            });
+            await ApiService.checkout(cart); 
+            await this.clearCart(); 
             alert("Order placed successfully!");
         } catch (error) {
             this.setState({ error: error.message });
@@ -117,6 +121,12 @@ class Cart extends Component {
                     className="checkout-button"
                 >
                     {isCheckingOut ? "Processing..." : "Place Order"}
+                </button>
+                <button
+                    onClick={this.clearCart}
+                    className="clear-cart-button"
+                >
+                    Clear Cart
                 </button>
             </div>
         );
