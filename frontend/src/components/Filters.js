@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 const Filters = ({ onFilterChange }) => {
   const { isAuthenticated, role, token } = useSelector((state) => state.auth);
   const [showModal, setShowModal] = useState(false);
-  // Define the state for each filter
+  
   const [filters, setFilters] = useState({
     category: '',
     price: '',
@@ -15,7 +15,7 @@ const Filters = ({ onFilterChange }) => {
     title: '',
   });
 
-  // Handle changes in the filter fields
+ 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters((prevFilters) => ({
@@ -23,12 +23,12 @@ const Filters = ({ onFilterChange }) => {
       [name]: value,
     }));
 
-    // Call the onFilterChange callback to update parent component
+    
     onFilterChange({ ...filters, [name]: value });
   };
 
   const handleAddProduct = async (productData) => {
-    // Send productData to the server (via API)
+    
     console.log(productData);
     const response = await fetch(`${process.env.REACT_APP_API_URL}/product/add_product`, {
       method: "POST",

@@ -89,13 +89,13 @@ const UserList = () => {
     }
   };
 
-  // Open the UpdateUserModal
+
   const handleUpdate = (id) => {
     setSelectedUserId(id);
     setShowUpdateModal(true);
   };
 
-  // Handle user update completion
+  
   const handleUserUpdated = (updatedUser) => {
     const updatedUsers = users.map((user) =>
       user.id === updatedUser.id ? updatedUser : user
@@ -105,7 +105,7 @@ const UserList = () => {
     setShowUpdateModal(false);
   };
 
-  // Pagination logic
+  // Pagination 
   const startIndex = (currentPage - 1) * usersPerPage;
   const currentUsers = filteredUsers.slice(startIndex, startIndex + usersPerPage);
 

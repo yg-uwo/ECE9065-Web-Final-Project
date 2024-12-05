@@ -3,7 +3,7 @@ const UserService = require('../services/users.services');
 const validateInput = require('../utils/validate_user_input');
 const { SUCCESS_MESSAGES,ERROR_MESSAGES } = require('../utils/constants');
 
-//Login to 
+//Add user 
 exports.addUser = async (req, res) => {
     try {
         const errors = validateInput(req.body, ['email', 'password', 'phoneNumber', 'role']); 
@@ -26,7 +26,7 @@ exports.updateUser = async (req, res) => {
       const { first_name, last_name, email, password, phoneNumber, role } = req.body;
       const updatedData = { first_name, last_name, email, password, phoneNumber, role };
   
-      //check if there is undefine value in request body
+    
       Object.keys(updatedData).forEach(key => updatedData[key] === undefined && delete updatedData[key]);
   
       const updatedUser = await UserService.updateUserById(id, updatedData);

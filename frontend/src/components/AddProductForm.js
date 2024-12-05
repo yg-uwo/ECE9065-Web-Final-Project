@@ -102,16 +102,15 @@ const AddProductForm = ({ onAddProduct, onClose }) => {
   };
 
   useEffect(() => {
-    // Reset specifications when category changes
     if (formData.category) {
       const newSpecifications = specificationSchema[formData.category] || [];
       const newSpecData = newSpecifications.reduce((acc, field) => {
-        acc[field] = ''; // Initialize fields to empty strings
+        acc[field] = '';
         return acc;
       }, {});
       setFormData((prevData) => ({
         ...prevData,
-        specification: newSpecData, // Set the specification data based on the selected category
+        specification: newSpecData, 
       }));
     }
   }, [formData.category]);

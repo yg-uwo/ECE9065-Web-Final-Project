@@ -203,7 +203,7 @@ const Auth = () => {
                                 </Button>
                             </Form>
 
-                            {/* Link to toggle between Login/Sign Up */}
+                            
                             <div className="text-center mt-3">
                                 {isLogin ? (
                                     <p>
