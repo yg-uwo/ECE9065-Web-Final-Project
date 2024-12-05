@@ -6,12 +6,14 @@ const nodemailer = require('nodemailer');
 
 class OrderController {
     async checkout(req, res) {
-        const { userId, email } = req.body;
+
+        const { userId, cart, email } = req.body;
         let paymentSuccess = false;
         try {
-            const cart = await CartService.getCart(userId);
-            if (!cart) {
-                return res.status(404).json({ message: 'Cart not found' })
+            //const cart = await CartService.getCart(userId);
+            if (!cart) { 
+                return res.status(404).json({message: 'Cart not found'})
+
             } else {
                 paymentSuccess = true;
             }

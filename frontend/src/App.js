@@ -12,8 +12,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProductList from './pages/ProductListing';
 import ProductDetails from './pages/ProductDetails';
+
 import Logout from './components/Logout';
 import OrdersPage from './pages/OrderListing';
+
 
 const App = () => {
   return (
@@ -72,7 +74,6 @@ const App = () => {
               </PrivateRoute>
             }
           />
-           <Route path="/logout" element={<Logout />} />
         </Routes>
       </Router>
     </Provider>
@@ -91,7 +92,7 @@ const CartWithUser = () => {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userId: userId,email:email }), 
+        body: JSON.stringify({ userId: userId, cart, email:email }), 
     });
       if (!response.ok) {
         throw new Error("Request can't be fulfilled due to inventory issue.. :(");
