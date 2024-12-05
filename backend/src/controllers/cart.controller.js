@@ -3,6 +3,7 @@ const CartService = require('../services/cart.service');
 class CartController {
     async createCart(req, res) {
         const { userId, items } = req.body;
+        console.log("item-info", items);
         if (!userId || !items || !Array.isArray(items)) {
             return res.status(400).json({message: 'Invalid data. Check the inputs(userId, item array)'});
         }

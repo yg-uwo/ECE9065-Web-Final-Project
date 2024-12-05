@@ -42,6 +42,7 @@ class ProductModel {
 
   async updateProductStock(id, quantity) {
     try {
+      console.log("ProductId:", id);
         const result = await this.model.findOneAndUpdate(
             { productId: id },
             { $inc: { quantity } },
