@@ -11,9 +11,6 @@ exports.signupService = async ({ first_name,last_name, email, password,phoneNumb
     throw new AppError(ERROR_MESSAGES.USER_ALREADY_EXISTS, 400);
   }
 
-  // if (role && role !== ROLES.GENERAL) {
-  //   throw new AppError(ERROR_MESSAGES.UNAUTHORIZED_ACCESS, 403);
-  // }
 
   const user = new User({ first_name,last_name, email, password,phoneNumber, role });
   await user.save();

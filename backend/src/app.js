@@ -24,10 +24,10 @@ app.post('/api/auth/login', login);
 
 //users
 app.post('/api/user/add_user', authMiddleware, adminMiddleware, addUser);
-app.put('/api/user/update_user/:id', updateUser);
+app.put('/api/user/update_user/:id',authMiddleware, updateUser);
 app.delete('/api/user/delete_user/:id', authMiddleware, adminMiddleware, deleteUser);
 app.post('/api/user/listing', authMiddleware, adminMiddleware, listUsers);
-app.put('/api/user/:id', authMiddleware, adminMiddleware,getUser); 
+app.put('/api/user/:id', getUser); 
 
 //Products
 app.post('/api/product/add_product', authMiddleware, adminMiddleware, ProductController.createProduct);             

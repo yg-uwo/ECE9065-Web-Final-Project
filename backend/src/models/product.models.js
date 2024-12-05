@@ -42,7 +42,7 @@ class ProductModel {
 
   async updateProductStock(id, quantity) {
     try {
-      console.log("ProductId:", id);
+    
         const result = await this.model.findOneAndUpdate(
             { productId: id },
             { $inc: { quantity } },
@@ -51,7 +51,7 @@ class ProductModel {
         return result;
     } catch (err) {
         console.log("Error in payments", err);
-        throw err; // Throw the error to be handled by the caller
+        throw err; 
     }
   }
 

@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { Modal, Button, Form } from "react-bootstrap";
 import { validateUserForm } from "../utils/validation";
+import { useSelector,useDispatch } from 'react-redux';
+import { login } from '../redux/auth_slice';
 import '../assets/css/user_modal_form.css'
 
 const UpdateUserModal = ({ userId, onClose, onUserUpdated, token }) => {
+    const role = useSelector((state) => state.auth.role);
     const [formData, setFormData] = useState({
         first_name: "",
         last_name: "",
@@ -57,7 +60,8 @@ const UpdateUserModal = ({ userId, onClose, onUserUpdated, token }) => {
             }
 
             const updatedUser = await response.json();
-            toast.success("User updated successfully!");
+            toast.success(`${updatedUser.first_name},profile updated successfully`);
+           
             onUserUpdated(updatedUser);
             onClose();
         } catch (error) {
@@ -68,7 +72,7 @@ const UpdateUserModal = ({ userId, onClose, onUserUpdated, token }) => {
     return (
         <Modal show onHide={onClose} centered>
             <Modal.Header closeButton>
-                <Modal.Title>Update User</Modal.Title>
+                <Modal.Title>User</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={handleSubmit}>
@@ -120,19 +124,21 @@ const UpdateUserModal = ({ userId, onClose, onUserUpdated, token }) => {
                         />
                     </Form.Group>
 
-                    <Form.Group className="mb-3">
-                        <Form.Label className="form_label">Role</Form.Label>
-                        <Form.Control
-                            as="select"
-                            name="role"
-                            value={formData.role || ""}
-                            onChange={handleChange}
-                            className="form-control"
-                        >
-                            <option value="admin">Admin</option>
-                            <option value="general">General</option>
-                        </Form.Control>
-                    </Form.Group>
+                    {role === 'admin' && (
+                        <Form.Group className="mb-3">
+                            <Form.Label className="form_label">Role</Form.Label>
+                            <Form.Control
+                                as="select"
+                                name="role"
+                                value={formData.role || ""}
+                                onChange={handleChange}
+                                className="form-control"
+                            >
+                                <option value="admin">Admin</option>
+                                <option value="general">General</option>
+                            </Form.Control>
+                        </Form.Group>
+                    )}
 
                     <div className="d-flex justify-content-center mt-4">
                         <Button variant="primary" type="submit">

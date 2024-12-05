@@ -1,13 +1,15 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { toast } from "react-toastify";
+import UpdateUserModal from "../components/UpdateUserModal";
 
 const NavbarComponent = () => {
   const baseUrl = process.env.REACT_APP_API_URL;
-  const { isAuthenticated, role,token } = useSelector((state) => state.auth);
-
+  const { isAuthenticated, role, token,userId } = useSelector((state) => state.auth);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
   const handleSyncReviews = async () => {
     try {
@@ -17,15 +19,28 @@ const NavbarComponent = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
- 
+
       });
-  
+
       toast.success("Reviews Synced Successfully")
     } catch (error) {
       console.error('Error syncing reviews:', error);
       alert('Failed to sync reviews. Please try again later.');
     }
   }
+
+ 
+  const handleUpdate = () => {
+    let id = userId
+    setSelectedUserId(id);
+    setShowUpdateModal(true);
+  };
+
+  
+  const handleUserUpdated = (updatedUser) => {
+    setShowUpdateModal(false);
+    
+  };
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
@@ -52,12 +67,28 @@ const NavbarComponent = () => {
               <Nav.Link as={Link} to="/cart">Cart</Nav.Link>
             )}
             {isAuthenticated && (
-              <Nav.Link href="/logout">Logout</Nav.Link>
+              <>
+                <Nav.Link as={Link} to="/products">Products</Nav.Link>
+                <Nav.Link as="span" onClick={handleUpdate}>
+                  Profile
+                </Nav.Link>
+                <Nav.Link href="/logout">Logout</Nav.Link>
+              </>
             )}
           </Nav>
         </Navbar.Collapse>
+        {showUpdateModal && (
+          <UpdateUserModal
+            userId={selectedUserId}
+            onClose={() => setShowUpdateModal(false)}
+            onUserUpdated={handleUserUpdated}
+            token={token}
+          />
+        )}
       </Container>
     </Navbar>
+
+
   );
 };
 

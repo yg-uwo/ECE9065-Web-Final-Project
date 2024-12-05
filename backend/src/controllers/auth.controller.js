@@ -1,11 +1,11 @@
 const { signupService,loginService } = require('../services/auth.services');
-const { SUCCESS_MESSAGES, ERROR_MESSAGES, REGEX } = require('../utils/constants');
+const { SUCCESS_MESSAGES } = require('../utils/constants');
 const validateInput = require('../utils/validate_user_input');
 
 // Signup API
 exports.signup = async (req, res) => {
     try {
-        console.log("Inside backend code");
+        // console.log("Inside backend code");
         const errors = validateInput(req.body);
         if (errors.length > 0) {
             return res.status(400).json({ errors });

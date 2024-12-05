@@ -42,7 +42,7 @@ const UpdateProduct = ({ productId, onUpdateProduct, onClose }) => {
         bag: ["material", "dimensions", "compartments", "strap_type", "laptop_compatible"],
     };
 
-    // Fetch product details from the API
+    
     useEffect(() => {
         const fetchProductDetails = async () => {
             try {

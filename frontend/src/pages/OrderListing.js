@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Container, Row, Col, Table, Form, InputGroup, Button } from "react-bootstrap";
+
 
 
 const OrdersPage = () => {
@@ -39,8 +39,8 @@ const OrdersPage = () => {
 
     const formatDate = (isoDate) => {
         const date = new Date(isoDate);
-        const formattedDate = date.toISOString().slice(0, 10); // Extract YYYY-MM-DD
-        const formattedTime = date.toTimeString().slice(0, 8); // Extract HH:MM:SS
+        const formattedDate = date.toISOString().slice(0, 10); 
+        const formattedTime = date.toTimeString().slice(0, 8); 
         return `${formattedDate} ${formattedTime}`;
       };
 
@@ -61,15 +61,7 @@ const OrdersPage = () => {
                                 onChange={(e) => setFilter(e.target.value)}
                                 placeholder="Enter first name"
                             />
-                            <div className="input-group-append ml-3">
-                                <button
-                                    className="btn btn-outline-secondary"
-                                    type="button"
-                                    onClick={fetchOrders}
-                                >
-                                    Filter
-                                </button>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>

@@ -116,17 +116,7 @@ class ProductService {
     return Product.countDocuments(filter);
   }
 
-  //   async updateProductStock(productId, quantity) {
-  //     const product = await Product.findOneAndUpdate(
-  //       { productId },
-  //       { $inc: { quantity } },
-  //       { new: true }
-  //     );
-  //     if (!product) {
-  //       throw new Error(ERROR_MESSAGES.PRODUCT_NOT_FOUND);
-  //     }
-  //     return product;
-  //   }
+
 }
 
 module.exports = new ProductService();
