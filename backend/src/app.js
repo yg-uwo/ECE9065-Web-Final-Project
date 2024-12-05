@@ -36,12 +36,17 @@ app.delete('/api/product/delete_product/:id', authMiddleware, adminMiddleware, P
 app.post('/api/product/listing',ProductController.listProducts);
 app.get('/api/product/sync_reviews', ProductController.fillReviews);
 app.get('/api/product/:productId', ProductController.getProduct); 
+
+//Cart
 app.get('/api/cart/:userId', CartController.getCart.bind(CartController));
-app.post('/api/checkout', (req, res) => OrderController.checkout(req, res));
 app.post('/api/cart', CartController.createCart.bind(CartController));
+app.put('/api/cart/update/:userId', CartController.updateCart.bind(CartController));
+app.delete('api/cart/clear/:userId', CartController.clearCart.bind(CartController));
 
 //orders
 app.get('/api/orders/listing',authMiddleware, adminMiddleware,OrderController.listOrders);
+app.post('/api/checkout', (req, res) => OrderController.checkout(req, res));
+
 
 app.use((err, req, res, next) => ErrorHandler.handleError(err, req, res, next));
 

@@ -20,6 +20,26 @@ class ApiService {
             throw new Error(error.response?.data?.message || "Checkout failed");
         }
     }
+
+    static async updateCart(userId, cartData) {
+        try {
+            console.log("Inside Cart", cartData);
+            const response = await axios.put(`${API_BASE_URL}/cart/update/${userId}`, cartData);
+            return response.data;
+        } catch (error) {
+            throw new Error(error.response?.data?.message || "Failed to update cart");
+        }
+    }
+
+    static async clearCart(userId) {
+        try {
+            const response = await axios.delete(`${API_BASE_URL}/cart/clear/${userId}`);
+            return response.data;
+        } catch (error) {
+            throw new Error(error.response?.data?.message || "Failed to clear cart");
+        }
+    }
+
 }
 
 export default ApiService;
