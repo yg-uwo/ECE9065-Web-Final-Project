@@ -15,6 +15,13 @@ const ProductReviewsPage = () => {
   const [sortOption, setSortOption] = useState('newest'); // Default sorting option
   const userId = useSelector((state) => state.auth.userId);
   const email = useSelector((state) => state.auth.email);
+  const formatKey = (key) => {
+    return key
+      .split('_') // Split the key by underscores
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize each word
+      .join(' '); // Join the words back with spaces
+  };
+
   useEffect(() => {
     if (!productId) {
       setError('Invalid Product ID');
@@ -203,7 +210,7 @@ const ProductReviewsPage = () => {
               <ListGroup variant="flush">
                 {Object.entries(product.specification).map(([key, value], index) => (
                   <ListGroup.Item key={index}>
-                    <strong>{key}:</strong> {value}
+                     <strong>{formatKey(key)}:</strong> {value}
                   </ListGroup.Item>
                 ))}
               </ListGroup>

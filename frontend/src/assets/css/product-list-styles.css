@@ -29,3 +29,14 @@
     align-items: center;
     object-fit: cover;
   }
+
+  .card-footer {
+    display: flex;
+    flex-direction: column; /* Always stack buttons vertically */
+    gap: 10px; /* Add consistent spacing between buttons */
+  }
+  
+  .card-footer button {
+    width: 100%; /* Ensure buttons take full width of the container */
+  }
+  

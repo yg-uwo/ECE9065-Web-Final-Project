@@ -22,7 +22,6 @@ const ProductList = () => {
 
 
 
-
   const [filters, setFilters] = useState({
     category: '',
     price: '',
@@ -74,6 +73,7 @@ const ProductList = () => {
   };
 
   const handleFilterChange = (newFilters) => {
+    console.log("New Filters:", newFilters);
     setFilters(newFilters);
     setCurrentPage(1);
   };
@@ -165,14 +165,14 @@ const ProductList = () => {
               />
               <Card.Body className="card-body">
                 <Card.Title className="card-title">{product.title}</Card.Title>
-                <Card.Text className="card-text">Quantity:{product.specification?.cpu_model}</Card.Text>
-                <Card.Text className="card-text">{product.quantity}</Card.Text>
-                <div className="card-footer d-flex flex-column flex-sm-row justify-content-between">
+                <Card.Text className="card-text">{product.specification?.cpu_model}</Card.Text>
+                <Card.Text className="card-text">Quantity: {product.quantity}</Card.Text>
+                <div className="card-footer d-flex flex-column">
                   <Button variant="primary" className="mb-2 mb-sm-0 me-sm-2" onClick={() => navigate(`/product/details/${product._id}`)}>View Details</Button>
                   {isAuthenticated && role === 'admin' && (
                     <>
-                      <Button variant="warning" onClick={() => handleOpenModal(product._id)} className="me-2">Update Product</Button>
-                      <Button variant="danger" onClick={() => handleDelete(product._id)}>Remove Product</Button>
+                      <Button variant="warning" className="mb-2" onClick={() => handleOpenModal(product._id)}>Update Product</Button>
+                      <Button variant="danger" className="mb-2"onClick={() => handleDelete(product._id)}>Remove Product</Button>
                     </>
                   )}
                 </div>

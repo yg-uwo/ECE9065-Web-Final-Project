@@ -62,7 +62,17 @@ class ProductController {
       if (category) filter.category = { $regex: category, $options: 'i' };
       if (manufacturer) filter.manufacturer = { $regex: manufacturer, $options: 'i' };
       if (title) filter.title = { $regex: title, $options: 'i' };
-      if (price) filter.price = { $lte: price }; // Filter by price less than or equal to the given value
+      // if (price) filter.price = { $lte: price }; // Filter by price less than or equal to the given value
+      if (price) {
+        const [minPrice, maxPrice] = price.split('-').map(Number); // Split price range into min and max values
+        if (!isNaN(minPrice) && !isNaN(maxPrice)) {
+          filter.price = { $gte: minPrice, $lte: maxPrice }; // Filter by price range
+        } else {
+          return res.status(400).json({ message: 'Invalid price range format' });
+        }
+      }
+
+
       const pageNumber = parseInt(page, 10);
       const pageSize = parseInt(limit, 10);
       const skip = (pageNumber - 1) * pageSize;
