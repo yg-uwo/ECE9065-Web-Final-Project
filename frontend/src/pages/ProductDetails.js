@@ -69,7 +69,7 @@ const ProductReviewsPage = () => {
       ],
     };
 
-    console.log(cartItem)
+    console.log("ProductId:", cartItem);
   
     try {
       const response = await fetch(`${baseUrl}/cart`, {  // Assuming '/cart/update' for the updateCart route
