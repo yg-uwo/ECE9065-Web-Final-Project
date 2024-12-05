@@ -45,8 +45,11 @@ const NavbarComponent = () => {
             {isAuthenticated && role === 'admin' && (
               <Nav.Link as={Link} to="/users">User List</Nav.Link>
             )}
+            {isAuthenticated && role === 'admin' && (
+              <Nav.Link as={Link} to="/orders">Order List</Nav.Link>
+            )}
             {isAuthenticated && (
-              <Nav.Link as={Link} to="/cart">Order</Nav.Link>
+              <Nav.Link as={Link} to="/cart">Cart</Nav.Link>
             )}
             {isAuthenticated && (
               <Nav.Link href="/logout">Logout</Nav.Link>
