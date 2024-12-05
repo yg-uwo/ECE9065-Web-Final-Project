@@ -170,11 +170,8 @@ const ProductList = () => {
                   <Button variant="primary" className="mb-2 mb-sm-0 me-sm-2" onClick={() => navigate(`/product/details/${product._id}`)}>View Details</Button>
                   {isAuthenticated && role === 'admin' && (
                     <>
-
-                   
                       <Button variant="warning" onClick={() => handleOpenModal(product._id)} className="me-2">Update Product</Button>
                       <Button variant="danger" onClick={() => handleDelete(product._id)}>Remove Product</Button>
-
                     </>
                   )}
                 </div>
