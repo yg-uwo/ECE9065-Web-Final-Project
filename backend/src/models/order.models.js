@@ -13,7 +13,7 @@ class OrderModel {
                 },
             ],
             status: {type: String, default: 'Pending'},
-        });
+        }, { timestamps: true });
         this.model = mongoose.model('orders', schema);
     }
 
