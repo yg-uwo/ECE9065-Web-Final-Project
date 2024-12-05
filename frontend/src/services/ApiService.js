@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "https://jot-web-final-img-205543273236.us-central1.run.app/api";
+const API_BASE_URL = "http://localhost:8080/api";
 
 class ApiService {
     static async getCart(userId) {
