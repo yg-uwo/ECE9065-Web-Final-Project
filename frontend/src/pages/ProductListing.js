@@ -73,7 +73,6 @@ const ProductList = () => {
   };
 
   const handleFilterChange = (newFilters) => {
-    console.log("New Filters:", newFilters);
     setFilters(newFilters);
     setCurrentPage(1);
   };
