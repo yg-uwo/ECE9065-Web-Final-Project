@@ -60,16 +60,13 @@ const ProductReviewsPage = () => {
       userId: userId,
       items: [
         {
-          productId: productId,  
+          productId: product.productId,  
           quantity: 1,            
           imageUrl: product.images && product.images.length > 0 ? product.images[0] : '', 
           productName: product.title,  
           price: product.price || 0,
         },
       ],
-      // product: {
-      //   productId: productId,  // Include the product in the request as required by your backend
-      // },
     };
 
     console.log(cartItem)

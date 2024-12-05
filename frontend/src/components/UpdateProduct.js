@@ -130,35 +130,37 @@ const UpdateProduct = ({ productId, onUpdateProduct, onClose }) => {
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={handleSubmit}>
-                    <Form.Group controlId="formTitle">
-                        <Form.Label>Title</Form.Label>
+                    <Form.Group controlId="formTitle" className="mb-3">
+                        <Form.Label className="form_label">Title</Form.Label>
                         <Form.Control
                             type="text"
                             name="title"
                             value={formData.title}
                             onChange={handleInputChange}
                             required
+                            className="form-control"
                         />
                     </Form.Group>
-                    <Form.Group controlId="formPrice">
-                        <Form.Label>Price</Form.Label>
+                    <Form.Group controlId="formPrice" className="mb-3">
+                        <Form.Label className="form_label">Price</Form.Label>
                         <Form.Control
                             type="number"
                             name="price"
                             value={formData.price}
                             onChange={handleInputChange}
                             required
+                            className="form-control"
                         />
                     </Form.Group>
 
-                    <Form.Group controlId="formCategory">
-                        <Form.Label>Category</Form.Label>
+                    <Form.Group controlId="formCategory" className="mb-3">
+                        <Form.Label className="form_label">Category</Form.Label>
                         <Form.Select
                             name="category"
                             value={formData.category}
                             onChange={handleInputChange}
                             required
-                            disabled 
+                            disabled
                         >
                             <option value="">Select Category</option>
                             {categories.map((category) => (
@@ -171,60 +173,61 @@ const UpdateProduct = ({ productId, onUpdateProduct, onClose }) => {
 
                     {formData.category &&
                         specificationSchema[formData.category]?.map((field) => (
-                            <Form.Group key={field} controlId={`formSpec.${field}`}>
-                                <Form.Label>{field.replace('_', ' ').toUpperCase()}</Form.Label>
+                            <Form.Group key={field} controlId={`formSpec.${field}`} className="mb-3">
+                                <Form.Label className="form_label">{field.replace('_', ' ').toUpperCase()}</Form.Label>
                                 <Form.Control
                                     type="text"
                                     name={`specification.${field}`}
                                     value={formData.specification[field] || ''}
                                     onChange={handleInputChange}
+                                    className="form-control"
                                 />
                             </Form.Group>
                         ))}
 
-                    <Form.Group controlId="formManufacturer">
-                        <Form.Label>Manufacturer</Form.Label>
+                    <Form.Group controlId="formManufacturer" className="mb-3">
+                        <Form.Label className="form_label">Manufacturer</Form.Label>
                         <Form.Control
                             type="text"
                             name="manufacturer"
                             value={formData.manufacturer}
                             onChange={handleInputChange}
                             required
+                            className="form-control"
                         />
                     </Form.Group>
 
-                    <Form.Group controlId="formPopularity">
-                        <Form.Label>Popularity</Form.Label>
+                    <Form.Group controlId="formPopularity" className="mb-3">
+                        <Form.Label className="form_label">Popularity</Form.Label>
                         <Form.Control
                             type="number"
                             name="popularity"
                             value={formData.popularity}
                             onChange={handleInputChange}
                             required
+                            className="form-control"
                         />
                     </Form.Group>
 
-                    <Form.Group controlId="formQuantity">
-                        <Form.Label>Quantity</Form.Label>
+                    <Form.Group controlId="formQuantity" className="mb-3">
+                        <Form.Label className="form_label">Quantity</Form.Label>
                         <Form.Control
                             type="number"
                             name="quantity"
                             value={formData.quantity}
                             onChange={handleInputChange}
                             required
+                            className="form-control"
                         />
                     </Form.Group>
-
-                    <Button variant="primary" type="submit" className="mt-3">
-                        Update Product
-                    </Button>
+                    <div className="d-flex justify-content-center mt-4">
+                        <Button variant="primary" type="submit">
+                            Update
+                        </Button>
+                    </div>
                 </Form>
             </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={onClose}>
-                    Close
-                </Button>
-            </Modal.Footer>
+           
         </Modal>
     );
 };
