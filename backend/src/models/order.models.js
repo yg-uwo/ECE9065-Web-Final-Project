@@ -12,9 +12,10 @@ class OrderModel {
                     quantity: { type: Number, required: true },
                 },
             ],
-            status: { type: String, default: 'Pending' },
-            
-        },{ timestamps: true });
+
+            status: {type: String, default: 'Pending'},
+        }, { timestamps: true });
+
         this.model = mongoose.model('orders', schema);
 
     }
