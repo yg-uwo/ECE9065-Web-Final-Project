@@ -122,12 +122,7 @@ class Cart extends Component {
                 >
                     {isCheckingOut ? "Processing..." : "Place Order"}
                 </button>
-                <button
-                    onClick={this.clearCart}
-                    className="clear-cart-button"
-                >
-                    Clear Cart
-                </button>
+                
             </div>
         );
     }
