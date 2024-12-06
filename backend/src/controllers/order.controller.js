@@ -10,7 +10,7 @@ class OrderController {
         const { userId, cart, email } = req.body;
         let paymentSuccess = false;
         try {
-            //const cart = await CartService.getCart(userId);
+            const cart = await CartService.getCart(userId);
             if (!cart) { 
                 return res.status(404).json({message: 'Cart not found'})
 
@@ -21,7 +21,7 @@ class OrderController {
                 for (const item of cart.items) {
                     try {
                         const updatedStock = await ProductModel.updateProductStock(item.productId, -item.quantity);
-                        console.log("Updated stock data", updatedStock);
+                        // console.log("Updated stock data", updatedStock);
                         const quantityIsLessThenThreshold = updatedStock.quantity < 0;
                         if (!updatedStock || quantityIsLessThenThreshold) {
                             throw Error(res.status(500).json({ message: 'Error updating product stock' }));

@@ -78,6 +78,7 @@ class Cart extends Component {
 
     handleCheckout = async () => {
         const { cart } = this.state;
+        cart.email="aekam59@gmail.com"
         this.setState({ isCheckingOut: true });
         try {
             await ApiService.checkout(cart); 
