@@ -1,0 +1,760 @@
+commit 6eabf01da97e873ec120d8b0f8eb6807b6f1faf3
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Thu Dec 5 23:19:20 2024 -0500
+
+    removed clear cart button
+
+commit 8511fd102370da59cafe69de325b6355dd347e83
+Merge: 6679eb23 8e779d77
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Thu Dec 5 16:40:21 2024 -0500
+
+    Merge pull request #36 from yg-uwo/feature/admin_orders
+    
+    item_already_added_to_cart
+
+commit 8e779d77a6edda30468ed85993b725f6dae9e7c3
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Thu Dec 5 16:39:39 2024 -0500
+
+    item_already_added_to_cart
+
+commit 6679eb23c30dc0e1dcb28e9f1bbc8e57328e484a
+Merge: 0dabb57a aa684947
+Author: Aekamjot Singh <asing888@uwo.ca>
+Date:   Thu Dec 5 16:06:20 2024 -0500
+
+    Merge pull request #35 from yg-uwo/updated-cart-page
+    
+    Made the cart persistence
+
+commit aa684947c02298709f819b2b1186c08323991c37
+Author: Aekamjot Singh <jot@Aekamjots-MacBook-Pro.local>
+Date:   Thu Dec 5 16:05:19 2024 -0500
+
+    Updated the code
+
+commit 0dabb57ae7e7607cb9dd92976b3abc8ed08eba5a
+Merge: d4a8507d 6328aca6
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Thu Dec 5 13:58:51 2024 -0500
+
+    Merge pull request #34 from yg-uwo/feature/admin_orders
+    
+    Feature/admin orders
+
+commit 6328aca6b8ea028fc925bb9f64541b38568132fc
+Merge: 4c293c4e 97ed29c9
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Thu Dec 5 13:56:56 2024 -0500
+
+    Merge branch 'feature/admin_orders' of https://github.com/yg-uwo/ECE9065-Web-Final-Project into feature/admin_orders
+
+commit 4c293c4ee61b07bdff7eef240d48be296914829b
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Thu Dec 5 13:49:54 2024 -0500
+
+    profile_button_and_refractoring
+
+commit d4a8507d00deb4aeaad3d72538308fda9b661d99
+Author: musab-uwo <mshai27@uwo.ca>
+Date:   Thu Dec 5 10:57:01 2024 -0500
+
+    Fixed buttons UI, Fixed price filter logic, Fixed Sepecifications UI
+
+commit 733063ca0d3638f7d900b2c967c89f6414a9f829
+Merge: a17052b8 97ed29c9
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Thu Dec 5 02:49:54 2024 -0500
+
+    Merge pull request #33 from yg-uwo/feature/admin_orders
+    
+    list_orders_done
+
+commit 97ed29c942d65fb459b3ab9fb8f652852939e349
+Merge: ce1ab82f a17052b8
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Thu Dec 5 02:49:44 2024 -0500
+
+    Merge branch 'main' into feature/admin_orders
+
+commit ce1ab82f09a596fcb2f0a46cddabc45ca3638521
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Thu Dec 5 02:46:21 2024 -0500
+
+    list_orders_done
+
+commit a17052b85212fea7edc2ec0fe84a2d78a8f223f0
+Merge: a6bba54a 5e572bb2
+Author: Aekamjot Singh <asing888@uwo.ca>
+Date:   Thu Dec 5 02:28:54 2024 -0500
+
+    Merge pull request #32 from yg-uwo/added-date-field
+    
+    Added the timestamp field for cart and orders
+
+commit 5e572bb2cc99f2ef3ac6a80d3730c38d2da7372d
+Author: Aekamjot Singh <jot@Aekamjots-MacBook-Pro.local>
+Date:   Thu Dec 5 02:18:49 2024 -0500
+
+    Added the timestamp field for cart and orders
+
+commit a6bba54a1af1a8427776d22373519c255cab8e45
+Merge: 8dad9d4b 0f283f42
+Author: Aekamjot Singh <asing888@uwo.ca>
+Date:   Thu Dec 5 01:42:35 2024 -0500
+
+    Merge pull request #31 from yg-uwo/hotfix
+    
+    Added the changes for hotfix
+
+commit 0f283f42d30bf8601daeb81d77ec76d6809817e8
+Merge: b881991e 8dad9d4b
+Author: Aekamjot Singh <asing888@uwo.ca>
+Date:   Thu Dec 5 01:42:28 2024 -0500
+
+    Merge branch 'main' into hotfix
+
+commit b881991e781dcb6011c4d6dea67a2320a124f5e8
+Author: Aekamjot Singh <jot@Aekamjots-MacBook-Pro.local>
+Date:   Thu Dec 5 01:40:18 2024 -0500
+
+    Added the changes for hotfix
+
+commit 8dad9d4bf136d8256a328828d9f138cc9c288c94
+Merge: dd6bfefd 6e6d2a97
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Thu Dec 5 01:06:22 2024 -0500
+
+    Merge pull request #30 from yg-uwo/feature/admin_orders
+    
+    cart update changes
+
+commit 6e6d2a97285a79e605d22057f8ea3f24964d9223
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Thu Dec 5 01:05:03 2024 -0500
+
+    cart update changes
+
+commit dd6bfefde849ff6cad98a013e3c93946b3e5a5cd
+Merge: 8b8222a4 0c8ea67c
+Author: Aekamjot Singh <asing888@uwo.ca>
+Date:   Thu Dec 5 00:18:49 2024 -0500
+
+    Merge pull request #29 from yg-uwo/payment-email
+    
+    Integrated email and refactored code
+
+commit 0c8ea67cce24ac498ac5744d4cf528be969dbd1d
+Author: Aekamjot Singh <jot@Aekamjots-MacBook-Pro.local>
+Date:   Thu Dec 5 00:16:47 2024 -0500
+
+    Integrated email
+
+commit 8b8222a4530d52e44aea27fb319f14e1263169c6
+Merge: e4b39a9d 5f7b6a6b
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Thu Dec 5 00:13:38 2024 -0500
+
+    Merge pull request #28 from yg-uwo/feature/product_UI
+    
+    fixed UI changes in product
+
+commit 5f7b6a6b8717256b41bfe5174edd2f96bf395edd
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Thu Dec 5 00:12:15 2024 -0500
+
+    fixed UI changes in product
+
+commit e4b39a9db6d5433695e8be08099d39b23bcc1a20
+Author: musab-uwo <mshai27@uwo.ca>
+Date:   Wed Dec 4 17:35:24 2024 -0500
+
+    fixed cart function
+
+commit acd9a58909da5498cb1b839165e1e2d177ac662f
+Merge: b19fe62f 267b14f2
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Wed Dec 4 14:30:42 2024 -0500
+
+    Merge pull request #27 from yg-uwo/feature/product_UI
+    
+    bug_fix_sync_api
+
+commit 267b14f2172407afd959a096e480e372bb5ee4a6
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Wed Dec 4 14:29:24 2024 -0500
+
+    bug_fix_sync_api
+
+commit b19fe62fa698493f27156bedefd3918c282d524a
+Merge: 8daa9192 9d27b118
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Wed Dec 4 14:00:49 2024 -0500
+
+    Merge pull request #26 from yg-uwo/feature/product_UI
+    
+    Feature/product UI
+
+commit 9d27b118754dac6b5f8b030401e4546e4f21a2ae
+Merge: d80744b9 bad841ae
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Wed Dec 4 13:53:44 2024 -0500
+
+    Merge branch 'feature/product_UI' of https://github.com/yg-uwo/ECE9065-Web-Final-Project into feature/product_UI
+
+commit d80744b9f4d4c1713770c526aaad38cd84de7055
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Wed Dec 4 13:52:51 2024 -0500
+
+    sync_reviews_button
+
+commit 8daa91925dbe428cd32e169619017160d6bcdcda
+Merge: 0724328e 97856de4
+Author: Aekamjot Singh <asing888@uwo.ca>
+Date:   Wed Dec 4 12:07:27 2024 -0500
+
+    Merge pull request #25 from yg-uwo/changes-payment-order-cart
+    
+    Added the changes for payments, orders and cart info
+
+commit 97856de4b4c6b6a057091a1cc4bf86390369db3c
+Merge: 4cc146ca 0724328e
+Author: Aekamjot Singh <asing888@uwo.ca>
+Date:   Wed Dec 4 12:07:10 2024 -0500
+
+    Merge branch 'main' into changes-payment-order-cart
+
+commit 4cc146ca06fd45e56a56d0560c0362d2ecfb282a
+Author: Aekamjot Singh <asing888@uwo.ca>
+Date:   Wed Dec 4 12:06:03 2024 -0500
+
+    Update App.js
+
+commit 70cded52ad30bbb6ce8008c60a145b7feb45e859
+Author: Aekamjot Singh <jot@Aekamjots-MacBook-Pro.local>
+Date:   Wed Dec 4 12:00:43 2024 -0500
+
+    Synced main changes
+
+commit 0e73735ff148d7959e0018cce86c87d0441793f1
+Author: Aekamjot Singh <jot@Aekamjots-MacBook-Pro.local>
+Date:   Wed Dec 4 11:55:54 2024 -0500
+
+    Added the changse
+
+commit 0724328e9a3df98624d92a3a535628f36a4cc5a4
+Merge: 45f21854 bad841ae
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Wed Dec 4 01:45:27 2024 -0500
+
+    Merge pull request #24 from yg-uwo/feature/product_UI
+    
+    Feature/product UI
+
+commit bad841aec41e05c460764ecc1f24434e6a99c564
+Merge: ff2bcf64 45f21854
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Wed Dec 4 01:45:18 2024 -0500
+
+    Merge branch 'main' into feature/product_UI
+
+commit ff2bcf6416fefb042a4f3117ce9ebf2eeef0e4bb
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Wed Dec 4 01:39:47 2024 -0500
+
+    incorporated images&reviews from serb while creating product
+
+commit 45f21854c8b586a82dc2683383a6b269b56a4485
+Author: musab-uwo <mshai27@uwo.ca>
+Date:   Wed Dec 4 01:30:35 2024 -0500
+
+    fixed filters on product details page
+
+commit 399e90dcbb9b8e4a4169c3c9162565c190f51cc9
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Wed Dec 4 00:41:15 2024 -0500
+
+    update_user_modal & add_user_modal frontend
+
+commit dc02eec178c2a92b5949fb6a1d12cf3b5bbf9242
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Tue Dec 3 23:58:30 2024 -0500
+
+    added update_product;delete_product&auth UI changes
+
+commit 11f384e6869a781dc4b3127dd80e33df99d6dcde
+Author: musab-uwo <mshai27@uwo.ca>
+Date:   Tue Dec 3 23:47:55 2024 -0500
+
+    redesign
+
+commit 5b5822de96e90ab2bcbecee9e2cc76f5d160a3cb
+Author: musab-uwo <mshai27@uwo.ca>
+Date:   Tue Dec 3 21:47:09 2024 -0500
+
+    added sorting button for ratings
+
+commit d462a68f79bfe7b29416a3a0eadb77937dfd820e
+Merge: 07f144e9 6b4fb6a8
+Author: Musab Shaikh <mshai27@uwo.ca>
+Date:   Tue Dec 3 20:11:15 2024 -0500
+
+    Merge pull request #23 from yg-uwo/feature/product
+    
+    added reviews section
+
+commit 6b4fb6a8330d68902e1df08d0f2b3b45b15d7e7f
+Author: musab-uwo <mshai27@uwo.ca>
+Date:   Tue Dec 3 20:09:17 2024 -0500
+
+    added reviews section
+
+commit 07f144e99add53ef7f192fcd6f5fa18d1d9ccf07
+Merge: 40fea99d 9d45f1ec
+Author: Musab Shaikh <mshai27@uwo.ca>
+Date:   Tue Dec 3 19:44:00 2024 -0500
+
+    Merge pull request #22 from yg-uwo/feature/product
+    
+    fixed product details page
+
+commit 9d45f1ec6440074c3bbcbd1a45bcfc546f3543e3
+Author: musab-uwo <mshai27@uwo.ca>
+Date:   Tue Dec 3 19:42:31 2024 -0500
+
+    fixed details page
+
+commit 40fea99d876f89d6620dd58f41e867b84c32f968
+Merge: 3ef34354 a3bd1a78
+Author: Aekamjot Singh <asing888@uwo.ca>
+Date:   Tue Dec 3 19:02:42 2024 -0500
+
+    Merge pull request #21 from yg-uwo/synced-be-fe
+    
+    Synced Backend and FrontEnd Code
+
+commit a3bd1a78e510e967487fd2feb4e3b83e01fe5c57
+Author: Aekamjot Singh <jot@Aekamjots-MacBook-Pro.local>
+Date:   Tue Dec 3 19:01:17 2024 -0500
+
+    Synced Backend and FrontEnd Code
+
+commit 3ef34354b825f643462c35d3d551da3ab9ae690e
+Merge: 52d7398d 4e00c42c
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Sat Nov 30 14:54:55 2024 -0500
+
+    Merge pull request #20 from yg-uwo/feature/product
+    
+    Feature/product
+
+commit 4e00c42cb7bafa1e43e8fe957842bb3536d875c3
+Merge: b2da262b 52d7398d
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Sat Nov 30 14:54:47 2024 -0500
+
+    Merge branch 'main' into feature/product
+
+commit b2da262bfe45b9de5d18716c38bd0c3768c9a818
+Merge: 7fc4354e 7561a29e
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Sat Nov 30 14:48:42 2024 -0500
+
+    merge conflict resolution
+
+commit 7fc4354e66f06152282481c569dc03e2704259a3
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Sat Nov 30 14:45:38 2024 -0500
+
+    add_product_functionality_wrt_category
+
+commit 52d7398d95c26a822e6024533cb4ef81edee839d
+Author: Aekamjot Singh <asing888@uwo.ca>
+Date:   Sat Nov 30 14:28:48 2024 -0500
+
+    Update product.models.js
+
+commit 52d6d865a59f81c99093e419913c253f334885e2
+Author: Aekamjot Singh <asing888@uwo.ca>
+Date:   Sat Nov 30 14:28:16 2024 -0500
+
+    Update order.controller.js
+
+commit 7561a29e823dee25cc3f3b4ec1f89c08b2298480
+Author: musab-uwo <mshai27@uwo.ca>
+Date:   Sat Nov 30 14:27:24 2024 -0500
+
+    product details page added
+
+commit d4c2fb3114a16cf8b7daa426ed0574fca24b0d99
+Merge: 279c743f 7a0e2f99
+Author: Aekamjot Singh <asing888@uwo.ca>
+Date:   Sat Nov 30 14:24:32 2024 -0500
+
+    Merge pull request #19 from yg-uwo/added-logs
+    
+    Error Handling and logging
+
+commit 7a0e2f9906cd4a0a5d24c5d7527d0336890a1bd9
+Author: Aekamjot Singh <jot@aekamjots-mbp.home>
+Date:   Sat Nov 30 14:22:38 2024 -0500
+
+    Added the changes
+
+commit 279c743fd06ce6928d775cab3e3191a4a245cd2f
+Merge: 6dabb543 5c73da4c
+Author: Aekamjot Singh <asing888@uwo.ca>
+Date:   Fri Nov 29 16:37:43 2024 -0500
+
+    Merge pull request #18 from yg-uwo/updated-fe-code
+    
+    FrontEnd Code
+
+commit 5c73da4c68724deb42f28f02adba8246312eacc7
+Author: Aekamjot Singh <jot@Aekamjots-MacBook-Pro.local>
+Date:   Fri Nov 29 16:36:20 2024 -0500
+
+    Added the FE code
+
+commit ef8412fc91af60da935fe6095579dc2fc880cc93
+Merge: fa06bdf0 21cfef6e
+Author: musab-uwo <mshai27@uwo.ca>
+Date:   Fri Nov 29 11:47:08 2024 -0500
+
+    Merge branch 'feature/product' of https://github.com/yg-uwo/ECE9065-Web-Final-Project into feature/product
+
+commit fa06bdf055c641045c8296581087f50355a2ce99
+Author: musab-uwo <mshai27@uwo.ca>
+Date:   Fri Nov 29 11:45:27 2024 -0500
+
+    added buttons and filters
+
+commit 6dabb543bae708cf90857ddf9cb74ec870f6646e
+Merge: f00faece 21cfef6e
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Thu Nov 28 23:41:03 2024 -0500
+
+    Merge pull request #17 from yg-uwo/feature/product
+    
+    Feature/product
+
+commit 21cfef6e12522fcef78b2823187e82921df453cd
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Thu Nov 28 23:35:11 2024 -0500
+
+    fixed sign up api
+
+commit 9afcc2378dac04c28310c9decab517fae197dceb
+Merge: e11eba76 14b9d69d
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Thu Nov 28 20:45:55 2024 -0500
+
+    added serp api to get reviews
+
+commit e11eba764a454e5c5d4abd2c060b822ef6072c5f
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Thu Nov 28 20:44:23 2024 -0500
+
+    added product reviews from serp
+
+commit f00faecea40a47314cd2cb9038c76c18825dc78e
+Merge: ded09036 a0081997
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Thu Nov 28 18:20:35 2024 -0500
+
+    Merge pull request #16 from yg-uwo/feature/users
+    
+    Feature/users
+
+commit a00819970e6a85a78a71d8c833d670a9730fae32
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Thu Nov 28 18:14:49 2024 -0500
+
+    update user frontend functionality
+
+commit 80abaacf2e77af6ae4bd056eb843fdcb4f850059
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Thu Nov 28 17:45:54 2024 -0500
+
+    delete_user_frontend_functionality
+
+commit 0a49e0e99c3d746f0ebd89373b5e5758f4a50169
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Thu Nov 28 17:31:21 2024 -0500
+
+    addUser frontend functionality done
+
+commit ded09036a15597963cf7638db35f0a2cb4fc399c
+Merge: 3ef3ae95 7b265e25
+Author: Aekamjot Singh <asing888@uwo.ca>
+Date:   Thu Nov 28 16:44:52 2024 -0500
+
+    Merge pull request #15 from yg-uwo/call-me-jot-patch-2
+    
+    Update cart.controller.js
+
+commit 7b265e25b5cc30e942141817005eb7b5e7ee5a7d
+Author: Aekamjot Singh <asing888@uwo.ca>
+Date:   Thu Nov 28 16:44:35 2024 -0500
+
+    Update cart.controller.js
+
+commit 3ef3ae9585e86c157123b9ceb37cd98d72e4f2df
+Merge: 712ca18a 84796a76
+Author: Aekamjot Singh <asing888@uwo.ca>
+Date:   Thu Nov 28 16:43:01 2024 -0500
+
+    Merge pull request #14 from yg-uwo/update-controller
+    
+    Updated the controller
+
+commit 84796a76a6fd4a5357014656711b646e86ef79a0
+Author: Aekamjot Singh <jot@Aekamjots-MacBook-Pro.local>
+Date:   Thu Nov 28 16:42:11 2024 -0500
+
+    Updated the controller
+
+commit 712ca18a84cb1b574ff3e2773845ddfb59181f5b
+Merge: 57ec9d91 9e6b02c6
+Author: Aekamjot Singh <asing888@uwo.ca>
+Date:   Thu Nov 28 16:36:26 2024 -0500
+
+    Merge pull request #13 from yg-uwo/add-updated-fxn
+    
+    Added the changes for updateCart
+
+commit 9e6b02c623a999a76c9c958140b1af00ea04f82d
+Author: Aekamjot Singh <jot@Aekamjots-MacBook-Pro.local>
+Date:   Thu Nov 28 16:31:28 2024 -0500
+
+    Added the changes
+
+commit 14b9d69d162dfdb7ec726f8214525709d2ff96ce
+Author: musab-uwo <mshai27@uwo.ca>
+Date:   Thu Nov 28 13:50:36 2024 -0500
+
+    added product listing, pagination, filters (beta)
+
+commit 57ec9d91a7fe04d326af4e84fe3d0d032cb1e17a
+Merge: 0a4549bf db4fe82d
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Tue Nov 26 23:38:03 2024 -0500
+
+    Merge pull request #12 from yg-uwo/feature/users
+    
+    user listing page
+
+commit db4fe82df6f5fbd9af6c863e46c41053636ae111
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Tue Nov 26 23:36:56 2024 -0500
+
+    user listing page
+
+commit 0a4549bfecf4ae73763b7db717a54e1a4a7c6df3
+Merge: cebd824c e18df245
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Tue Nov 26 21:42:00 2024 -0500
+
+    Merge pull request #11 from yg-uwo/feature/auth
+    
+    implemented auth frontend
+
+commit e18df2455fd9c37b6e36ed2c20a1c1fd181b7f63
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Tue Nov 26 21:40:12 2024 -0500
+
+    implemented auth frontend
+
+commit cebd824ca85f4763b0010f88c858214cd73c3dd8
+Merge: 7394d45b 0bc70723
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Sun Nov 24 03:49:27 2024 -0500
+
+    Merge pull request #10 from yg-uwo/feature/product
+    
+    added product listing api
+
+commit 0bc707238d1cadaa33aaa0ddf130cd7bd476a1d0
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Sun Nov 24 03:30:14 2024 -0500
+
+    added product listing api
+
+commit 7394d45bdb149cf07d5ea9565d3ba435d3e6444a
+Merge: 6d77e463 7119f363
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Sun Nov 24 03:18:47 2024 -0500
+
+    Merge pull request #9 from yg-uwo/feature/users
+    
+    Feature/users
+
+commit 7119f36384c986dbf3fc8195cd335e3e893ade52
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Sun Nov 24 03:16:04 2024 -0500
+
+    changing constant for error messages
+
+commit df7f4f0c88efc1c5d992a37470556a02b3c22c9b
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Sun Nov 24 03:10:54 2024 -0500
+
+    update.delete,listing api
+
+commit 6d77e4633dbf54caf0864c375d6ed0ad775c97d4
+Merge: 8e62eda2 685f18dc
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Sun Nov 24 02:32:59 2024 -0500
+
+    Merge pull request #8 from yg-uwo/feature/product
+    
+    implemented add,update&delete product apis
+
+commit 685f18dcbd7c3902db7691ae72020b840b1c6958
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Sun Nov 24 02:26:10 2024 -0500
+
+    implemeneted add,update&delete product apis
+
+commit 8e62eda27e40df6cbeea816f1d1f2a710fd7c49c
+Merge: bbbe94bf eed3e95c
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Sun Nov 24 01:13:15 2024 -0500
+
+    Merge pull request #7 from yg-uwo/feature/auth
+    
+    Feature/auth
+
+commit eed3e95c84b9704b3de4601b4265a2b622ae4932
+Merge: 93c980d4 bbbe94bf
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Sun Nov 24 01:13:06 2024 -0500
+
+    Merge branch 'main' into feature/auth
+
+commit 93c980d4c61159c00ac57529dd6959870a10102c
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Sun Nov 24 01:07:40 2024 -0500
+
+    added middleware for add_user
+
+commit 651b1b328a87e50a02e70ead25b2f02ba26ce9a6
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Sun Nov 24 00:48:03 2024 -0500
+
+    added_login_api
+
+commit bbbe94bf858e9bf015767289c3779900c1669529
+Merge: 8fa084d5 8c66be9f
+Author: Aekamjot Singh <asing888@uwo.ca>
+Date:   Fri Nov 22 22:57:33 2024 -0500
+
+    Merge pull request #6 from yg-uwo/react-code
+    
+    Added the react code
+
+commit 8c66be9feaabd04631a97ed2191cffda0ee22fb3
+Author: Aekamjot Singh <jot@Aekamjots-MacBook-Pro.local>
+Date:   Fri Nov 22 22:48:18 2024 -0500
+
+    Added the react code
+
+commit 8fa084d50ecb8f2e2ab2c167e04ffc1a5e03e82d
+Merge: c63c1733 90c55635
+Author: Aekamjot Singh <asing888@uwo.ca>
+Date:   Fri Nov 22 16:51:26 2024 -0500
+
+    Merge pull request #5 from yg-uwo/mongo-updates
+    
+    Added the changes for publishing the data to mongo
+
+commit 90c556359ebcae5f1239b79eae24529117973ede
+Author: Aekamjot Singh <jot@dyn172-30-2-222.wireless.uwo.pri>
+Date:   Fri Nov 22 16:49:48 2024 -0500
+
+    Added the changes
+
+commit 71ac0cf774c425e0c3d1562d02f2bd3cf9d3bdc1
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Fri Nov 22 16:27:37 2024 -0500
+
+    login_api_completed
+
+commit 2f09082ae6f337d1cc4812b6c68d8abc03d9f52a
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Fri Nov 22 16:02:57 2024 -0500
+
+    completed_signup_api
+
+commit c63c1733e0548fe888c019a00d3d95c73ae4951e
+Merge: 2313a631 2c869417
+Author: Aekamjot Singh <asing888@uwo.ca>
+Date:   Fri Nov 22 15:15:34 2024 -0500
+
+    Merge pull request #4 from yg-uwo/order-implementation
+    
+    Added the logic for cart, order
+
+commit 2c8694179532d55b015b717ca1316796cc9972c1
+Author: Aekamjot Singh <jot@dyn172-30-2-222.wireless.uwo.pri>
+Date:   Fri Nov 22 15:14:03 2024 -0500
+
+    Added the logic for cart, order
+
+commit 2313a6316c9f82452cb9557736d963d8989fdf8f
+Merge: 876b89c4 c060235c
+Author: Aekamjot Singh <asing888@uwo.ca>
+Date:   Fri Nov 22 00:25:09 2024 -0500
+
+    Merge pull request #3 from yg-uwo/call-me-jot-patch-1
+    
+    Created the script of MongoDB injection
+
+commit c060235cd035805f96a78e35e71ff15eb7339706
+Author: Aekamjot Singh <asing888@uwo.ca>
+Date:   Fri Nov 22 00:24:07 2024 -0500
+
+    Created the script of MongoDB injection
+
+commit 876b89c452e54e625ac73819db20ae90b6990601
+Merge: fb4b02ae 12004dc4
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Fri Nov 22 00:15:44 2024 -0500
+
+    Merge pull request #2 from yg-uwo/feature/set-up
+    
+    frontend files
+
+commit 12004dc4608caad3c0f211a34dd3c76aa30faf39
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Fri Nov 22 00:14:43 2024 -0500
+
+    frontend files
+
+commit fb4b02aec79f1af9dccef394ff8da07ff85f6ddf
+Merge: f7b708eb a89030db
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Fri Nov 22 00:13:21 2024 -0500
+
+    Merge pull request #1 from yg-uwo/feature/set-up
+    
+    Feature/set up
+
+commit a89030db925dd02be88c6d88b2778e278c77321a
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Fri Nov 22 00:10:59 2024 -0500
+
+    frontend-set-up-completed
+
+commit 6a60cc84f0f2d93ca8d62a771210ca3b2e3dfa8f
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Thu Nov 21 21:57:10 2024 -0500
+
+    backend_setup_completed
+
+commit f7b708eb8b45a4e19fcbd7fc167eac3dde744f03
+Author: Yash Gupta <ygupta26@uwo.ca>
+Date:   Tue Nov 19 17:45:45 2024 -0500
+
+    Initial commit
