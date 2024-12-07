@@ -30,7 +30,7 @@ class CartController {
     async updateCart(req, res) {
         const { items } = req.body;
         const { userId } = req.params;
-        console.log("Items count", items);
+        //console.log("Items count", items);
         // Validate the request body
         if (!userId || !items || !Array.isArray(items)) {
             return res.status(400).json({ message: 'Invalid data. Ensure userId and items (as an array) are provided.' });
@@ -93,6 +93,7 @@ class CartController {
     
     async clearCart(req, res) {
         const { userId } = req.body;
+        console.log("Cleared userID", userId);
         // Validate the request body
         if (!userId) {
             return res.status(400).json({ message: 'Invalid data. userId is required.' });

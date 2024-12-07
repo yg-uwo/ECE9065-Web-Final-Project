@@ -117,18 +117,6 @@ class OrderController {
                 html: `
                     <h1>Order Confirmation</h1>
                     <p>Thank you for your purchase! Your order has been confirmed.</p>
-                    <h3>Order Details</h3>
-                    <ul>
-                        ${order.items.map(item => `
-                            <li>
-                                <strong>Product:</strong> ${item.productId.name} <br />
-                                <strong>Quantity:</strong> ${item.quantity} <br />
-                                <strong>Price:</strong> $${item.productId.price}
-                            </li>
-                        `).join('')}
-                    </ul>
-                    <h3>Total Amount: $${order.totalAmount}</h3>
-                    <p>Status: ${order.status}</p>
                 `,
             };
 

@@ -63,15 +63,12 @@ class CartModel {
         // Ensure inputs are converted to appropriate types
         const userIdString = userId.toString();
         const productIdString = productId.toString();
-        console.log("Inside UserId", userId);
         // Input validation
         if (!userIdString || !productIdString || quantity === undefined || quantity === null) {
             throw new Error('Invalid input: userId, productId, and quantity are required');
         }
     
         try {
-            console.log("Updated UserId:", { userId: userIdString, productId: productIdString, quantity });
-            
             const cart = await this.model.findOne({ userId: userIdString });
             if (!cart) {
                 throw new Error(`Cart for userId ${userIdString} not found`);
