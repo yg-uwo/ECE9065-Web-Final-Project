@@ -126,7 +126,7 @@ class Cart extends Component {
         }
 
         const { cart } = this.state;
-        cart.email = "aekam59@gmail.com"; // Example email
+        cart.email = "testUser@gmail.com"; // Example email
         this.setState({ isCheckingOut: true });
         try {
             await ApiService.checkout(cart);
